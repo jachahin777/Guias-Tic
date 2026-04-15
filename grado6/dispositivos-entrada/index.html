@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Interactiva: Dispositivos de Entrada</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --success: #16a34a;
+      --error: #dc2626;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: var(--primary); margin-bottom: 15px; }
+    
+    /* NUEVO: Información del estudiante */
+    .student-info { 
+      display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; padding: 15px; 
+      background: #f1f5f9; border-radius: 8px; border: 1px solid var(--border); 
+    }
+    .student-info label { flex: 1; min-width: 250px; font-weight: 500; }
+    .student-info input { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid var(--border); border-radius: 6px; }
+    
+    .info { background: #eff6ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+    .activity { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border); }
+    .activity h2 { color: var(--primary); margin-bottom: 15px; font-size: 1.2em; }
+    .question { margin-bottom: 18px; }
+    .options label { display: block; margin: 5px 0; cursor: pointer; padding: 8px; border-radius: 6px; transition: 0.2s; }
+    .options label:hover { background: #e2e8f0; }
+    .feedback { margin-top: 5px; font-weight: bold; min-height: 24px; font-size: 0.95em; }
+    .correct { color: var(--success); }
+    .incorrect { color: var(--error); }
+    select, input[type="text"], textarea { width: 100%; padding: 10px; margin: 5px 0 15px; border: 1px solid var(--border); border-radius: 6px; }
+    button { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    button:hover { background: #1d4ed8; }
+    .btn-check { margin-top: 5px; }
+    .score-bar { position: sticky; top: 0; background: var(--card); padding: 12px 20px; border-bottom: 2px solid var(--primary); z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .score { font-weight: bold; font-size: 1.1em; }
+    .print-btn { background: var(--success); margin-top: 30px; width: 100%; padding: 15px; font-size: 1.1em; }
+    .no-print { display: inline-block; }
+    .result-box { margin-top: 10px; padding: 10px; background: #dcfce7; border-radius: 6px; border: 1px solid var(--success); display: none; }
+    
+    @media print {
+      .no-print, .btn-check, .print-btn, .score-bar { display: none !important; }
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; max-width: 100%; padding: 15px; }
+      .activity { border: 1px solid #ccc; background: white; page-break-inside: avoid; }
+      .feedback, .result-box { display: block !important; color: black; border: 1px solid #666; background: white; margin-top: 5px; padding: 5px; }
+      input, select, textarea { border: none; background: transparent; padding: 2px 0; }
+      .student-info input { border-bottom: 1px solid #333; border-radius: 0; }
+      h1 { font-size: 1.5em; margin-bottom: 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="score-bar no-print">
+  <span>📘 Guía: Dispositivos de Entrada</span>
+  <span class="score">Puntuación: <span id="score">0</span> / 16</span>
+</div>
+
+<div class="container">
+  <h1>🖥️ Dispositivos de Entrada del Computador</h1>
+  
+  <!-- CAMPOS SOLICITADOS -->
+  <div class="student-info">
+    <label>👤 Nombre del estudiante: <input type="text" id="studentName" placeholder="Escribe tu nombre completo" required></label>
+    <label>🏫 Curso: <input type="text" id="studentCourse" placeholder="Ej: 6-1, 6A, etc." required></label>
+  </div>
+
+  <div class="info">
+    <strong>Área:</strong> Tecnología e Informática | <strong>Grado:</strong> Sexto<br>
+    <strong>Objetivo:</strong> Comprender qué es un dispositivo de entrada, identificar los más usados y diferenciar sus usos.<br>
+    <em>Instrucciones:</em> Completa tu nombre y curso. Responde cada actividad y presiona <strong>Verificar</strong>. Al finalizar, usa el botón verde para imprimir o guardar en PDF.
+  </div>
+
+  <!-- Actividad 1 -->
+  <div class="activity">
+    <h2>🔹 Actividad 1: Selección múltiple</h2>
+    <div class="question" id="a1q1">
+      <p>1. Un dispositivo de entrada sirve para:</p>
+      <div class="options">
+        <label><input type="radio" name="a1q1" value="a"> a) Mostrar información</label>
+        <label><input type="radio" name="a1q1" value="b"> b) Ingresar información</label>
+        <label><input type="radio" name="a1q1" value="c"> c) Guardar archivos</label>
+        <label><input type="radio" name="a1q1" value="d"> d) Compartir información</label>
+      </div>
+      <button class="btn-check no-print" onclick="checkMC('a1q1', 'b')">Verificar</button>
+      <div class="feedback" id="fb-a1q1"></div>
+    </div>
+    <div class="question" id="a1q2">
+      <p>2. ¿Cuál de estos es un dispositivo de entrada?</p>
+      <div class="options">
+        <label><input type="radio" name="a1q2" value="a"> a) Monitor</label>
+        <label><input type="radio" name="a1q2" value="b"> b) Impresora</label>
+        <label><input type="radio" name="a1q2" value="c"> c) Teclado</label>
+        <label><input type="radio" name="a1q2" value="d"> d) Procesador</label>
+      </div>
+      <button class="btn-check no-print" onclick="checkMC('a1q2', 'c')">Verificar</button>
+      <div class="feedback" id="fb-a1q2"></div>
+    </div>
+    <div class="question" id="a1q3">
+      <p>3. El mouse se utiliza para:</p>
+      <div class="options">
+        <label><input type="radio" name="a1q3" value="a"> a) Escuchar música</label>
+        <label><input type="radio" name="a1q3" value="b"> b) Mover el puntero</label>
+        <label><input type="radio" name="a1q3" value="c"> c) Imprimir</label>
+        <label><input type="radio" name="a1q3" value="d"> d) Ingresar imágenes</label>
+      </div>
+      <button class="btn-check no-print" onclick="checkMC('a1q3', 'b')">Verificar</button>
+      <div class="feedback" id="fb-a1q3"></div>
+    </div>
+    <div class="question" id="a1q4">
+      <p>4. El micrófono sirve para:</p>
+      <div class="options">
+        <label><input type="radio" name="a1q4" value="a"> a) Capturar sonido</label>
+        <label><input type="radio" name="a1q4" value="b"> b) Ver videos</label>
+        <label><input type="radio" name="a1q4" value="c"> c) Escribir textos</label>
+      </div>
+      <button class="btn-check no-print" onclick="checkMC('a1q4', 'a')">Verificar</button>
+      <div class="feedback" id="fb-a1q4"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 2 -->
+  <div class="activity">
+    <h2>🔹 Actividad 2: Relaciona columnas</h2>
+    <div class="question">
+      <p>Selecciona la función correcta para cada dispositivo:</p>
+      <label>Micrófono: 
+        <select id="a2q1"><option value="">-- Elige --</option><option value="c">c) Grabar sonidos</option><option value="d">d) Mostrar mi imagen en videollamadas</option><option value="a">a) Escribir información</option><option value="b">b) Mover el puntero</option></select>
+      </label>
+      <label>Cámara web: 
+        <select id="a2q2"><option value="">-- Elige --</option><option value="c">c) Grabar sonidos</option><option value="d">d) Mostrar mi imagen en videollamadas</option><option value="a">a) Escribir información</option><option value="b">b) Mover el puntero</option></select>
+      </label>
+      <label>Teclado: 
+        <select id="a2q3"><option value="">-- Elige --</option><option value="c">c) Grabar sonidos</option><option value="d">d) Mostrar mi imagen en videollamadas</option><option value="a">a) Escribir información</option><option value="b">b) Mover el puntero</option></select>
+      </label>
+      <label>Mouse: 
+        <select id="a2q4"><option value="">-- Elige --</option><option value="c">c) Grabar sonidos</option><option value="d">d) Mostrar mi imagen en videollamadas</option><option value="a">a) Escribir información</option><option value="b">b) Mover el puntero</option></select>
+      </label>
+      <button class="btn-check no-print" onclick="checkMatching()">Verificar</button>
+      <div class="feedback" id="fb-a2"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 3 -->
+  <div class="activity">
+    <h2>🔹 Actividad 3: Aplicación</h2>
+    <div class="question">
+      <p>¿Qué dispositivo usarías para?</p>
+      <label>Jugar videojuegos: <input type="text" id="a3q1" placeholder="Ej: control, gamepad, teclado y mouse..."></label>
+      <label>Ingresar imágenes: <input type="text" id="a3q2" placeholder="Ej: cámara web, escáner..."></label>
+      <label>Dibujar en el computador: <input type="text" id="a3q3" placeholder="Ej: lápiz óptico, tableta gráfica, mouse..."></label>
+      <button class="btn-check no-print" onclick="checkApplication()">Verificar</button>
+      <div class="feedback" id="fb-a3"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 4 -->
+  <div class="activity">
+    <h2>🔹 Actividad 4: Verdadero o Falso</h2>
+    <div class="question">
+      <p>1. El teclado es un dispositivo de entrada</p>
+      <label><input type="radio" name="a4q1" value="V"> V &nbsp; <input type="radio" name="a4q1" value="F"> F</label>
+      <button class="btn-check no-print" onclick="checkTF('a4q1', 'V')">Verificar</button>
+      <div class="feedback" id="fb-a4q1"></div>
+    </div>
+    <div class="question">
+      <p>2. El monitor es un dispositivo de entrada</p>
+      <label><input type="radio" name="a4q2" value="V"> V &nbsp; <input type="radio" name="a4q2" value="F"> F</label>
+      <button class="btn-check no-print" onclick="checkTF('a4q2', 'F')">Verificar</button>
+      <div class="feedback" id="fb-a4q2"></div>
+    </div>
+    <div class="question">
+      <p>3. El micrófono captura sonido</p>
+      <label><input type="radio" name="a4q3" value="V"> V &nbsp; <input type="radio" name="a4q3" value="F"> F</label>
+      <button class="btn-check no-print" onclick="checkTF('a4q3', 'V')">Verificar</button>
+      <div class="feedback" id="fb-a4q3"></div>
+    </div>
+    <div class="question">
+      <p>4. La cámara web no sirve para videollamadas</p>
+      <label><input type="radio" name="a4q4" value="V"> V &nbsp; <input type="radio" name="a4q4" value="F"> F</label>
+      <button class="btn-check no-print" onclick="checkTF('a4q4', 'F')">Verificar</button>
+      <div class="feedback" id="fb-a4q4"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 5 -->
+  <div class="activity">
+    <h2>🔹 Actividad 5: Creativa</h2>
+    <p>Dibuja o sube una imagen de dos dispositivos de entrada y escribe sus funciones.</p>
+    <label>📷 Sube tu imagen: <input type="file" id="a5img" accept="image/*" class="no-print"></label>
+    <p id="a5img-preview" style="margin-top:10px;"></p>
+    <label>✍️ Escribe las funciones de los dispositivos dibujados:</label>
+    <textarea id="a5text" rows="4" placeholder="Ej: El teclado sirve para escribir letras y números. El mouse sirve para seleccionar..."></textarea>
+    <button class="btn-check no-print" onclick="checkCreative()">Marcar como completada</button>
+    <div class="feedback" id="fb-a5"></div>
+  </div>
+
+  <button class="print-btn no-print" onclick="printGuide()">🖨️ Imprimir / Guardar como PDF</button>
+  <p style="text-align:center; margin-top:10px; color:#64748b; font-size:0.9em;">💡 Consejo: Al dar clic en "Imprimir", selecciona "Guardar como PDF" en el destino de tu navegador.</p>
+</div>
+
+<script>
+  let score = 0;
+  const answered = { a1q1:false, a1q2:false, a1q3:false, a1q4:false, a2:false, a3:false, a4q1:false, a4q2:false, a4q3:false, a4q4:false, a5:false };
+
+  function updateScore(points, id) {
+    if (!answered[id]) {
+      score += points;
+      answered[id] = true;
+      document.getElementById('score').textContent = score;
+    }
+  }
+
+  function printGuide() {
+    const name = document.getElementById('studentName').value.trim();
+    const course = document.getElementById('studentCourse').value.trim();
+    if (!name || !course) {
+      alert("⚠️ Por favor, completa tu nombre y curso antes de imprimir.");
+      document.getElementById('studentName').focus();
+      return;
+    }
+    window.print();
+  }
+
+  function checkMC(qName, correct) {
+    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+    const fb = document.getElementById(`fb-${qName}`);
+    if (!selected) { fb.textContent = "⚠️ Selecciona una opción."; fb.className = "feedback incorrect"; return; }
+    if (selected.value === correct) {
+      fb.textContent = "✅ ¡Correcto!"; fb.className = "feedback correct";
+      updateScore(1, qName);
+    } else {
+      fb.textContent = "❌ Incorrecto. Revisa los conceptos de la guía."; fb.className = "feedback incorrect";
+    }
+  }
+
+  function checkMatching() {
+    const q1 = document.getElementById('a2q1').value;
+    const q2 = document.getElementById('a2q2').value;
+    const q3 = document.getElementById('a2q3').value;
+    const q4 = document.getElementById('a2q4').value;
+    const fb = document.getElementById('fb-a2');
+    if (!q1 || !q2 || !q3 || !q4) { fb.textContent = "⚠️ Completa todas las opciones."; fb.className = "feedback incorrect"; return; }
+    const correctMap = { a2q1:'c', a2q2:'d', a2q3:'a', a2q4:'b' };
+    let allCorrect = true;
+    for (let id in correctMap) {
+      if (document.getElementById(id).value !== correctMap[id]) allCorrect = false;
+    }
+    if (allCorrect) {
+      fb.textContent = "✅ ¡Excelente! Todas las relaciones son correctas."; fb.className = "feedback correct";
+      updateScore(4, 'a2');
+    } else {
+      fb.textContent = "❌ Algunas relaciones son incorrectas. Revisa la tabla de funciones."; fb.className = "feedback incorrect";
+    }
+  }
+
+  function checkApplication() {
+    const a1 = document.getElementById('a3q1').value.toLowerCase();
+    const a2 = document.getElementById('a3q2').value.toLowerCase();
+    const a3 = document.getElementById('a3q3').value.toLowerCase();
+    const fb = document.getElementById('fb-a3');
+    const valid1 = /control|gamepad|joystick|teclado|mouse/i.test(a1);
+    const valid2 = /cámara|camara|escáner|escaner|web/i.test(a2);
+    const valid3 = /lápiz óptico|lapiz optico|tableta|mouse|stylus/i.test(a3);
+    if (!a1 || !a2 || !a3) { fb.textContent = "⚠️ Responde las 3 preguntas."; fb.className = "feedback incorrect"; return; }
+    if (valid1 && valid2 && valid3) {
+      fb.textContent = "✅ ¡Muy bien! Tus respuestas son correctas."; fb.className = "feedback correct";
+      updateScore(3, 'a3');
+    } else {
+      fb.textContent = "❌ Revisa: videojuegos (control/teclado/mouse), imágenes (cámara/escáner), dibujo (lápiz óptico/tableta).";
+      fb.className = "feedback incorrect";
+    }
+  }
+
+  function checkTF(qName, correct) {
+    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+    const fb = document.getElementById(`fb-${qName}`);
+    if (!selected) { fb.textContent = "⚠️ Selecciona V o F."; fb.className = "feedback incorrect"; return; }
+    if (selected.value === correct) {
+      fb.textContent = "✅ ¡Correcto!"; fb.className = "feedback correct";
+      updateScore(1, qName);
+    } else {
+      fb.textContent = "❌ Incorrecto."; fb.className = "feedback incorrect";
+    }
+  }
+
+  function checkCreative() {
+    const file = document.getElementById('a5img').files[0];
+    const text = document.getElementById('a5text').value.trim();
+    const fb = document.getElementById('fb-a5');
+    const preview = document.getElementById('a5img-preview');
+    if (file) {
+      preview.innerHTML = `<img src="${URL.createObjectURL(file)}" style="max-width:200px; border-radius:8px; margin-top:5px;">`;
+    }
+    if (!file || !text) { fb.textContent = "⚠️ Debes subir una imagen y escribir las funciones."; fb.className = "feedback incorrect"; return; }
+    fb.textContent = "✅ Actividad creativa completada. ¡Buen trabajo!"; fb.className = "feedback correct";
+    updateScore(1, 'a5');
+  }
+</script>
+</body>
+</html>
