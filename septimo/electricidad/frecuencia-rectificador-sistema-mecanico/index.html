@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corriente Alterna, Rectificación y Circuito Mecánico</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header .meta { font-size: 0.9em; opacity: 0.9; }
+        .student-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 30px; background: #f8f9fa; }
+        .student-info input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; transition: border 0.3s; }
+        .student-info input:focus { outline: none; border-color: #2a5298; }
+        
+        /* CALIFICACIÓN ARRIBA (VISIBLE AL IMPRIMIR) */
+        #score-top {
+            background: #fffbeb; border: 2px solid #d97706; padding: 15px; border-radius: 8px;
+            text-align: center; margin: 15px 30px; font-weight: bold; font-size: 1.2rem;
+            display: none;
+        }
+        #score-top .badge { background: #fef3c7; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; margin-top: 8px; display: inline-block; }
+        
+        .theory-box { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px 30px; margin: 0 30px 20px 30px; border-radius: 8px; }
+        .theory-box h3 { color: #1976d2; margin-bottom: 15px; }
+        .theory-box p { margin: 10px 0; text-align: justify; }
+        
+        .section { margin: 20px 30px; padding: 25px; background: #fafafa; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .section h2 { color: #2a5298; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 3px solid #2a5298; }
+        .activity { background: white; padding: 25px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #4caf50; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .activity h3 { color: #388e3c; margin-bottom: 15px; font-size: 1.3em; }
+        .objective { background: #f1f8e9; padding: 12px; border-radius: 5px; margin: 15px 0; font-weight: 600; border-left: 3px solid #4caf50; }
+        .materials, .procedure { margin: 15px 0; }
+        .materials ul, .procedure ol { margin-left: 25px; }
+        .materials li, .procedure li { margin: 8px 0; }
+        
+        .evidence-box { background: #fff3e0; border: 2px dashed #ff9800; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .evidence-box h4 { color: #e65100; margin-bottom: 15px; }
+        .image-upload { margin: 15px 0; }
+        .image-upload label { display: block; font-weight: 600; margin-bottom: 8px; color: #555; }
+        .image-upload input[type="file"] { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 5px; background: white; }
+        .image-preview { margin-top: 10px; max-width: 100%; border-radius: 5px; border: 2px solid #ddd; display: none; }
+        .check-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 10px; background: #e8f5e9; border-radius: 5px; }
+        .check-item input { transform: scale(1.3); }
+        
+        .question-block { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .question-block label { display: block; margin: 8px 0; cursor: pointer; padding: 8px; border-radius: 5px; transition: background 0.2s; }
+        .question-block label:hover { background: #e0e0e0; }
+        .question-block input[type="radio"] { margin-right: 10px; }
+        .question-block input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.6; }
+        
+        .points { display: inline-block; background: #ff9800; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.85em; font-weight: bold; margin-left: 10px; }
+        .btn-verify { background: #2196f3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1em; transition: background 0.3s; }
+        .btn-verify:hover { background: #1976d2; }
+        .btn-verify:disabled { background: #9e9e9e; cursor: not-allowed; }
+        
+        .feedback { padding: 10px; margin-top: 10px; border-radius: 5px; display: none; font-weight: 600; }
+        .feedback.correct { background: #c8e6c9; color: #2e7d32; display: block; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; display: block; }
+        .feedback.warning { background: #fff9c4; color: #f57f17; display: block; }
+        .attempts { font-size: 0.85em; color: #757575; margin-left: 10px; }
+        
+        .btn-calculate { background: #4caf50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 20px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-calculate:hover { background: #388e3c; }
+        .btn-print { background: #607d8b; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 0 30px 30px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-print:hover { background: #455a64; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .btn-verify, .btn-calculate, .btn-print, .feedback, .attempts, input[type="file"] { display: none !important; }
+            #score-top { display: block !important; border: 2px solid #000; background: white !important; color: black !important; margin-bottom: 20px; }
+            .check-item input { border: 1px solid #000; }
+            .section, .activity, .question-block { break-inside: avoid; }
+            .image-preview { max-height: 150px; object-fit: contain; }
+        }
+        @media (max-width: 768px) { .student-info { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔌 Corriente Alterna, Rectificación y Circuito Mecánico</h1>
+            <div class="meta">Área: Tecnología e Informática | Grado: Séptimo | Simulador: Crocodile Clips</div>
+        </div>
+        
+        <div class="student-info">
+            <input type="text" id="alumno" placeholder="Nombre del Alumno">
+            <input type="text" id="curso" placeholder="Curso">
+        </div>
+        
+        <!-- CALIFICACIÓN ARRIBA -->
+        <div id="score-top"></div>
+
+        <div class="theory-box">
+            <h3>📘 Conceptos Básicos</h3>
+            <p><strong>Corriente Alterna (CA):</strong> Cambia de dirección y polaridad repetidamente. Se mide en Hertzios (Hz).</p>
+            <p><strong>Frecuencia:</strong> Veces que se repite una onda por segundo. Mayor frecuencia = onda más rápida/junta.</p>
+            <p><strong>Osciloscopio:</strong> Instrumento que muestra gráficamente cómo cambia una señal eléctrica con el tiempo.</p>
+            <p><strong>Diodo:</strong> Permite pasar corriente en un solo sentido. Se usa para rectificar.</p>
+            <p><strong>Rectificador de Media Onda:</strong> Deja pasar solo una mitad de la señal CA, generando pulsos unidireccionales.</p>
+        </div>
+        
+        <!-- ACTIVIDAD 1 -->
+        <div class="section">
+            <h2>Actividad 1: Observación de la Corriente Alterna <span class="points">30 pts</span></h2>
+            <div class="activity">
+                <div class="objective"><strong>Objetivo:</strong> Observar la forma de una señal de CA y analizar cómo cambia al modificar la frecuencia.</div>
+                <div class="materials"><strong>Materiales en Crocodile:</strong><ul><li>Fuente CA (110V)</li><li>Osciloscopio</li><li>Cables</li><li>Lámpara</li></ul></div>
+                <div class="procedure"><strong>Procedimiento:</strong><ol><li>Abre Crocodile e inserta la fuente CA</li><li>Conecta lámpara y osciloscopio</li><li>Ejecuta y prueba: 10 Hz, 30 Hz, 60 Hz</li><li>Observa cambios en la onda y la lámpara</li></ol></div>
+                
+                <div class="evidence-box">
+                    <h4>📸 Evidencia - Sube tus capturas <span class="points">10 pts</span></h4>
+                    <div class="image-upload"><label>Imagen 10 Hz:</label><input type="file" accept="image/*" onchange="previewImage(this, 'p1_10')"><img id="p1_10" class="image-preview"></div>
+                    <div class="image-upload"><label>Imagen 30 Hz:</label><input type="file" accept="image/*" onchange="previewImage(this, 'p1_30')"><img id="p1_30" class="image-preview"></div>
+                    <div class="image-upload"><label>Imagen 60 Hz:</label><input type="file" accept="image/*" onchange="previewImage(this, 'p1_60')"><img id="p1_60" class="image-preview"></div>
+                    <div class="check-item"><input type="checkbox" id="check1" onchange="updateScore()"><label for="check1">✅ He subido las 3 imágenes de evidencia</label></div>
+                </div>
+                
+                <div class="question-block">
+                    <strong>Preguntas de Análisis</strong> <span class="points">20 pts (4 pts c/u)</span>
+                    <div id="q1_container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ACTIVIDAD 2 -->
+        <div class="section">
+            <h2>Actividad 2: Rectificador de Media Onda <span class="points">30 pts</span></h2>
+            <div class="activity">
+                <div class="objective"><strong>Objetivo:</strong> Construir un rectificador de media onda y observar cómo el diodo modifica la señal.</div>
+                <div class="materials"><strong>Materiales en Crocodile:</strong><ul><li>Fuente CA (110V 60Hz)</li><li>Diodo</li><li>Resistencia</li><li>Osciloscopio</li><li>Cables</li></ul></div>
+                <div class="procedure"><strong>Procedimiento:</strong><ol><li>Inserta fuente CA, diodo y resistencia en serie</li><li>Conecta osciloscopio sobre la resistencia</li><li>Ejecuta y compara señal original vs salida</li></ol></div>
+                
+                <div class="evidence-box">
+                    <h4>📸 Evidencia - Sube tu captura <span class="points">10 pts</span></h4>
+                    <div class="image-upload"><label>Imagen del rectificador:</label><input type="file" accept="image/*" onchange="previewImage(this, 'p2')"><img id="p2" class="image-preview"></div>
+                    <div class="check-item"><input type="checkbox" id="check2" onchange="updateScore()"><label for="check2">✅ He subido la imagen de evidencia</label></div>
+                </div>
+                
+                <div class="question-block">
+                    <strong>Preguntas de Análisis</strong> <span class="points">20 pts (4 pts c/u)</span>
+                    <div id="q2_container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ACTIVIDAD 3 -->
+        <div class="section">
+            <h2>Actividad 3: Sistema Mecánico <span class="points">30 pts</span></h2>
+            <div class="activity">
+                <div class="objective"><strong>Objetivo:</strong> Diseñar un circuito mecánico para observar cómo la electricidad produce movimiento.</div>
+                <div class="materials"><strong>Materiales en Crocodile:</strong><ul><li>Fuente de energía</li><li>Interruptor</li><li>Motor</li><li>Cables</li><li>Elementos mecánicos (piñones, cadenas, hélices)</li></ul></div>
+                <div class="procedure"><strong>Procedimiento:</strong><ol><li>Inserta fuente, interruptor y motor</li><li>Agrega componentes mecánicos</li><li>Ejecuta y observa al activar/desactivar</li><li>Realiza una modificación al circuito</li></ol></div>
+                
+                <div class="evidence-box">
+                    <h4>📸 Evidencia - Sube tu captura <span class="points">10 pts</span></h4>
+                    <div class="image-upload"><label>Imagen del circuito mecánico:</label><input type="file" accept="image/*" onchange="previewImage(this, 'p3')"><img id="p3" class="image-preview"></div>
+                    <div class="check-item"><input type="checkbox" id="check3" onchange="updateScore()"><label for="check3">✅ He subido la imagen de evidencia</label></div>
+                </div>
+                
+                <div class="question-block">
+                    <strong>Preguntas de Análisis</strong> <span class="points">20 pts (4 pts c/u)</span>
+                    <div id="q3_container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PREGUNTA FINAL INTEGRADORA -->
+        <div class="section">
+            <h2>Pregunta Final Integradora <span class="points">10 pts</span></h2>
+            <div class="activity">
+                <div class="question-block">
+                    <p><strong>1.</strong> ¿Cuál es el propósito principal de esta guía de simulación?</p>
+                    <div id="q_final_container"></div>
+                    <button class="btn-verify" onclick="verifyMC('final', 1, 10)">Verificar</button>
+                    <span class="attempts" id="att_final">Intentos: 0/2</span>
+                    <div id="fb_final" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn-calculate" onclick="calculateFinalScore()">📊 Calificar Guía Completa</button>
+        <button class="btn-print" onclick="window.print()">️ Guardar como PDF / Imprimir</button>
+    </div>
+
+    <script>
+        // DATOS DE PREGUNTAS (Selección Múltiple)
+        const questions = {
+            1: [
+                {q:"¿Qué ocurre con la onda cuando aumentas la frecuencia?", opts:["Se separa más","Se junta y se repite más rápido","Se vuelve plana","Desaparece"], ans:1},
+                {q:"¿La onda se ve más separada o más junta cuando la frecuencia es mayor?", opts:["Más separada","Más junta","Igual","Invertida"], ans:1},
+                {q:"¿Qué diferencia observaste entre una señal de 10 Hz y una de 60 Hz?", opts:["A 60 Hz la onda se repite mucho más rápido","No hay diferencia","A 10 Hz la onda es continua","A 60 Hz el voltaje baja a cero"], ans:0},
+                {q:"¿Qué le ocurre a la lámpara al cambiar la frecuencia?", opts:["Parpadea más lento","El parpadeo disminuye hasta volverse imperceptible","Se quema inmediatamente","Deja de recibir energía"], ans:1},
+                {q:"¿Para qué sirve el osciloscopio en esta práctica?", opts:["Medir resistencia","Visualizar la forma de la onda CA","Encender la lámpara","Cambiar el voltaje"], ans:1}
+            ],
+            2: [
+                {q:"¿Qué función cumple el diodo en este circuito?", opts:["Amplifica la señal","Permite pasar corriente en un solo sentido","Almacena energía","Cambia el voltaje de CA"], ans:1},
+                {q:"¿Qué parte de la onda permite pasar el diodo?", opts:["Toda la señal","Solo una mitad (positiva o negativa)","Ninguna parte","La onda invertida"], ans:1},
+                {q:"¿La señal de salida sigue siendo igual a la corriente alterna original?", opts:["Sí, es idéntica","No, se convierte en pulsos unidireccionales","Se vuelve continua pura","Desaparece completamente"], ans:1},
+                {q:"¿Cómo se ve la señal en el osciloscopio después de la rectificación?", opts:["Onda sinusoidal completa","Línea recta continua","Pulsos separados en un solo sentido","Onda cuadrada"], ans:2},
+                {q:"¿Qué ocurre con la mitad de la onda que no permite pasar el diodo?", opts:["Se amplifica","Se convierte en calor","Queda bloqueada","Vuelve a la fuente"], ans:2}
+            ],
+            3: [
+                {q:"¿Qué elemento del circuito produce movimiento?", opts:["Interruptor","Motor","Bombillo","Cables"], ans:1},
+                {q:"¿Qué ocurre cuando se activa el interruptor?", opts:["El circuito se abre","La energía fluye y el motor gira","El motor se frena","La fuente se descarga"], ans:1},
+                {q:"La relación entre electricidad y movimiento se explica porque...", opts:["La electricidad crea vacío","La energía eléctrica se transforma en energía mecánica","El motor genera electricidad","El interruptor almacena voltaje"], ans:1},
+                {q:"¿Qué componentes mecánicos agregaste al circuito?", opts:["Piñones, cadenas o hélices","Solo resistencias","Condensadores y diodos","Fusibles únicamente"], ans:0},
+                {q:"¿Qué modificación realizaste al circuito?", opts:["Agregué un bombillo indicador o cambié la posición del interruptor","Eliminé la fuente de energía","Desconecté todos los cables","Cambié el motor por un altavoz"], ans:0}
+            ],
+            final: [{q:"¿Cuál es el propósito principal de esta guía de simulación?", opts:["Aprender a programar en Python","Observar cómo la electricidad se transforma, se controla y produce movimiento","Diseñar páginas web","Soldar circuitos reales"], ans:1}]
+        };
+
+        // ESTADO
+        let state = {
+            attempts: {}, locked: {},
+            scores: {evid: 0, q1:0, q2:0, q3:0, final:0}
+        };
+
+        // RENDERIZAR PREGUNTAS
+        function renderQuestions(actId, containerId) {
+            const cont = document.getElementById(containerId);
+            questions[actId].forEach((item, i) => {
+                const qId = `${actId}_${i}`;
+                let html = `<div style="margin:15px 0; padding-bottom:15px; border-bottom:1px dashed #ccc;">
+                    <p><strong>${i+1}.</strong> ${item.q} <span class="attempts" id="att_${qId}">Intentos: 0/2</span></p>
+                    ${item.opts.map((opt, j) => `
+                        <label><input type="radio" name="${qId}" value="${j}"> ${String.fromCharCode(65+j)}) ${opt}</label>
+                    `).join('')}
+                    <button class="btn-verify" onclick="verifyMC('${qId}', ${item.ans}, 4)">Verificar</button>
+                    <div id="fb_${qId}" class="feedback"></div>
+                </div>`;
+                cont.innerHTML += html;
+            });
+        }
+        renderQuestions('final', 'q_final_container');
+
+        // PREVISUALIZAR IMAGEN
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { preview.src = e.target.result; preview.style.display = 'block'; };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // VERIFICAR SELECCIÓN MÚLTIPLE (MÁX 2 INTENTOS)
+        function verifyMC(qId, correctAns, points) {
+            if (state.locked[qId] || state.attempts[qId] >= 2) return;
+            const sel = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!sel) return alert("Selecciona una opción antes de verificar.");
+            
+            state.attempts[qId] = (state.attempts[qId] || 0) + 1;
+            document.getElementById(`att_${qId}`).textContent = `Intentos: ${state.attempts[qId]}/2`;
+            
+            const fb = document.getElementById(`fb_${qId}`);
+            const btn = sel.closest('div').querySelector('.btn-verify');
+            const isCorrect = parseInt(sel.value) === correctAns;
+
+            if (isCorrect) {
+                fb.textContent = "✅ ¡Correcto!"; fb.className = "feedback correct";
+                state.locked[qId] = true;
+                btn.disabled = true;
+                document.querySelectorAll(`input[name="${qId}"]`).forEach(i => i.disabled = true);
+                // Asignar puntos
+                if(qId.startsWith('1_')) state.scores.q1 += points;
+                else if(qId.startsWith('2_')) state.scores.q2 += points;
+                else if(qId.startsWith('3_')) state.scores.q3 += points;
+                else if(qId==='final') state.scores.final = points;
+                updateScore();
+            } else {
+                if (state.attempts[qId] >= 2) {
+                    fb.textContent = `❌ Incorrecto. Se acabaron los intentos. Respuesta correcta: ${String.fromCharCode(65+correctAns)}`;
+                    fb.className = "feedback incorrect";
+                    state.locked[qId] = true;
+                    btn.disabled = true;
+                    document.querySelectorAll(`input[name="${qId}"]`).forEach(i => i.disabled = true);
+                } else {
+                    fb.textContent = "⚠️ Incorrecto. Te queda 1 oportunidad.";
+                    fb.className = "feedback warning";
+                }
+            }
+        }
+
+        // ACTUALIZAR PUNTUACIÓN PARCIAL
+        function updateScore() {
+            let evid = 0;
+            if(document.getElementById('check1').checked) evid += 10;
+            if(document.getElementById('check2').checked) evid += 10;
+            if(document.getElementById('check3').checked) evid += 10;
+            state.scores.evid = evid;
+            return evid + state.scores.q1 + state.scores.q2 + state.scores.q3 + state.scores.final;
+        }
+
+        // CALIFICAR FINAL Y MOSTRAR ARRIBA
+        function calculateFinalScore() {
+            const total = updateScore();
+            const final = Math.min(100, total);
+            
+            const html = `
+                <div style="font-size:1.4rem; margin-bottom:8px;">📊 CALIFICACIÓN FINAL: ${final} / 100 pts</div>
+                <div class="badge"> Evidencias: ${state.scores.evid}/30 | 🛠️ Act1: ${state.scores.q1}/20 | ⚡ Act2: ${state.scores.q2}/20 | 🔧 Act3: ${state.scores.q3}/20 |  Final: ${state.scores.final}/10</div>
+                <div style="margin-top:10px; font-size:1rem; font-weight:normal;">
+                    ${final >= 85 ? '🌟 ¡Excelente dominio de simulación y teoría!' : final >= 70 ? '👍 Aprobado. Revisa los conceptos marcados.' : '💡 Repasa la teoría y vuelve a simular en Crocodile.'}
+                </div>`;
+            
+            document.getElementById('score-top').innerHTML = html;
+            document.getElementById('score-top').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = () => {
+            renderQuestions(1, 'q1_container');
+            renderQuestions(2, 'q2_container');
+            renderQuestions(3, 'q3_container');
+        };
+    </script>
+</body>
+</html>
