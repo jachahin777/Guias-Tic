@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Sistema Operativo - Guía Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header .meta { font-size: 0.9em; opacity: 0.9; }
+        .student-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 30px; background: #f8f9fa; }
+        .student-info input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; }
+        .student-info input:focus { outline: none; border-color: #2a5298; }
+        
+        /* CALIFICACIÓN ARRIBA */
+        #score-top {
+            background: #fffbeb; border: 2px solid #d97706; padding: 15px; border-radius: 8px;
+            text-align: center; margin: 15px 30px; font-weight: bold; font-size: 1.2rem;
+            display: none;
+        }
+        #score-top .badge { background: #fef3c7; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; margin-top: 8px; display: inline-block; }
+        
+        .section { margin: 25px 30px; padding: 25px; background: #fafafa; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .section h2 { color: #2a5298; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2a5298; font-size: 1.4em; }
+        
+        .theory-box { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; border-radius: 8px; margin: 15px 0; }
+        .theory-box h3 { color: #1976d2; margin-bottom: 12px; font-size: 1.15em; }
+        .theory-box p { margin: 10px 0; text-align: justify; }
+        .theory-box ul { margin-left: 25px; margin: 10px 0; }
+        .theory-box li { margin: 8px 0; }
+        
+        .instruction-box { background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107; }
+        
+        .activity-box { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #4caf50; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .activity-box h3 { color: #388e3c; margin-bottom: 15px; font-size: 1.15em; }
+        
+        .question-block { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .question-block label { display: block; margin: 8px 0; cursor: pointer; padding: 8px; border-radius: 5px; transition: background 0.2s; }
+        .question-block label:hover { background: #e0e0e0; }
+        .question-block input[type="radio"], .question-block input[type="checkbox"] { margin-right: 10px; }
+        .question-block input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.6; }
+        
+        .points { display: inline-block; background: #ff9800; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.85em; font-weight: bold; margin-left: 10px; }
+        .btn-verify { background: #2196f3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1em; transition: background 0.3s; }
+        .btn-verify:hover { background: #1976d2; }
+        .btn-verify:disabled { background: #9e9e9e; cursor: not-allowed; }
+        
+        .feedback { padding: 10px; margin-top: 10px; border-radius: 5px; display: none; font-weight: 600; }
+        .feedback.correct { background: #c8e6c9; color: #2e7d32; display: block; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; display: block; }
+        .feedback.warning { background: #fff9c4; color: #f57f17; display: block; }
+        .attempts { font-size: 0.85em; color: #757575; margin-left: 10px; }
+        
+        /* TABLA DE CLASIFICACIÓN */
+        .classification-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .classification-table th, .classification-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .classification-table th { background: #2a5298; color: white; }
+        .classification-table tr:hover { background: #f5f5f5; }
+        .classification-table select { padding: 8px; border-radius: 5px; border: 2px solid #ddd; font-size: 0.95em; width: 100%; max-width: 250px; }
+        
+        /* TABLA DE CONCEPTOS (CRUCIGRAMA) */
+        .concept-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .concept-table th, .concept-table td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        .concept-table th { background: #1976d2; color: white; }
+        .concept-table tr:nth-child(even) { background: #f9f9f9; }
+        .concept-table select { padding: 8px; border-radius: 5px; border: 2px solid #ddd; font-size: 0.95em; width: 100%; }
+        
+        .btn-calculate { background: #4caf50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 20px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-calculate:hover { background: #388e3c; }
+        .btn-print { background: #607d8b; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 0 30px 30px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-print:hover { background: #455a64; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .btn-verify, .btn-calculate, .btn-print, .feedback, .attempts { display: none !important; }
+            #score-top { display: block !important; border: 2px solid #000; background: white !important; color: black !important; margin-bottom: 20px; }
+            .section { break-inside: avoid; }
+            select { border: 1px solid #000; appearance: none; }
+        }
+        @media (max-width: 768px) { .student-info { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💻 El Sistema Operativo</h1>
+            <div class="meta">Área: Tecnología e Informática | Grado: ________</div>
+        </div>
+        
+        <div class="student-info">
+            <input type="text" id="nombre" placeholder="Nombre del Estudiante">
+            <input type="text" id="curso" placeholder="Curso">
+        </div>
+        
+        <!-- CALIFICACIÓN ARRIBA -->
+        <div id="score-top"></div>
+
+        <!-- SECCIÓN 1: TEORÍA -->
+        <div class="section">
+            <h2>📖 Parte 1: Teoría para Copiar en el Cuaderno</h2>
+            <div class="instruction-box">
+                <strong>📝 Instrucción:</strong> Copia en tu cuaderno la siguiente teoría. Debes escribir con buena letra, usar títulos y dejar espacio entre cada tema.
+            </div>
+
+            <div class="theory-box">
+                <h3>1. Software</h3>
+                <p>El <strong>software</strong> está formado por todos los programas y datos almacenados en los dispositivos de almacenamiento. Incluye los sistemas operativos y las aplicaciones que permiten realizar diferentes tareas en el computador, como escribir textos, navegar por Internet, dibujar, hacer cálculos o reproducir videos.</p>
+            </div>
+
+            <div class="theory-box">
+                <h3>2. Sistema Operativo</h3>
+                <p>El <strong>sistema operativo</strong> es el programa más importante de un computador. Su función principal es permitir que el usuario pueda comunicarse con la máquina y utilizar sus recursos. También realiza tareas básicas como reconocer dispositivos periféricos, mostrar información en la pantalla, administrar archivos, carpetas, unidades de disco y memorias.</p>
+            </div>
+
+            <div class="theory-box">
+                <h3>3. Windows</h3>
+                <p><strong>Windows</strong> es un sistema operativo desarrollado por la compañía Microsoft. Está compuesto por ventanas que representan tareas o programas en ejecución. Su función principal es servir como interfaz entre el usuario y la computadora, facilitando su uso.</p>
+                <p><strong>Ejemplos:</strong> Windows 7, Windows 8, Windows 10, Windows 11, Windows Server, Windows Phone</p>
+                <p><strong>Aplicaciones incluidas:</strong> WordPad, Bloc de notas, Paint 3D, Microsoft Edge, Cortana, Windows Store, Alarmas, reloj y calendario, Microsoft Defender, Calculadora</p>
+            </div>
+
+            <div class="theory-box">
+                <h3>4. Linux</h3>
+                <p><strong>Linux</strong> es un sistema operativo gratuito. No tiene costo, se puede modificar y redistribuir con libertad. Es muy utilizado en servidores porque es estable, seguro y permite una gran personalización.</p>
+                <p><strong>Distribuciones:</strong> Ubuntu, Mint, Debian, Red Hat, Fedora, Suse, CentOS</p>
+            </div>
+
+            <div class="theory-box">
+                <h3>5. Android</h3>
+                <p><strong>Android</strong> es un sistema operativo utilizado principalmente en dispositivos móviles con pantalla táctil, como celulares y tabletas. También puede encontrarse en relojes inteligentes, automóviles, televisores, electrodomésticos y otras máquinas.</p>
+                <p><strong>Versiones:</strong> Cupcake, Ice Cream Sandwich, Jelly Bean, KitKat</p>
+                <p><strong>Aplicaciones incluidas:</strong> Play Store, Gmail, Calendario, Google Drive, Contactos, Google Maps, Micrófono, Traductor, Fotos, Meet, Play Libros</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: PREGUNTAS SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <h2>❓ Parte 2: Preguntas de Comprensión (Selección Múltiple)</h2>
+            <div id="questions-container"></div>
+        </div>
+
+        <!-- SECCIÓN 3: CLASIFICACIÓN -->
+        <div class="section">
+            <h2>📋 Parte 3: Clasifica los Elementos</h2>
+            <p style="margin-bottom: 15px;">Selecciona la clasificación correcta para cada elemento: <strong>hardware</strong>, <strong>software</strong> o <strong>sistema operativo</strong>.</p>
+            <table class="classification-table">
+                <thead>
+                    <tr><th>#</th><th>Elemento</th><th>Clasificación</th></tr>
+                </thead>
+                <tbody id="classification-body"></tbody>
+            </table>
+            <button class="btn-verify" onclick="verifyClassification()">Verificar Clasificación</button>
+            <div id="cls-feedback" class="feedback"></div>
+        </div>
+
+        <!-- SECCIÓN 4: CONCEPTOS (CRUCIGRAMA TIPO TABLA) -->
+        <div class="section">
+            <h2>🎯 Parte 4: Relaciona Conceptos con sus Definiciones</h2>
+            <p style="margin-bottom: 15px;">Selecciona el concepto correcto para cada definición/pista.</p>
+            <table class="concept-table">
+                <thead>
+                    <tr><th>#</th><th>Pista/Definición</th><th>Concepto</th></tr>
+                </thead>
+                <tbody id="concept-body"></tbody>
+            </table>
+            <button class="btn-verify" onclick="verifyConcepts()">Verificar Respuestas</button>
+            <div id="concept-feedback" class="feedback"></div>
+        </div>
+
+        <button class="btn-calculate" onclick="calculateFinalScore()">📊 Calificar Guía Completa</button>
+        <button class="btn-print" onclick="window.print()">🖨️ Guardar como PDF / Imprimir</button>
+    </div>
+
+    <script>
+        // DATOS DE PREGUNTAS (TODAS SELECCIÓN MÚLTIPLE)
+        const questions = [
+            {q:"¿Qué es el hardware?", opts:["Los programas del computador","La parte física que se puede tocar","Los datos almacenados","Las aplicaciones de Internet"], ans:1, pts:4},
+            {q:"¿Cuál es un ejemplo de hardware?", opts:["Windows 11","Google Chrome","Teclado","Microsoft Word"], ans:2, pts:4},
+            {q:"¿Qué es el software?", opts:["La pantalla del computador","Los programas y datos almacenados","El teclado y mouse","La fuente de poder"], ans:1, pts:4},
+            {q:"¿Cuál es un ejemplo de software?", opts:["Monitor","Impresora","Paint 3D","Procesador"], ans:2, pts:4},
+            {q:"¿Cuál es el programa más importante de un computador?", opts:["El navegador web","El sistema operativo","Microsoft Word","El reproductor de video"], ans:1, pts:4},
+            {q:"¿Qué tarea realiza el sistema operativo?", opts:["Solo muestra información en pantalla","Permite la comunicación usuario-máquina y administra recursos","Solo reproduce música","Únicamente conecta a Internet"], ans:1, pts:4},
+            {q:"¿Por qué Windows facilita el uso del computador?", opts:["Porque es gratuito","Porque sirve como interfaz entre usuario y computadora","Porque no requiere instalación","Porque funciona sin hardware"], ans:1, pts:4},
+            {q:"¿Qué empresa desarrolló Windows?", opts:["Apple","Google","Microsoft","Linux Foundation"], ans:2, pts:4},
+            {q:"¿Cuál es una versión de Windows?", opts:["Ubuntu","Windows 10","Android KitKat","Debian"], ans:1, pts:4},
+            {q:"¿Qué aplicación está incluida en Windows?", opts:["Play Store","Paint 3D","Gmail","Google Maps"], ans:1, pts:4},
+            {q:"¿Qué característica importante tiene Linux?", opts:["Es de pago","Es gratuito y se puede modificar libremente","Solo funciona en celulares","Fue creado por Microsoft"], ans:1, pts:4},
+            {q:"¿Por qué Linux es muy utilizado en servidores?", opts:["Porque es inestable","Porque es estable, seguro y personalizable","Porque es muy costoso","Porque no permite modificaciones"], ans:1, pts:4},
+            {q:"¿Cuál es una distribución de Linux?", opts:["Windows 11","Ubuntu","Android","iOS"], ans:1, pts:4},
+            {q:"¿En qué dispositivos se utiliza principalmente Android?", opts:["Computadores de escritorio","Dispositivos móviles con pantalla táctil","Solo en televisores","Exclusivamente en automóviles"], ans:1, pts:4},
+            {q:"¿Qué aplicación está incluida en Android?", opts:["Microsoft Edge","Play Store","WordPad","Paint 3D"], ans:1, pts:4}
+        ];
+
+        // CLASIFICACIÓN
+        const classification = [
+            {item:"Teclado", ans:"hardware"},
+            {item:"Windows 11", ans:"sistema operativo"},
+            {item:"Mouse", ans:"hardware"},
+            {item:"Google Chrome", ans:"software"},
+            {item:"Android", ans:"sistema operativo"},
+            {item:"Pantalla", ans:"hardware"},
+            {item:"Linux", ans:"sistema operativo"},
+            {item:"Paint 3D", ans:"software"},
+            {item:"Impresora", ans:"hardware"},
+            {item:"Calculadora", ans:"software"},
+            {item:"Ubuntu", ans:"sistema operativo"},
+            {item:"Microsoft Edge", ans:"software"}
+        ];
+
+        // CONCEPTOS (CRUCIGRAMA TIPO TABLA)
+        const concepts = [
+            {pista:"Es la parte física del computador que se puede tocar", opts:["Software","Hardware","Sistema operativo","Aplicación"], ans:1},
+            {pista:"Son los programas y datos almacenados en el computador", opts:["Hardware","Software","Periférico","Memoria RAM"], ans:1},
+            {pista:"Es el programa más importante del computador", opts:["Navegador","Sistema operativo","Word","Excel"], ans:1},
+            {pista:"Sistema operativo creado por Microsoft", opts:["Linux","Android","Windows","Ubuntu"], ans:2},
+            {pista:"Sistema operativo gratuito que puede modificarse libremente", opts:["Windows","Linux","Android","iOS"], ans:1},
+            {pista:"Sistema operativo usado principalmente en celulares y tabletas", opts:["Windows","Linux","Android","Debian"], ans:2},
+            {pista:"Aplicación de Windows usada para hacer cálculos", opts:["Paint","WordPad","Calculadora","Bloc de notas"], ans:2},
+            {pista:"Aplicación de Android usada para descargar aplicaciones", opts:["Gmail","Google Maps","Play Store","Google Drive"], ans:2},
+            {pista:"Permite observar y organizar archivos y carpetas", opts:["Explorador de archivos","Calculadora","Reloj","Calendario"], ans:0},
+            {pista:"Dispositivo físico usado para escribir en el computador", opts:["Mouse","Monitor","Teclado","Impresora"], ans:2}
+        ];
+
+        // ESTADO
+        let state = {
+            questions: {},
+            classification: {},
+            concepts: {},
+            scores: {questions: 0, classification: 0, concepts: 0}
+        };
+
+        // RENDERIZAR PREGUNTAS
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <p><strong>${i+1}.</strong> ${q.q} <span class="points">${q.pts} pts</span> <span class="attempts" id="att_q${i}">Intentos: 0/2</span></p>
+                    ${q.opts.map((opt, j) => `
+                        <label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}) ${opt}</label>
+                    `).join('')}
+                    <button class="btn-verify" onclick="verifyQuestion(${i}, ${q.ans}, ${q.pts})">Verificar</button>
+                    <div id="fb_q${i}" class="feedback"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // RENDERIZAR CLASIFICACIÓN
+        function renderClassification() {
+            const tbody = document.getElementById('classification-body');
+            classification.forEach((item, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${i+1}</td>
+                    <td><strong>${item.item}</strong></td>
+                    <td>
+                        <select id="cls_${i}" data-item="${item.item}">
+                            <option value="">Selecciona...</option>
+                            <option value="hardware">Hardware</option>
+                            <option value="software">Software</option>
+                            <option value="sistema operativo">Sistema Operativo</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // RENDERIZAR CONCEPTOS
+        function renderConcepts() {
+            const tbody = document.getElementById('concept-body');
+            concepts.forEach((c, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${i+1}</td>
+                    <td>${c.pista}</td>
+                    <td>
+                        <select id="concept_${i}">
+                            <option value="">Selecciona...</option>
+                            ${c.opts.map((opt, j) => `<option value="${j}">${opt}</option>`).join('')}
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // VERIFICAR PREGUNTA
+        function verifyQuestion(qNum, correctAns, points) {
+            if(state.questions[qNum] && state.questions[qNum].locked) return;
+            
+            const sel = document.querySelector(`input[name="q${qNum}"]:checked`);
+            if(!sel) return alert("Selecciona una opción antes de verificar.");
+            
+            if(!state.questions[qNum]) state.questions[qNum] = {attempts: 0};
+            state.questions[qNum].attempts++;
+            document.getElementById(`att_q${qNum}`).textContent = `Intentos: ${state.questions[qNum].attempts}/2`;
+            
+            const fb = document.getElementById(`fb_q${qNum}`);
+            const btn = sel.closest('.question-block').querySelector('.btn-verify');
+            const isCorrect = parseInt(sel.value) === correctAns;
+
+            if(isCorrect) {
+                fb.textContent = "✅ ¡Correcto!";
+                fb.className = "feedback correct";
+                state.questions[qNum].locked = true;
+                state.questions[qNum].score = points;
+                state.scores.questions += points;
+                btn.disabled = true;
+                document.querySelectorAll(`input[name="q${qNum}"]`).forEach(i => i.disabled = true);
+            } else {
+                if(state.questions[qNum].attempts >= 2) {
+                    fb.textContent = `❌ Incorrecto. Respuesta correcta: ${String.fromCharCode(65+correctAns)}`;
+                    fb.className = "feedback incorrect";
+                    state.questions[qNum].locked = true;
+                    btn.disabled = true;
+                    document.querySelectorAll(`input[name="q${qNum}"]`).forEach(i => i.disabled = true);
+                } else {
+                    fb.textContent = "⚠️ Incorrecto. Te queda 1 oportunidad.";
+                    fb.className = "feedback warning";
+                }
+            }
+        }
+
+        // VERIFICAR CLASIFICACIÓN
+        function verifyClassification() {
+            let correct = 0;
+            let total = classification.length;
+            let allAnswered = true;
+            
+            classification.forEach((item, i) => {
+                const sel = document.getElementById(`cls_${i}`).value;
+                if(!sel) allAnswered = false;
+                if(sel === item.ans) correct++;
+            });
+            
+            if(!allAnswered) return alert("Responde todas las clasificaciones antes de verificar.");
+            
+            state.scores.classification = Math.round((correct / total) * 20);
+            const fb = document.getElementById('cls-feedback');
+            fb.textContent = `✅ ${correct}/${total} correctas. Puntuación: ${state.scores.classification}/20 pts`;
+            fb.className = "feedback correct";
+            
+            // Deshabilitar selects
+            classification.forEach((item, i) => {
+                document.getElementById(`cls_${i}`).disabled = true;
+            });
+        }
+
+        // VERIFICAR CONCEPTOS
+        function verifyConcepts() {
+            let correct = 0;
+            let total = concepts.length;
+            let allAnswered = true;
+            
+            concepts.forEach((c, i) => {
+                const sel = document.getElementById(`concept_${i}`).value;
+                if(sel === "") allAnswered = false;
+                if(parseInt(sel) === c.ans) correct++;
+            });
+            
+            if(!allAnswered) return alert("Responde todos los conceptos antes de verificar.");
+            
+            state.scores.concepts = Math.round((correct / total) * 20);
+            const fb = document.getElementById('concept-feedback');
+            fb.textContent = `✅ ${correct}/${total} correctos. Puntuación: ${state.scores.concepts}/20 pts`;
+            fb.className = "feedback correct";
+            
+            // Deshabilitar selects
+            concepts.forEach((c, i) => {
+                document.getElementById(`concept_${i}`).disabled = true;
+            });
+        }
+
+        // CALCULAR PUNTUACIÓN FINAL
+        function calculateFinalScore() {
+            const total = state.scores.questions + state.scores.classification + state.scores.concepts;
+            const final = Math.min(100, total + 10); // +10 por copiar teoría
+            
+            const html = `
+                <div style="font-size:1.4rem; margin-bottom:8px;">📊 CALIFICACIÓN FINAL: ${final} / 100 pts</div>
+                <div class="badge"> Preguntas: ${state.scores.questions}/60 | Clasificación: ${state.scores.classification}/20 | Conceptos: ${state.scores.concepts}/20 | Teoría: 10 pts</div>
+                <div style="margin-top:10px; font-size:1rem;">
+                    ${final >= 85 ? '🌟 ¡Excelente comprensión de sistemas operativos!' : final >= 70 ? '👍 Aprobado. Revisa los conceptos marcados.' : '💡 Repasa la teoría y vuelve a intentar'}
+                </div>`;
+            
+            document.getElementById('score-top').innerHTML = html;
+            document.getElementById('score-top').style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        window.onload = () => {
+            renderQuestions();
+            renderClassification();
+            renderConcepts();
+        };
+    </script>
+</body>
+</html>
