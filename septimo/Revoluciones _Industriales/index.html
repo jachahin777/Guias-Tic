@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller Interactivo: Las Revoluciones Industriales</title>
+<style>
+:root {
+  --primary: #1e3a5f;
+  --primary-light: #2c5282;
+  --secondary: #009688;
+  --accent: #ff9800;
+  --success: #4caf50;
+  --danger: #e53935;
+  --warning: #ffc107;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #333333;
+  --text-light: #666666;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1);
+  --radius: 12px;
+  --transition: all 0.3s ease;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
+header { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 2rem 1rem; text-align: center; }
+header h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: 0.5rem; }
+header p { opacity: 0.9; font-size: 1.1rem; }
+.progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); z-index: 1000; display: none; }
+.progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+.container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+section { display: none; background: var(--card); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); animation: fadeIn 0.5s ease; }
+section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+h2 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+h3 { color: var(--secondary); margin: 1rem 0 0.5rem; }
+h4 { color: var(--primary-light); margin: 1rem 0 0.5rem; }
+.card { background: #f8f9fa; border-left: 4px solid var(--secondary); padding: 1rem; margin: 1rem 0; border-radius: 0 var(--radius) var(--radius) 0; }
+.card ul { margin-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.form-group { margin: 1rem 0; }
+label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: var(--primary); }
+input[type="text"], select { width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: var(--transition); }
+input[type="text"]:focus, select:focus { border-color: var(--secondary); outline: none; }
+button { background: linear-gradient(135deg, var(--secondary), #00796b); color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: var(--transition); margin: 0.5rem 0.25rem; font-weight: 600; }
+button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,150,136,0.3); }
+button.secondary { background: linear-gradient(135deg, var(--accent), #f57c00); }
+button.danger { background: linear-gradient(135deg, var(--danger), #c62828); }
+button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+.btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; }
+.checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; padding: 1rem; background: #e8f5e9; border-radius: 8px; cursor: pointer; }
+.checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+.word-search-container { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+#wordGrid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; background: #333; padding: 4px; border-radius: 8px; max-width: 450px; }
+.cell { background: white; width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.7rem, 1.5vw, 0.9rem); cursor: pointer; user-select: none; transition: background 0.2s; }
+.cell:hover { background: #e0f7fa; }
+.cell.selected { background: var(--accent); color: white; }
+.cell.found { background: var(--success); color: white; animation: pulse 0.5s; }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.word-list { background: #f8f9fa; padding: 1rem; border-radius: 8px; min-width: 200px; max-width: 300px; }
+.word-item { padding: 0.4rem; margin: 0.2rem 0; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+.word-item.found { background: #e8f5e9; text-decoration: line-through; color: var(--success); }
+.word-item.pending { color: var(--text-light); }
+.drag-puzzle { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.puzzle-column { background: #f8f9fa; padding: 1rem; border-radius: var(--radius); min-height: 250px; border: 2px dashed #ccc; transition: var(--transition); }
+.puzzle-column h4 { text-align: center; color: var(--primary); margin-bottom: 0.5rem; font-size: 0.9rem; }
+.puzzle-column.drag-over { background: #e3f2fd; border-color: var(--secondary); }
+.card-pool { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem; background: #fff3e0; border-radius: var(--radius); margin-bottom: 1rem; min-height: 80px; }
+.drag-card { background: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: grab; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 0.9rem; font-weight: 600; transition: var(--transition); user-select: none; }
+.drag-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+.drag-card.dragging { opacity: 0.5; }
+.drag-card.correct { background: #e8f5e9; border: 2px solid var(--success); }
+.drag-card.incorrect { background: #ffebee; border: 2px solid var(--danger); }
+.quiz-question { background: #f8f9fa; padding: 1.5rem; border-radius: var(--radius); margin: 1.5rem 0; border-left: 4px solid var(--primary); }
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+.quiz-option { padding: 0.8rem; background: white; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; }
+.quiz-option:hover { border-color: var(--secondary); background: #f0f8ff; }
+.quiz-option.selected { border-color: var(--secondary); background: #e3f2fd; }
+.quiz-option.correct { border-color: var(--success); background: #e8f5e9; }
+.quiz-option.incorrect { border-color: var(--danger); background: #ffebee; }
+.tf-options { display: flex; gap: 1rem; margin-top: 1rem; }
+.tf-btn { flex: 1; padding: 1rem; border: 2px solid #ddd; background: white; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 600; transition: var(--transition); }
+.tf-btn:hover { border-color: var(--secondary); }
+.tf-btn.selected { border-color: var(--secondary); background: #e3f2fd; }
+.tf-btn.correct { border-color: var(--success); background: #e8f5e9; }
+.tf-btn.incorrect { border-color: var(--danger); background: #ffebee; }
+.match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.match-col { display: flex; flex-direction: column; gap: 0.5rem; }
+.match-item { padding: 1rem; background: white; border: 2px solid #ddd; border-radius: 8px; text-align: center; }
+.match-item.selected { border-color: var(--accent); background: #fff3e0; }
+.match-item.matched { border-color: var(--success); background: #e8f5e9; cursor: default; }
+.matching-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.matching-col { background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+.matching-col h4 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.5rem; text-align: center; }
+.matching-select { width: 100%; margin: 0.5rem 0; padding: 0.5rem; border: 2px solid #ddd; border-radius: 6px; background: white; }
+.matching-select:focus { border-color: var(--secondary); outline: none; }
+.results-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2rem; border-radius: var(--radius); text-align: center; margin: 2rem 0; }
+.score-display { font-size: 4rem; font-weight: bold; margin: 1rem 0; }
+.score-breakdown { text-align: left; max-width: 500px; margin: 2rem auto; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; }
+.score-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+.performance-badge { display: inline-block; padding: 0.5rem 2rem; border-radius: 20px; font-size: 1.2rem; font-weight: bold; margin-top: 1rem; }
+.feedback { padding: 0.8rem; border-radius: 8px; margin-top: 0.5rem; font-size: 0.9rem; display: none; }
+.feedback.show { display: block; }
+.feedback.correct { background: #e8f5e9; color: var(--success); }
+.feedback.incorrect { background: #ffebee; color: var(--danger); }
+.notification { position: fixed; top: 20px; right: 20px; background: var(--success); color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; transform: translateX(150%); transition: transform 0.3s ease; max-width: 300px; }
+.notification.show { transform: translateX(0); }
+@media print {
+  header, .btn-group, .progress-container, button, .word-search-container, .drag-puzzle, .quiz-question, .matching-row, .card-pool { display: none !important; }
+  section { display: block !important; break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  .results-card { color: var(--text) !important; background: white !important; }
+  .score-row { border-color: #ddd; color: var(--text) !important; }
+  body { background: white; }
+  .card, .word-list, .drag-card { border: 1px solid #ccc; }
+}
+@media (max-width: 768px) {
+  .word-search-container { flex-direction: column; align-items: center; }
+  #wordGrid { max-width: 100%; }
+  .drag-puzzle { grid-template-columns: 1fr; }
+  .match-container { grid-template-columns: 1fr; }
+  .matching-row { grid-template-columns: 1fr; }
+  h2 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<div class="progress-container" id="progressContainer">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div id="notification" class="notification"></div>
+
+<header>
+  <h1>🏭 Taller Interactivo: Las Revoluciones Industriales</h1>
+  <p>Tecnología e Informática | Grado Sexto/Séptimo</p>
+</header>
+
+<div class="container">
+  <!-- PORTADA -->
+  <section id="cover" class="active">
+    <h2>📖 Portada</h2>
+    <p style="text-align:center; margin-bottom:2rem; color:var(--text-light);">Bienvenido al taller interactivo sobre las Revoluciones Industriales. Completa todas las actividades y obtén tu calificación.</p>
+    <div class="form-group">
+      <label for="studentName">👤 Nombre del estudiante:</label>
+      <input type="text" id="studentName" placeholder="Escribe tu nombre completo" required>
+    </div>
+    <div class="form-group">
+      <label for="studentCourse">🏫 Curso:</label>
+      <input type="text" id="studentCourse" placeholder="Ej: 601, 702" required>
+    </div>
+    <div class="btn-group">
+      <button onclick="startWorkshop()">🚀 Iniciar actividad</button>
+    </div>
+  </section>
+
+  <!-- TEORÍA -->
+  <section id="theorySection">
+    <h2>📚 Teoría para copiar en tu cuaderno</h2>
+    <div class="card">
+      <h3>🌍 ¿Qué son las Revoluciones Industriales?</h3>
+      <p>Son puntos de inflexión o ruptura en la historia, en donde se modifican aspectos de la vida cotidiana como son la economía, el transporte, el uso de la energía, la salud, entre otras.</p>
+    </div>
+    <div class="card">
+      <h3>⚙️ Primera Revolución Industrial (1780 - 1840)</h3>
+      <p>Cambio fundamental en Inglaterra. La economía agrícola y artesana se transforma en industrial. Innovaciones clave: nuevos materiales (acero), carbón como fuente energética y la <strong>máquina de vapor</strong> diseñada por James Watts.</p>
+      <ul>
+        <li>Economía basada en la industria.</li>
+        <li>Aumento de la población.</li>
+        <li>Nuevas máquinas en transporte, agricultura y textiles.</li>
+        <li>Invención del barco de vapor y la locomotora.</li>
+        <li>Carbón como combustible principal.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚡ Segunda Revolución Industrial (1850 - 1950)</h3>
+      <p>Transformaciones tecnológicas con nuevas fuentes: gas, petróleo y electricidad. Nuevos transportes: avión y motor de combustión interna. Producción en masa de automóviles (Henry Ford, Modelo T). Avances en comunicaciones: telégrafo, teléfono, radio y televisión. Industria química: plásticos, tintes sintéticos, explosivos.</p>
+      <ul>
+        <li>Nuevos materiales: zinc y aluminio.</li>
+        <li>Explosivos (dinamita y nitroglicerina).</li>
+        <li>Fertilizantes sintéticos.</li>
+        <li>Revolución en transporte y comunicaciones.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💻 Tercera Revolución Industrial</h3>
+      <p>Avalada por la comunidad europea en 2007. Nuevas formas de comunicación gracias a computadores e internet. Energías renovables. Cambio de economía de producción a economía de servicios.</p>
+      <ul>
+        <li>Computadores en actividades humanas.</li>
+        <li>Fuentes de energía renovables.</li>
+        <li>Internet en comunicaciones e interacciones.</li>
+        <li>Fibra óptica.</li>
+        <li>Economía de servicios.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🤖 Cuarta Revolución Industrial (2016)</h3>
+      <p>Definida en el foro económico mundial de 2016. Tecnologías innovadoras:</p>
+      <ul>
+        <li>Inteligencia artificial</li>
+        <li>Vehículos autónomos</li>
+        <li>Drones</li>
+        <li>Impresión 3D</li>
+        <li>Robótica avanzada</li>
+        <li>Nuevos materiales reciclables, ligeros y resistentes</li>
+        <li>Internet de las cosas</li>
+        <li>Economía bajo demanda</li>
+        <li>Big Data</li>
+        <li>Blockchain</li>
+      </ul>
+    </div>
+    <div class="checkbox-group" onclick="toggleTheoryCheck()">
+      <input type="checkbox" id="theoryCheck">
+      <label for="theoryCheck" style="cursor:pointer;">✅ He copiado la teoría en mi cuaderno</label>
+    </div>
+    <div class="btn-group">
+      <button id="continueBtn" onclick="showActivity(1)" disabled>📝 Continuar a las actividades</button>
+    </div>
+  </section>
+
+  <!-- ACTIVIDAD 1: SOPA DE LETRAS -->
+  <section id="activity1">
+    <h2>🔍 Actividad 1: Sopa de Letras (25 puntos)</h2>
+    <p>Encuentra las palabras escondidas en la cuadrícula. Haz clic y arrastra para seleccionar las letras. Las palabras pueden estar en horizontal, vertical o diagonal.</p>
+    <div class="word-search-container">
+      <div id="wordGrid"></div>
+      <div class="word-list">
+        <h4>Palabras encontradas:</h4>
+        <div id="foundList"></div>
+        <h4 style="margin-top:1rem;">Palabras pendientes:</h4>
+        <div id="pendingList"></div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button onclick="verifyWordSearch()">✅ Verificar sopa de letras</button>
+      <button class="secondary" onclick="showActivity(2)">Siguiente ➡️</button>
+    </div>
+  </section>
+
+  <!-- ACTIVIDAD 2: ROMPECABEZAS -->
+  <section id="activity2">
+    <h2>🧩 Actividad 2: Rompecabezas (25 puntos)</h2>
+    <p>Arrastra cada invento o característica a la revolución industrial correcta.</p>
+    <div id="cardPool" class="card-pool"></div>
+    <div class="drag-puzzle">
+      <div class="puzzle-column" data-col="1">
+        <h4>🏭 Primera Rev. Industrial</h4>
+      </div>
+      <div class="puzzle-column" data-col="2">
+        <h4>⚡ Segunda Rev. Industrial</h4>
+      </div>
+      <div class="puzzle-column" data-col="3">
+        <h4>💻 Tercera Rev. Industrial</h4>
+      </div>
+      <div class="puzzle-column" data-col="4">
+        <h4>🤖 Cuarta Rev. Industrial</h4>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button onclick="verifyPuzzle()">✅ Verificar rompecabezas</button>
+      <button class="secondary" onclick="showActivity(3)">Siguiente ➡️</button>
+    </div>
+  </section>
+
+  <!-- ACTIVIDAD 3: PREGUNTAS CERRADAS -->
+  <section id="activity3">
+    <h2>❓ Actividad 3: Preguntas Cerradas (25 puntos)</h2>
+    <div id="mcqContainer"></div>
+    <div id="tfContainer"></div>
+    <div id="matchQContainer"></div>
+    <div class="btn-group">
+      <button onclick="verifyQuestions()">✅ Verificar preguntas</button>
+      <button class="secondary" onclick="showActivity(4)">Siguiente ➡️</button>
+    </div>
+  </section>
+
+  <!-- ACTIVIDAD 4: EMPAREJAMIENTO GENERAL -->
+  <section id="activity4">
+    <h2>🔗 Actividad 4: Emparejamiento General (25 puntos)</h2>
+    <p>Selecciona la opción correcta para cada atributo de cada revolución.</p>
+    <div id="matchingContainer"></div>
+    <div class="btn-group">
+      <button onclick="verifyMatching()">✅ Verificar emparejamiento</button>
+      <button class="secondary" onclick="showResults()">📊 Ver resultados</button>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section id="results">
+    <h2>🏆 Calificación Final</h2>
+    <div class="results-card">
+      <h3>Resultados del Estudiante</h3>
+      <p id="resStudentName"></p>
+      <p id="resStudentCourse"></p>
+      <div class="score-breakdown" id="scoreBreakdown"></div>
+      <div class="score-display" id="totalScore"></div>
+      <div id="performanceBadge"></div>
+      <div class="btn-group" style="margin-top:2rem;">
+        <button onclick="calculateFinalGrade()">🔄 Calcular calificación final</button>
+        <button class="secondary" onclick="printResults()">🖨️ Imprimir resultados</button>
+        <button class="danger" onclick="resetWorkshop()">🔁 Reiniciar actividad</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+// VARIABLES GLOBALES
+let studentName = '';
+let studentCourse = '';
+let scores = { a1: 0, a2: 0, a3: 0, a4: 0 };
+let foundWords = new Set();
+let puzzleScores = {};
+let questionScores = {};
+let matchingScores = {};
+
+// INICIAR TALLER
+function startWorkshop() {
+  studentName = document.getElementById('studentName').value.trim();
+  studentCourse = document.getElementById('studentCourse').value.trim();
+  if (!studentName || !studentCourse) {
+    showNotification('⚠️ Por favor completa tu nombre y curso.', 'warning');
+    return;
+  }
+  document.getElementById('cover').classList.remove('active');
+  document.getElementById('theorySection').classList.add('active');
+  document.getElementById('progressContainer').style.display = 'block';
+  updateProgress(10);
+  initWordSearch();
+  initPuzzle();
+  initQuestions();
+  initMatching();
+}
+
+function toggleTheoryCheck() {
+  const cb = document.getElementById('theoryCheck');
+  cb.checked = !cb.checked;
+  document.getElementById('continueBtn').disabled = !cb.checked;
+}
+
+// NAVEGACIÓN
+function showActivity(num) {
+  const sections = ['theorySection', 'activity1', 'activity2', 'activity3', 'activity4', 'results'];
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById(sections[num]).classList.add('active');
+  updateProgress(10 + num * 15);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(pct) {
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// SOPA DE LETRAS
+const WORDS = ['AUTOMOVILES','CAMBIO','COMPUTADORES','FABRICA','MODERNIDAD','PRODUCCION','TECNOLOGIA','TRANSPORTE','AVIONES','COMERCIO','ENERGIA','INDUSTRIA','MAQUINA','PROGRESO','TRABAJO','VAPOR'];
+const GRID_SIZE = 16;
+let grid = [];
+
+function initWordSearch() {
+  grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
+  const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  WORDS.forEach(word => {
+    let placed = false;
+    while(!placed) {
+      const dir = dirs[Math.floor(Math.random()*dirs.length)];
+      const r = Math.floor(Math.random()*GRID_SIZE);
+      const c = Math.floor(Math.random()*GRID_SIZE);
+      if(canPlace(word, r, c, dir)) {
+        for(let i=0; i<word.length; i++) grid[r+dir[0]*i][c+dir[1]*i] = word[i];
+        placed = true;
+      }
+    }
+  });
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) if(!grid[r][c]) grid[r][c] = letters[Math.floor(Math.random()*26)];
+  renderGrid();
+  renderWordLists();
+}
+
+function canPlace(w, r, c, d) {
+  if(r+d[0]*(w.length-1)<0 || r+d[0]*(w.length-1)>=GRID_SIZE || c+d[1]*(w.length-1)<0 || c+d[1]*(w.length-1)>=GRID_SIZE) return false;
+  for(let i=0; i<w.length; i++) if(grid[r+d[0]*i][c+d[1]*i] && grid[r+d[0]*i][c+d[1]*i]!==w[i]) return false;
+  return true;
+}
+
+function renderGrid() {
+  const g = document.getElementById('wordGrid');
+  g.innerHTML = '';
+  for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.textContent = grid[r][c];
+    cell.dataset.r = r;
+    cell.dataset.c = c;
+    g.appendChild(cell);
+  }
+  setupSelection();
+}
+
+function renderWordLists() {
+  const f = document.getElementById('foundList');
+  const p = document.getElementById('pendingList');
+  f.innerHTML = ''; p.innerHTML = '';
+  WORDS.forEach(w => {
+    const div = document.createElement('div');
+    div.className = 'word-item ' + (foundWords.has(w) ? 'found' : 'pending');
+    div.textContent = w;
+    if(foundWords.has(w)) f.appendChild(div); else p.appendChild(div);
+  });
+}
+
+function setupSelection() {
+  let selecting = false, startCell = null, cells = [];
+  const gridEl = document.getElementById('wordGrid');
+  gridEl.addEventListener('mousedown', e => {
+    if(e.target.classList.contains('cell')) {
+      selecting = true; startCell = e.target; clearSelection();
+      e.target.classList.add('selected'); cells = [e.target];
+    }
+  });
+  gridEl.addEventListener('mouseover', e => {
+    if(selecting && e.target.classList.contains('cell')) {
+      clearSelection();
+      cells = getCellsBetween(startCell, e.target);
+      cells.forEach(c => c.classList.add('selected'));
+    }
+  });
+  gridEl.addEventListener('mouseup', () => {
+    if(selecting) {
+      selecting = false;
+      const selectedWord = cells.map(c=>c.textContent).join('');
+      const revWord = cells.map(c=>c.textContent).reverse().join('');
+      if(WORDS.includes(selectedWord) && !foundWords.has(selectedWord)) {
+        foundWords.add(selectedWord);
+        cells.forEach(c => c.classList.remove('selected'));
+        cells.forEach(c => c.classList.add('found'));
+        renderWordLists();
+        showNotification('🎉 ¡Palabra encontrada: ' + selectedWord + '!', 'success');
+      } else if(WORDS.includes(revWord) && !foundWords.has(revWord)) {
+        foundWords.add(revWord);
+        cells.forEach(c => c.classList.remove('selected'));
+        cells.forEach(c => c.classList.add('found'));
+        renderWordLists();
+        showNotification('🎉 ¡Palabra encontrada: ' + revWord + '!', 'success');
+      } else {
+        clearSelection();
+      }
+    }
+  });
+  function clearSelection() { document.querySelectorAll('.cell.selected').forEach(c=>c.classList.remove('selected')); }
+  function getCellsBetween(c1, c2) {
+    const r1=+c1.dataset.r, c_1=+c1.dataset.c, r2=+c2.dataset.r, c_2=+c2.dataset.c;
+    const dr=Math.sign(r2-r1), dc=Math.sign(c_2-c_1);
+    if(r1!==r2 && c_1!==c_2 && Math.abs(r2-r1)!==Math.abs(c_2-c_1)) return [c1];
+    const res=[], len=Math.max(Math.abs(r2-r1),Math.abs(c_2-c_1));
+    for(let i=0;i<=len;i++) res.push(document.querySelector(`.cell[data-r="${r1+dr*i}"][data-c="${c_1+dc*i}"]`));
+    return res;
+  }
+}
+
+function verifyWordSearch() {
+  scores.a1 = Math.round((foundWords.size / WORDS.length) * 25);
+  showNotification(`✅ Sopa de letras: ${scores.a1}/25 puntos (${foundWords.size} de ${WORDS.length} palabras)`, 'info');
+}
+
+// ROMPECABEZAS DRAG & DROP
+const ITEMS = [
+  {t:'Máquina de vapor', c:1}, {t:'Carbón', c:1}, {t:'Locomotora', c:1}, {t:'Barco de vapor', c:1},
+  {t:'Electricidad', c:2}, {t:'Petróleo', c:2}, {t:'Automóviles', c:2}, {t:'Teléfono', c:2},
+  {t:'Radio', c:2}, {t:'Televisión', c:2},
+  {t:'Computadores', c:3}, {t:'Internet', c:3}, {t:'Energías renovables', c:3}, {t:'Fibra óptica', c:3},
+  {t:'Inteligencia artificial', c:4}, {t:'Drones', c:4}, {t:'Impresión 3D', c:4}, {t:'Robótica avanzada', c:4},
+  {t:'Big Data', c:4}, {t:'Internet de las cosas', c:4}
+];
+
+function initPuzzle() {
+  const pool = document.getElementById('cardPool');
+  pool.innerHTML = '';
+  const shuffled = [...ITEMS].sort(()=>Math.random()-0.5);
+  shuffled.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'drag-card';
+    card.textContent = item.t;
+    card.draggable = true;
+    card.dataset.correct = item.c;
+    card.dataset.id = item.t;
+    card.addEventListener('dragstart', e => { e.dataTransfer.setData('text', card.dataset.id); card.classList.add('dragging'); });
+    card.addEventListener('dragend', () => card.classList.remove('dragging'));
+    pool.appendChild(card);
+  });
+  document.querySelectorAll('.puzzle-column').forEach(col => {
+    col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
+    col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+    col.addEventListener('drop', e => {
+      e.preventDefault(); col.classList.remove('drag-over');
+      const id = e.dataTransfer.getData('text');
+      const card = document.querySelector(`.drag-card[data-id="${id}"]`);
+      if(card) { col.appendChild(card); card.classList.remove('dragging'); }
+    });
+  });
+}
+
+function verifyPuzzle() {
+  let correct = 0;
+  document.querySelectorAll('.puzzle-column').forEach(col => {
+    const colId = +col.dataset.col;
+    col.querySelectorAll('.drag-card').forEach(card => {
+      if(+card.dataset.correct === colId) { card.classList.add('correct'); correct++; }
+      else card.classList.add('incorrect');
+    });
+  });
+  document.querySelectorAll('.drag-card').forEach(card => {
+    if(!card.parentElement.classList.contains('puzzle-column')) card.classList.add('incorrect');
+  });
+  scores.a2 = Math.round((correct / ITEMS.length) * 25);
+  showNotification(`✅ Rompecabezas: ${scores.a2}/25 puntos (${correct} de ${ITEMS.length} correctas)`, 'info');
+}
+
+// PREGUNTAS CERRADAS
+const QUESTIONS = [
+  {t:'mcq', q:'¿Entre qué años ocurrió la Primera Revolución Industrial?', opts:['1780 y 1840','1850 y 1950','2007 y 2016','1600 y 1700'], a:0},
+  {t:'mcq', q:'¿Quién diseñó la máquina de vapor considerada motor inicial de la Revolución Industrial?', opts:['Henry Ford','James Watts','Albert Einstein','Isaac Newton'], a:1},
+  {t:'mcq', q:'¿Qué fuente de energía fue principal en la Segunda Revolución Industrial?', opts:['Carbón','Gas natural','Electricidad y petróleo','Energía solar'], a:2},
+  {t:'mcq', q:'¿Quién lideró la producción en masa de automóviles con el Modelo T?', opts:['James Watts','Thomas Edison','Henry Ford','Nikola Tesla'], a:2},
+  {t:'mcq', q:'¿En qué año se definió la Cuarta Revolución Industrial en el foro económico mundial?', opts:['2007','2010','2016','2020'], a:2},
+  {t:'mcq', q:'¿Cuál de las siguientes es una tecnología de la Cuarta Revolución Industrial?', opts:['Máquina de vapor','Telégrafo','Inteligencia artificial','Barco de vapor'], a:2},
+  {t:'mcq', q:'¿Qué fuente de energía se asocia con la Tercera Revolución Industrial?', opts:['Carbón','Petróleo','Energías renovables','Gas'], a:2},
+  {t:'mcq', q:'¿Cuál fue un invento clave de la Primera Revolución Industrial?', opts:['Internet','Avión','Locomotora','Blockchain'], a:2},
+  {t:'tf', q:'La Segunda Revolución Industrial ocurrió aproximadamente entre 1850 y 1950.', a:true},
+  {t:'tf', q:'La Tercera Revolución Industrial se caracteriza por el uso del carbón como fuente principal.', a:false},
+  {t:'tf', q:'Los drones y la impresión 3D son tecnologías de la Cuarta Revolución Industrial.', a:true},
+  {t:'tf', q:'En la Tercera Revolución Industrial, la economía pasó de servicios a producción.', a:false},
+  {t:'match', q:'Relaciona el invento con su revolución:', pairs:[['Telégrafo',2],['Internet',3],['Blockchain',4],['Barco de vapor',1]]},
+  {t:'match', q:'Relaciona la fuente de energía con su revolución:', pairs:[['Carbón',1],['Petróleo',2],['Energías renovables',3],['N/A',4]]}
+];
+
+function initQuestions() {
+  const mcq = document.getElementById('mcqContainer');
+  const tf = document.getElementById('tfContainer');
+  const mqc = document.getElementById('matchQContainer');
+  let mcqIdx=0, tfIdx=0, mqIdx=0;
+  QUESTIONS.forEach((q,i) => {
+    if(q.t==='mcq') {
+      const div = document.createElement('div');
+      div.className = 'quiz-question';
+      div.innerHTML = `<h4>${mcqIdx+1}. ${q.q}</h4><div class="quiz-options">${q.opts.map((o,j)=>`<div class="quiz-option" onclick="selectMCQ(this, ${i}, ${j})"><input type="radio" name="q${i}" style="display:none"> ${o}</div>`).join('')}</div><div class="feedback" id="fb-mcq-${i}"></div>`;
+      mcq.appendChild(div); mcqIdx++;
+    } else if(q.t==='tf') {
+      const div = document.createElement('div');
+      div.className = 'quiz-question';
+      div.innerHTML = `<h4>${tfIdx+8}. ${q.q}</h4><div class="tf-options"><div class="tf-btn" onclick="selectTF(this, ${i}, true)">✅ Verdadero</div><div class="tf-btn" onclick="selectTF(this, ${i}, false)">❌ Falso</div></div><div class="feedback" id="fb-tf-${i}"></div>`;
+      tf.appendChild(div); tfIdx++;
+    } else if(q.t==='match') {
+      const div = document.createElement('div');
+      div.className = 'quiz-question';
+      div.innerHTML = `<h4>${mqIdx+12}. ${q.q}</h4><div class="matching-row">${q.pairs.map(p=>`<div style="display:flex;gap:1rem;align-items:center;margin:0.5rem 0;"><span style="font-weight:600;min-width:120px;">${p[0]}:</span><select class="matching-select" data-q="${mqIdx}" data-p="${p[0]}"><option value="">Seleccionar...</option><option value="1">Primera Rev. Ind.</option><option value="2">Segunda Rev. Ind.</option><option value="3">Tercera Rev. Ind.</option><option value="4">Cuarta Rev. Ind.</option></select></div>`).join('')}</div><div class="feedback" id="fb-mq-${mqIdx}"></div>`;
+      mqc.appendChild(div); mqIdx++;
+    }
+  });
+}
+
+let mcqSel = {}, tfSel = {}, mqSel = {};
+function selectMCQ(el, qi, oi) {
+  el.parentElement.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  mcqSel[qi] = oi;
+}
+function selectTF(el, qi, val) {
+  el.parentElement.querySelectorAll('.tf-btn').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  tfSel[qi] = val;
+}
+
+function verifyQuestions() {
+  let correct = 0;
+  QUESTIONS.forEach((q,i) => {
+    if(q.t==='mcq') {
+      const fb = document.getElementById(`fb-mcq-${i}`);
+      const isCorrect = mcqSel[i] === q.a;
+      if(isCorrect) { fb.textContent = '✅ Correcto'; fb.className='feedback show correct'; correct++; }
+      else { fb.textContent = `❌ Incorrecto. La respuesta correcta era: ${q.opts[q.a]}`; fb.className='feedback show incorrect'; }
+    } else if(q.t==='tf') {
+      const fb = document.getElementById(`fb-tf-${i}`);
+      const isCorrect = tfSel[i] === q.a;
+      if(isCorrect) { fb.textContent = '✅ Correcto'; fb.className='feedback show correct'; correct++; }
+      else { fb.textContent = `❌ Incorrecto. Era: ${q.a ? 'Verdadero' : 'Falso'}`; fb.className='feedback show incorrect'; }
+    } else if(q.t==='match') {
+      const fb = document.getElementById(`fb-mq-${i}`);
+      let mc = 0;
+      q.pairs.forEach(p => {
+        const sel = document.querySelector(`.matching-select[data-p="${p[0]}"]`);
+        if(sel && +sel.value === p[1]) mc++;
+      });
+      if(mc === q.pairs.length) { fb.textContent = '✅ Todas correctas'; fb.className='feedback show correct'; correct++; }
+      else { fb.textContent = `❌ ${mc}/${q.pairs.length} correctas`; fb.className='feedback show incorrect'; correct += mc/q.pairs.length; }
+    }
+  });
+  scores.a3 = Math.round((correct / 14) * 25);
+  showNotification(`✅ Preguntas cerradas: ${scores.a3}/25 puntos`, 'info');
+}
+
+// EMPAREJAMIENTO GENERAL
+function initMatching() {
+  const c = document.getElementById('matchingContainer');
+  const data = [
+    {rev:'1. Primera Revolución Industrial', period:'1780 a 1840', energy:'Carbón', tech:'Máquina de vapor'},
+    {rev:'2. Segunda Revolución Industrial', period:'1850 a 1950', energy:'Petróleo / Electricidad', tech:'Automóvil / Teléfono'},
+    {rev:'3. Tercera Revolución Industrial', period:'Computadores e Internet', energy:'Energías renovables', tech:'Fibra óptica'},
+    {rev:'4. Cuarta Revolución Industrial', period:'2016 en adelante', energy:'N/A', tech:'Inteligencia artificial / Drones'}
+  ];
+  c.innerHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;overflow-x:auto;"><div><h4>🏭 Revolución</h4>' + data.map(d=>`<div style="padding:1rem;margin:0.5rem 0;background:#e3f2fd;border-radius:8px;font-weight:600;">${d.rev}</div>`).join('') + '</div>' +
+    '<div><h4>📅 Periodo</h4><div id="match-period" style="display:flex;flex-direction:column;gap:0.5rem;">' + shuffle([...data.map(d=>d.period)]).map((v,i)=>`<select class="matching-select" data-match="period" data-idx="${i}"><option value="">Seleccionar...</option><option value="${data[0].period}">1780 a 1840</option><option value="${data[1].period}">1850 a 1950</option><option value="${data[2].period}">Computadores e Internet</option><option value="${data[3].period}">2016 en adelante</option></select>`).join('') + '</div></div>' +
+    '<div><h4>⚡ Energía</h4><div id="match-energy" style="display:flex;flex-direction:column;gap:0.5rem;">' + shuffle([...data.map(d=>d.energy)]).map((v,i)=>`<select class="matching-select" data-match="energy" data-idx="${i}"><option value="">Seleccionar...</option><option value="${data[0].energy}">Carbón</option><option value="${data[1].energy}">Petróleo / Electricidad</option><option value="${data[2].energy}">Energías renovables</option><option value="${data[3].energy}">N/A</option></select>`).join('') + '</div></div>' +
+    '<div><h4>🔧 Tecnología</h4><div id="match-tech" style="display:flex;flex-direction:column;gap:0.5rem;">' + shuffle([...data.map(d=>d.tech)]).map((v,i)=>`<select class="matching-select" data-match="tech" data-idx="${i}"><option value="">Seleccionar...</option><option value="${data[0].tech}">Máquina de vapor</option><option value="${data[1].tech}">Automóvil / Teléfono</option><option value="${data[2].tech}">Fibra óptica</option><option value="${data[3].tech}">Inteligencia artificial / Drones</option></select>`).join('') + '</div></div></div>';
+}
+
+function shuffle(arr) { return arr.sort(()=>Math.random()-0.5); }
+
+function verifyMatching() {
+  let correct = 0;
+  const expected = ['0','1','2','3'];
+  document.querySelectorAll(`[data-match="period"]`).forEach((s,i) => { if(s.value === data[parseInt(expected[i])]?.period) correct++; });
+  document.querySelectorAll(`[data-match="energy"]`).forEach((s,i) => { if(s.value === data[parseInt(expected[i])]?.energy) correct++; });
+  document.querySelectorAll(`[data-match="tech"]`).forEach((s,i) => { if(s.value === data[parseInt(expected[i])]?.tech) correct++; });
+  const total = 12;
+  scores.a4 = Math.round((correct / total) * 25);
+  showNotification(`✅ Emparejamiento: ${scores.a4}/25 puntos`, 'info');
+}
+
+// RESULTADOS
+function showResults() { showActivity(5); updateProgress(100); }
+
+function calculateFinalGrade() {
+  if(!scores.a1 && !scores.a2 && !scores.a3 && !scores.a4) {
+    verifyWordSearch(); verifyPuzzle(); verifyQuestions(); verifyMatching();
+  }
+  const total = scores.a1 + scores.a2 + scores.a3 + scores.a4;
+  document.getElementById('resStudentName').innerHTML = `👤 Estudiante: <strong>${studentName}</strong>`;
+  document.getElementById('resStudentCourse').innerHTML = `🏫 Curso: <strong>${studentCourse}</strong>`;
+  document.getElementById('scoreBreakdown').innerHTML = `
+    <div class="score-row"><span>Sopa de Letras</span><span>${scores.a1}/25</span></div>
+    <div class="score-row"><span>Rompecabezas</span><span>${scores.a2}/25</span></div>
+    <div class="score-row"><span>Preguntas Cerradas</span><span>${scores.a3}/25</span></div>
+    <div class="score-row"><span>Emparejamiento General</span><span>${scores.a4}/25</span></div>
+    <div class="score-row" style="border:none;font-size:1.2rem;font-weight:bold;"><span>TOTAL</span><span>${total}/100</span></div>`;
+  document.getElementById('totalScore').textContent = total;
+  let perf = '';
+  if(total >= 90) perf = `<div class="performance-badge" style="background:var(--success);color:white;">🌟 Excelente trabajo</div>`;
+  else if(total >= 75) perf = `<div class="performance-badge" style="background:var(--secondary);color:white;">👍 Buen trabajo</div>`;
+  else if(total >= 60) perf = `<div class="performance-badge" style="background:var(--warning);color:#333;">💪 Puedes mejorar</div>`;
+  else perf = `<div class="performance-badge" style="background:var(--danger);color:white;">📖 Debes repasar nuevamente la teoría</div>`;
+  document.getElementById('performanceBadge').innerHTML = perf;
+  showNotification(`🏆 Tu calificación final es: ${total}/100`, 'success');
+}
+
+function printResults() { window.print(); }
+
+function resetWorkshop() {
+  scores = {a1:0,a2:0,a3:0,a4:0};
+  foundWords = new Set();
+  document.getElementById('studentName').value = '';
+  document.getElementById('studentCourse').value = '';
+  document.getElementById('theoryCheck').checked = false;
+  document.getElementById('continueBtn').disabled = true;
+  document.querySelectorAll('.feedback').forEach(f=>{f.className='feedback';f.textContent='';});
+  document.querySelectorAll('.matching-select').forEach(s=>s.value='');
+  document.querySelectorAll('.drag-card').forEach(c=>{c.classList.remove('correct','incorrect');});
+  document.getElementById('cardPool').innerHTML = '';
+  document.querySelectorAll('.puzzle-column').forEach(c=>{c.querySelectorAll('.drag-card').forEach(card=>document.getElementById('cardPool').appendChild(card));});
+  initPuzzle(); initWordSearch(); initQuestions(); initMatching();
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('cover').classList.add('active');
+  document.getElementById('progressContainer').style.display='none';
+  updateProgress(0);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// NOTIFICACIONES
+function showNotification(msg, type='success') {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.style.background = type==='warning'?'var(--warning)':type==='info'?'var(--primary-light)':type==='error'?'var(--danger)':'var(--success)';
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'), 4000);
+}
+</script>
+</body>
+</html>
