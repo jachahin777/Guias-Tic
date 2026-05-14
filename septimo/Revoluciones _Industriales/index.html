@@ -6,20 +6,10 @@
 <title>Taller Interactivo: Las Revoluciones Industriales</title>
 <style>
 :root {
-  --primary: #1e3a5f;
-  --primary-light: #2c5282;
-  --secondary: #009688;
-  --accent: #ff9800;
-  --success: #4caf50;
-  --danger: #e53935;
-  --warning: #ffc107;
-  --bg: #f0f4f8;
-  --card: #ffffff;
-  --text: #333333;
-  --text-light: #666666;
-  --shadow: 0 4px 15px rgba(0,0,0,0.1);
-  --radius: 12px;
-  --transition: all 0.3s ease;
+  --primary: #1e3a5f; --primary-light: #2c5282; --secondary: #009688;
+  --accent: #ff9800; --success: #4caf50; --danger: #e53935; --warning: #ffc107;
+  --bg: #f0f4f8; --card: #ffffff; --text: #333333; --text-light: #666666;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1); --radius: 12px; --transition: all 0.3s ease;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
 body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
@@ -36,8 +26,7 @@ h2 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bott
 h3 { color: var(--secondary); margin: 1rem 0 0.5rem; }
 h4 { color: var(--primary-light); margin: 1rem 0 0.5rem; }
 .card { background: #f8f9fa; border-left: 4px solid var(--secondary); padding: 1rem; margin: 1rem 0; border-radius: 0 var(--radius) var(--radius) 0; }
-.card ul { margin-left: 1.5rem; }
-.card li { margin-bottom: 0.3rem; }
+.card ul { margin-left: 1.5rem; } .card li { margin-bottom: 0.3rem; }
 .form-group { margin: 1rem 0; }
 label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: var(--primary); }
 input[type="text"], select { width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: var(--transition); }
@@ -51,45 +40,16 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
 .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; padding: 1rem; background: #e8f5e9; border-radius: 8px; cursor: pointer; }
 .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
 
-/* SOPA DE LETRAS OPTIMIZADA */
+/* SOPA DE LETRAS */
 .word-search-container { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: flex-start; margin-top: 1rem; }
-#wordGrid { 
-  display: grid; 
-  grid-template-columns: repeat(16, minmax(1.8rem, 2.5rem)); 
-  gap: 2px; 
-  background: #333; 
-  padding: 6px; 
-  border-radius: 10px; 
-  touch-action: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.cell { 
-  background: white; 
-  width: 100%; 
-  aspect-ratio: 1; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-weight: bold; 
-  font-size: clamp(0.7rem, 1.8vw, 1rem); 
-  cursor: pointer; 
-  user-select: none; 
-  transition: background 0.15s; 
-  border-radius: 2px;
-}
+#wordGrid { display: grid; grid-template-columns: repeat(16, minmax(1.8rem, 2.5rem)); gap: 2px; background: #333; padding: 6px; border-radius: 10px; touch-action: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.cell { background: white; width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.7rem, 1.8vw, 1rem); cursor: pointer; user-select: none; transition: background 0.15s; border-radius: 2px; }
 .cell:hover { background: #e0f7fa; }
 .cell.selected { background: var(--accent); color: white; }
 .cell.found { background: var(--success); color: white; animation: pulse 0.5s; }
 @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-.word-list { 
-  background: #f8f9fa; 
-  padding: 1rem; 
-  border-radius: 8px; 
-  min-width: 200px; 
-  max-width: 280px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.word-item { padding: 0.4rem 0.6rem; margin: 0.3rem 0; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.word-list { background: #f8f9fa; padding: 1rem; border-radius: 8px; min-width: 200px; max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.word-item { padding: 0.4rem 0.6rem; margin: 0.3rem 0; border-radius: 4px; font-size: 0.9rem; }
 .word-item.found { background: #e8f5e9; text-decoration: line-through; color: var(--success); font-weight: bold; }
 .word-item.pending { color: var(--text-light); }
 
@@ -124,8 +84,8 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
 .matching-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
 .matching-col { background: #f8f9fa; padding: 1rem; border-radius: 8px; }
 .matching-col h4 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.5rem; text-align: center; }
-.matching-select { width: 100%; margin: 0.5rem 0; padding: 0.5rem; border: 2px solid #ddd; border-radius: 6px; background: white; }
-.matching-select:focus { border-color: var(--secondary); outline: none; }
+.q-match-select { width: 100%; margin: 0.5rem 0; padding: 0.5rem; border: 2px solid #ddd; border-radius: 6px; background: white; }
+.q-match-select:focus { border-color: var(--secondary); outline: none; }
 
 /* RESULTADOS */
 .results-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2rem; border-radius: var(--radius); text-align: center; margin: 2rem 0; }
@@ -140,7 +100,7 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
 .notification { position: fixed; top: 20px; right: 20px; background: var(--success); color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; transform: translateX(150%); transition: transform 0.3s ease; max-width: 320px; }
 .notification.show { transform: translateX(0); }
 
-/* ESTILOS PARA PDF / IMPRESIÓN */
+/* IMPRESIÓN / PDF */
 @media print {
   body { background: white; color: black; padding: 0; }
   header, .btn-group, .progress-container, button, .word-search-container, .drag-puzzle, .quiz-question, .matching-row, .card-pool, .notification, #cover, #theorySection, #activity1, #activity2, #activity3, #activity4 { display: none !important; }
@@ -165,9 +125,7 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
 </style>
 </head>
 <body>
-<div class="progress-container" id="progressContainer">
-  <div class="progress-bar" id="progressBar"></div>
-</div>
+<div class="progress-container" id="progressContainer"><div class="progress-bar" id="progressBar"></div></div>
 <div id="notification" class="notification"></div>
 
 <header>
@@ -175,7 +133,6 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
   <p>Tecnología e Informática | Grado Sexto/Séptimo</p>
 </header>
 
-<!-- CONTENEDOR OCULTO PARA PDF -->
 <div id="printHeader" style="display:none; padding: 2rem 1rem 0; text-align: center;">
   <h2>📜 Certificado de Calificación</h2>
   <p style="font-size: 1.2rem; margin-top: 1rem;"><strong>Institución Educativa</strong></p>
@@ -184,556 +141,287 @@ button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-sh
 </div>
 
 <div class="container">
-  <!-- PORTADA -->
   <section id="cover" class="active">
     <h2>📖 Portada</h2>
     <p style="text-align:center; margin-bottom:2rem; color:var(--text-light);">Bienvenido al taller interactivo sobre las Revoluciones Industriales. Completa todas las actividades y obtén tu calificación.</p>
-    <div class="form-group">
-      <label for="studentName">👤 Nombre completo del estudiante:</label>
-      <input type="text" id="studentName" placeholder="Ej: Juan Pérez López" required>
-    </div>
-    <div class="form-group">
-      <label for="studentCourse">🏫 Curso:</label>
-      <input type="text" id="studentCourse" placeholder="Ej: 601, 702" required>
-    </div>
-    <div class="btn-group">
-      <button onclick="startWorkshop()">🚀 Iniciar actividad</button>
-    </div>
+    <div class="form-group"><label for="studentName">👤 Nombre completo del estudiante:</label><input type="text" id="studentName" placeholder="Ej: Juan Pérez López" required></div>
+    <div class="form-group"><label for="studentCourse">🏫 Curso:</label><input type="text" id="studentCourse" placeholder="Ej: 601, 702" required></div>
+    <div class="btn-group"><button onclick="startWorkshop()">🚀 Iniciar actividad</button></div>
   </section>
 
-  <!-- TEORÍA -->
   <section id="theorySection">
     <h2>📚 Teoría para copiar en tu cuaderno</h2>
-    <div class="card">
-      <h3>🌍 ¿Qué son las Revoluciones Industriales?</h3>
-      <p>Son puntos de inflexión o ruptura en la historia, en donde se modifican aspectos de la vida cotidiana como son la economía, el transporte, el uso de la energía, la salud, entre otras.</p>
-    </div>
-    <div class="card">
-      <h3>⚙️ Primera Revolución Industrial (1780 - 1840)</h3>
-      <p>Cambio fundamental en Inglaterra. La economía agrícola y artesana se transforma en industrial. Innovaciones clave: nuevos materiales (acero), carbón como fuente energética y la <strong>máquina de vapor</strong> diseñada por James Watts.</p>
-      <ul><li>Economía basada en la industria.</li><li>Aumento de la población.</li><li>Nuevas máquinas en transporte, agricultura y textiles.</li><li>Invención del barco de vapor y la locomotora.</li><li>Carbón como combustible principal.</li></ul>
-    </div>
-    <div class="card">
-      <h3>⚡ Segunda Revolución Industrial (1850 - 1950)</h3>
-      <p>Transformaciones tecnológicas con nuevas fuentes: gas, petróleo y electricidad. Nuevos transportes: avión y motor de combustión interna. Producción en masa de automóviles (Henry Ford, Modelo T). Avances en comunicaciones: telégrafo, teléfono, radio y televisión. Industria química: plásticos, tintes sintéticos, explosivos.</p>
-      <ul><li>Nuevos materiales: zinc y aluminio.</li><li>Explosivos (dinamita y nitroglicerina).</li><li>Fertilizantes sintéticos.</li><li>Revolución en transporte y comunicaciones.</li></ul>
-    </div>
-    <div class="card">
-      <h3>💻 Tercera Revolución Industrial</h3>
-      <p>Avalada por la comunidad europea en 2007. Nuevas formas de comunicación gracias a computadores e internet. Energías renovables. Cambio de economía de producción a economía de servicios.</p>
-      <ul><li>Computadores en actividades humanas.</li><li>Fuentes de energía renovables.</li><li>Internet en comunicaciones e interacciones.</li><li>Fibra óptica.</li><li>Economía de servicios.</li></ul>
-    </div>
-    <div class="card">
-      <h3>🤖 Cuarta Revolución Industrial (2016)</h3>
-      <p>Definida en el foro económico mundial de 2016. Tecnologías innovadoras:</p>
-      <ul><li>Inteligencia artificial</li><li>Vehículos autónomos</li><li>Drones</li><li>Impresión 3D</li><li>Robótica avanzada</li><li>Nuevos materiales reciclables, ligeros y resistentes</li><li>Internet de las cosas</li><li>Economía bajo demanda</li><li>Big Data</li><li>Blockchain</li></ul>
-    </div>
+    <div class="card"><h3>🌍 ¿Qué son las Revoluciones Industriales?</h3><p>Son puntos de inflexión o ruptura en la historia, en donde se modifican aspectos de la vida cotidiana como son la economía, el transporte, el uso de la energía, la salud, entre otras.</p></div>
+    <div class="card"><h3>⚙️ Primera Revolución Industrial (1780 - 1840)</h3><p>Cambio fundamental en Inglaterra. La economía agrícola y artesana se transforma en industrial. Innovaciones clave: nuevos materiales (acero), carbón como fuente energética y la <strong>máquina de vapor</strong> diseñada por James Watts.</p><ul><li>Economía basada en la industria.</li><li>Aumento de la población.</li><li>Nuevas máquinas en transporte, agricultura y textiles.</li><li>Invención del barco de vapor y la locomotora.</li><li>Carbón como combustible principal.</li></ul></div>
+    <div class="card"><h3>⚡ Segunda Revolución Industrial (1850 - 1950)</h3><p>Transformaciones tecnológicas con nuevas fuentes: gas, petróleo y electricidad. Nuevos transportes: avión y motor de combustión interna. Producción en masa de automóviles (Henry Ford). Avances en comunicaciones: telégrafo, teléfono, radio y televisión.</p><ul><li>Nuevos materiales: zinc y aluminio.</li><li>Explosivos (dinamita y nitroglicerina).</li><li>Fertilizantes sintéticos.</li><li>Revolución en transporte y comunicaciones.</li></ul></div>
+    <div class="card"><h3>💻 Tercera Revolución Industrial</h3><p>Avalada por la comunidad europea en 2007. Nuevas formas de comunicación gracias a computadores e internet. Energías renovables. Cambio de economía de producción a economía de servicios.</p><ul><li>Computadores en actividades humanas.</li><li>Fuentes de energía renovables.</li><li>Internet en comunicaciones e interacciones.</li><li>Fibra óptica.</li><li>Economía de servicios.</li></ul></div>
+    <div class="card"><h3>🤖 Cuarta Revolución Industrial (2016)</h3><p>Definida en el foro económico mundial de 2016. Tecnologías innovadoras: Inteligencia artificial, Vehículos autónomos, Drones, Impresión 3D, Robótica avanzada, Nuevos materiales reciclables, Internet de las cosas, Economía bajo demanda, Big Data, Blockchain.</p></div>
     <div class="checkbox-group" onclick="toggleTheoryCheck()">
-      <input type="checkbox" id="theoryCheck">
-      <label for="theoryCheck" style="cursor:pointer;">✅ He copiado la teoría en mi cuaderno</label>
+      <input type="checkbox" id="theoryCheck"><label for="theoryCheck" style="cursor:pointer;">✅ He copiado la teoría en mi cuaderno</label>
     </div>
-    <div class="btn-group">
-      <button id="continueBtn" onclick="showActivity(1)" disabled>📝 Continuar a las actividades</button>
-    </div>
+    <div class="btn-group"><button id="continueBtn" onclick="showActivity(1)" disabled>📝 Continuar a las actividades</button></div>
   </section>
 
-  <!-- ACTIVIDAD 1: SOPA DE LETRAS -->
   <section id="activity1">
     <h2>🔍 Actividad 1: Sopa de Letras (25 puntos)</h2>
-    <p>Encuentra las palabras escondidas en la cuadrícula. Haz clic y arrastra para seleccionar las letras. Las palabras pueden estar en horizontal, vertical o diagonal.</p>
-    <div class="word-search-container">
-      <div id="wordGrid"></div>
-      <div class="word-list">
-        <h4>✅ Palabras encontradas:</h4>
-        <div id="foundList"></div>
-        <h4 style="margin-top:1rem;">⏳ Palabras pendientes:</h4>
-        <div id="pendingList"></div>
-      </div>
-    </div>
-    <div class="btn-group">
-      <button onclick="verifyWordSearch()">✅ Verificar sopa de letras</button>
-      <button class="secondary" onclick="showActivity(2)">Siguiente ➡️</button>
-    </div>
+    <p>Encuentra las palabras escondidas. Haz clic y arrastra para seleccionar. Horizontal, vertical o diagonal.</p>
+    <div class="word-search-container"><div id="wordGrid"></div><div class="word-list"><h4>✅ Encontradas:</h4><div id="foundList"></div><h4 style="margin-top:1rem;">⏳ Pendientes:</h4><div id="pendingList"></div></div></div>
+    <div class="btn-group"><button onclick="verifyWordSearch()">✅ Verificar</button><button class="secondary" onclick="showActivity(2)">Siguiente ➡️</button></div>
   </section>
 
-  <!-- ACTIVIDAD 2: ROMPECABEZAS -->
   <section id="activity2">
     <h2>🧩 Actividad 2: Rompecabezas (25 puntos)</h2>
-    <p>Arrastra cada invento o característica a la revolución industrial correcta.</p>
+    <p>Arrastra cada invento a la revolución industrial correcta.</p>
     <div id="cardPool" class="card-pool"></div>
     <div class="drag-puzzle">
-      <div class="puzzle-column" data-col="1"><h4>🏭 Primera Rev. Industrial</h4></div>
-      <div class="puzzle-column" data-col="2"><h4>⚡ Segunda Rev. Industrial</h4></div>
-      <div class="puzzle-column" data-col="3"><h4>💻 Tercera Rev. Industrial</h4></div>
-      <div class="puzzle-column" data-col="4"><h4>🤖 Cuarta Rev. Industrial</h4></div>
+      <div class="puzzle-column" data-col="1"><h4>🏭 Primera Rev.</h4></div>
+      <div class="puzzle-column" data-col="2"><h4>⚡ Segunda Rev.</h4></div>
+      <div class="puzzle-column" data-col="3"><h4>💻 Tercera Rev.</h4></div>
+      <div class="puzzle-column" data-col="4"><h4>🤖 Cuarta Rev.</h4></div>
     </div>
-    <div class="btn-group">
-      <button onclick="verifyPuzzle()">✅ Verificar rompecabezas</button>
-      <button class="secondary" onclick="showActivity(3)">Siguiente ➡️</button>
-    </div>
+    <div class="btn-group"><button onclick="verifyPuzzle()">✅ Verificar</button><button class="secondary" onclick="showActivity(3)">Siguiente ➡️</button></div>
   </section>
 
-  <!-- ACTIVIDAD 3: PREGUNTAS CERRADAS -->
   <section id="activity3">
     <h2>❓ Actividad 3: Preguntas Cerradas (25 puntos)</h2>
     <div id="mcqContainer"></div>
     <div id="tfContainer"></div>
     <div id="matchQContainer"></div>
-    <div class="btn-group">
-      <button onclick="verifyQuestions()">✅ Verificar preguntas</button>
-      <button class="secondary" onclick="showActivity(4)">Siguiente ➡️</button>
-    </div>
+    <div class="btn-group"><button onclick="verifyQuestions()">✅ Verificar preguntas</button><button class="secondary" onclick="showActivity(4)">Siguiente ➡️</button></div>
   </section>
 
-  <!-- ACTIVIDAD 4: EMPAREJAMIENTO GENERAL -->
   <section id="activity4">
     <h2>🔗 Actividad 4: Emparejamiento General (25 puntos)</h2>
     <p>Selecciona la opción correcta para cada atributo de cada revolución.</p>
     <div id="matchingContainer"></div>
-    <div class="btn-group">
-      <button onclick="verifyMatching()">✅ Verificar emparejamiento</button>
-      <button class="secondary" onclick="showResults()">📊 Ver resultados</button>
-    </div>
+    <div class="btn-group"><button onclick="verifyMatching()">✅ Verificar emparejamiento</button><button class="secondary" onclick="showResults()">📊 Ver resultados</button></div>
   </section>
 
-  <!-- RESULTADOS -->
   <section id="results">
     <h2>🏆 Calificación Final</h2>
     <div class="results-card">
       <h3>Resultados del Estudiante</h3>
-      <p id="resStudentName"></p>
-      <p id="resStudentCourse"></p>
+      <p id="resStudentName"></p><p id="resStudentCourse"></p>
       <div class="score-breakdown" id="scoreBreakdown"></div>
       <div class="score-display" id="totalScore"></div>
       <div id="performanceBadge"></div>
       <div class="btn-group" style="margin-top:2rem;">
-        <button onclick="calculateFinalGrade()">🔄 Calcular calificación final</button>
+        <button onclick="calculateFinalGrade()">🔄 Calcular nota final</button>
         <button class="secondary" onclick="generatePDF()">📄 Generar PDF / Imprimir</button>
-        <button class="danger" onclick="resetWorkshop()">🔁 Reiniciar actividad</button>
+        <button class="danger" onclick="resetWorkshop()">🔁 Reiniciar</button>
       </div>
     </div>
   </section>
 </div>
 
 <script>
-// VARIABLES GLOBALES
-let studentName = '';
-let studentCourse = '';
+let studentName = '', studentCourse = '';
 let scores = { a1: 0, a2: 0, a3: 0, a4: 0 };
-let foundWords = new Set();
-let mcqSel = {}, tfSel = {}, mqSel = {};
-
+let foundWords = new Set(), mcqSel = {}, tfSel = {};
 const WORDS = ['AUTOMOVILES','CAMBIO','COMPUTADORES','FABRICA','MODERNIDAD','PRODUCCION','TECNOLOGIA','TRANSPORTE','AVIONES','COMERCIO','ENERGIA','INDUSTRIA','MAQUINA','PROGRESO','TRABAJO','VAPOR'];
-const GRID_SIZE = 16;
-let grid = [];
+const GRID_SIZE = 16; let grid = [];
 
-// INICIAR TALLER
 function startWorkshop() {
   studentName = document.getElementById('studentName').value.trim();
   studentCourse = document.getElementById('studentCourse').value.trim();
-  if (!studentName || !studentCourse) {
-    showNotification('⚠️ Por favor completa tu nombre y curso.', 'warning');
-    return;
-  }
+  if (!studentName || !studentCourse) { showNotification('⚠️ Completa tu nombre y curso.', 'warning'); return; }
   document.getElementById('cover').classList.remove('active');
   document.getElementById('theorySection').classList.add('active');
-  document.getElementById('progressContainer').style.display = 'block';
-  updateProgress(10);
-  initWordSearch();
-  initPuzzle();
-  initQuestions();
-  initMatching();
+  document.getElementById('progressContainer').style.display = 'block'; updateProgress(10);
+  initWordSearch(); initPuzzle(); initQuestions(); initMatching();
 }
-
 function toggleTheoryCheck() {
-  const cb = document.getElementById('theoryCheck');
-  cb.checked = !cb.checked;
+  const cb = document.getElementById('theoryCheck'); cb.checked = !cb.checked;
   document.getElementById('continueBtn').disabled = !cb.checked;
 }
-
-// NAVEGACIÓN
 function showActivity(num) {
-  const sections = ['theorySection', 'activity1', 'activity2', 'activity3', 'activity4', 'results'];
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.getElementById(sections[num]).classList.add('active');
-  updateProgress(10 + num * 15);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const s = ['theorySection','activity1','activity2','activity3','activity4','results'];
+  document.querySelectorAll('section').forEach(el=>el.classList.remove('active'));
+  document.getElementById(s[num]).classList.add('active'); updateProgress(10+num*15);
+  window.scrollTo({top:0, behavior:'smooth'});
 }
+function updateProgress(pct) { document.getElementById('progressBar').style.width = pct+'%'; }
 
-function updateProgress(pct) {
-  document.getElementById('progressBar').style.width = pct + '%';
-}
-
-// SOPA DE LETRAS MEJORADA
+// SOPA DE LETRAS
 function initWordSearch() {
-  grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
+  grid = Array(GRID_SIZE).fill(null).map(()=>Array(GRID_SIZE).fill(''));
   const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
   WORDS.forEach(word => {
-    let placed = false, attempts = 0;
-    while(!placed && attempts < 200) {
-      const dir = dirs[Math.floor(Math.random()*dirs.length)];
-      const r = Math.floor(Math.random()*GRID_SIZE);
-      const c = Math.floor(Math.random()*GRID_SIZE);
-      if(canPlace(word, r, c, dir)) {
-        for(let i=0; i<word.length; i++) grid[r+dir[0]*i][c+dir[1]*i] = word[i];
-        placed = true;
-      }
-      attempts++;
+    let placed=false, att=0;
+    while(!placed && att<200) {
+      const d=dirs[Math.floor(Math.random()*dirs.length)], r=Math.floor(Math.random()*GRID_SIZE), c=Math.floor(Math.random()*GRID_SIZE);
+      if(canPlace(word,r,c,d)) { for(let i=0;i<word.length;i++) grid[r+d[0]*i][c+d[1]*i]=word[i]; placed=true; } att++;
     }
   });
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) if(!grid[r][c]) grid[r][c] = letters[Math.floor(Math.random()*26)];
-  renderGrid();
-  renderWordLists();
+  const L='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<GRID_SIZE;r++) for(let c=0;c<GRID_SIZE;c++) if(!grid[r][c]) grid[r][c]=L[Math.floor(Math.random()*26)];
+  renderGrid(); renderWordLists();
 }
-
-function canPlace(w, r, c, d) {
-  if(r+d[0]*(w.length-1)<0 || r+d[0]*(w.length-1)>=GRID_SIZE || c+d[1]*(w.length-1)<0 || c+d[1]*(w.length-1)>=GRID_SIZE) return false;
-  for(let i=0; i<w.length; i++) if(grid[r+d[0]*i][c+d[1]*i] && grid[r+d[0]*i][c+d[1]*i]!==w[i]) return false;
-  return true;
+function canPlace(w,r,c,d) {
+  if(r+d[0]*(w.length-1)<0||r+d[0]*(w.length-1)>=GRID_SIZE||c+d[1]*(w.length-1)<0||c+d[1]*(w.length-1)>=GRID_SIZE) return false;
+  for(let i=0;i<w.length;i++) if(grid[r+d[0]*i][c+d[1]*i]&&grid[r+d[0]*i][c+d[1]*i]!==w[i]) return false; return true;
 }
-
 function renderGrid() {
-  const g = document.getElementById('wordGrid');
-  g.innerHTML = '';
-  for(let r=0; r<GRID_SIZE; r++) for(let c=0; c<GRID_SIZE; c++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.textContent = grid[r][c];
-    cell.dataset.r = r; cell.dataset.c = c;
-    g.appendChild(cell);
+  const g=document.getElementById('wordGrid'); g.innerHTML='';
+  for(let r=0;r<GRID_SIZE;r++) for(let c=0;c<GRID_SIZE;c++) {
+    const cell=document.createElement('div'); cell.className='cell'; cell.textContent=grid[r][c]; cell.dataset.r=r; cell.dataset.c=c; g.appendChild(cell);
   }
   setupSelection();
 }
-
 function renderWordLists() {
-  const f = document.getElementById('foundList');
-  const p = document.getElementById('pendingList');
-  f.innerHTML = ''; p.innerHTML = '';
-  WORDS.forEach(w => {
-    const div = document.createElement('div');
-    div.className = 'word-item ' + (foundWords.has(w) ? 'found' : 'pending');
-    div.textContent = w;
-    if(foundWords.has(w)) f.appendChild(div); else p.appendChild(div);
-  });
+  const f=document.getElementById('foundList'), p=document.getElementById('pendingList'); f.innerHTML=''; p.innerHTML='';
+  WORDS.forEach(w => { const d=document.createElement('div'); d.className='word-item '+((foundWords.has(w))?'found':'pending'); d.textContent=w; (foundWords.has(w)?f:p).appendChild(d); });
 }
-
 function setupSelection() {
-  let selecting = false, startCell = null, cells = [];
-  const gridEl = document.getElementById('wordGrid');
-  gridEl.addEventListener('mousedown', e => {
-    if(e.target.classList.contains('cell')) {
-      selecting = true; startCell = e.target; clearSelection();
-      e.target.classList.add('selected'); cells = [e.target];
-    }
-  });
-  gridEl.addEventListener('mouseover', e => {
-    if(selecting && e.target.classList.contains('cell')) {
-      clearSelection();
-      cells = getCellsBetween(startCell, e.target);
-      cells.forEach(c => c.classList.add('selected'));
-    }
-  });
-  gridEl.addEventListener('mouseup', () => {
-    if(selecting) {
-      selecting = false;
-      const selectedWord = cells.map(c=>c.textContent).join('');
-      const revWord = cells.map(c=>c.textContent).reverse().join('');
-      if(WORDS.includes(selectedWord) && !foundWords.has(selectedWord)) {
-        foundWords.add(selectedWord);
-        cells.forEach(c => {c.classList.remove('selected'); c.classList.add('found');});
-        renderWordLists(); showNotification('🎉 ¡Encontrada: ' + selectedWord + '!', 'success');
-      } else if(WORDS.includes(revWord) && !foundWords.has(revWord)) {
-        foundWords.add(revWord);
-        cells.forEach(c => {c.classList.remove('selected'); c.classList.add('found');});
-        renderWordLists(); showNotification('🎉 ¡Encontrada: ' + revWord + '!', 'success');
-      } else { clearSelection(); }
-    }
-  });
-  // Touch support
-  gridEl.addEventListener('touchstart', e => {
-    if(e.target.classList.contains('cell')) {
-      selecting = true; startCell = e.target; clearSelection();
-      e.target.classList.add('selected'); cells = [e.target];
-      e.preventDefault();
-    }
-  }, {passive: false});
-  gridEl.addEventListener('touchmove', e => {
-    if(selecting) {
-      const touch = e.touches[0];
-      const target = document.elementFromPoint(touch.clientX, touch.clientY);
-      if(target && target.classList.contains('cell')) {
-        clearSelection(); cells = getCellsBetween(startCell, target);
-        cells.forEach(c => c.classList.add('selected'));
-      }
-      e.preventDefault();
-    }
-  }, {passive: false});
-  gridEl.addEventListener('touchend', () => {
-    if(selecting) {
-      selecting = false;
-      const selectedWord = cells.map(c=>c.textContent).join('');
-      const revWord = cells.map(c=>c.textContent).reverse().join('');
-      if(WORDS.includes(selectedWord) && !foundWords.has(selectedWord)) {
-        foundWords.add(selectedWord);
-        cells.forEach(c => {c.classList.remove('selected'); c.classList.add('found');});
-        renderWordLists(); showNotification('🎉 ¡Encontrada: ' + selectedWord + '!', 'success');
-      } else if(WORDS.includes(revWord) && !foundWords.has(revWord)) {
-        foundWords.add(revWord);
-        cells.forEach(c => {c.classList.remove('selected'); c.classList.add('found');});
-        renderWordLists(); showNotification('🎉 ¡Encontrada: ' + revWord + '!', 'success');
-      } else { clearSelection(); }
-    }
-  });
-  function clearSelection() { document.querySelectorAll('.cell.selected').forEach(c=>c.classList.remove('selected')); }
-  function getCellsBetween(c1, c2) {
-    const r1=+c1.dataset.r, c_1=+c1.dataset.c, r2=+c2.dataset.r, c_2=+c2.dataset.c;
-    const dr=Math.sign(r2-r1), dc=Math.sign(c_2-c_1);
-    if(r1!==r2 && c_1!==c_2 && Math.abs(r2-r1)!==Math.abs(c_2-c_1)) return [c1];
-    const res=[], len=Math.max(Math.abs(r2-r1),Math.abs(c_2-c_1));
-    for(let i=0;i<=len;i++) {
-      const cell = document.querySelector(`.cell[data-r="${r1+dr*i}"][data-c="${c_1+dc*i}"]`);
-      if(cell) res.push(cell);
-    }
-    return res;
-  }
+  let selecting=false, startCell=null, cells=[];
+  const g=document.getElementById('wordGrid');
+  g.addEventListener('mousedown', e=>{if(e.target.classList.contains('cell')){selecting=true;startCell=e.target;clearSel();e.target.classList.add('selected');cells=[e.target];}});
+  g.addEventListener('mouseover', e=>{if(selecting&&e.target.classList.contains('cell')){clearSel();cells=getCells(startCell,e.target);cells.forEach(c=>c.classList.add('selected'));}});
+  g.addEventListener('mouseup', ()=>{if(selecting){selecting=false;const w=cells.map(c=>c.textContent).join(''), rw=[...cells].reverse().map(c=>c.textContent).join('');if((WORDS.includes(w)&&!foundWords.has(w))||(WORDS.includes(rw)&&!foundWords.has(rw))){const fw=WORDS.includes(w)?w:rw;foundWords.add(fw);cells.forEach(c=>{c.classList.remove('selected');c.classList.add('found');});renderWordLists();showNotification('🎉 ¡Encontrada: '+fw+'!','success');}clearSel();}});
+  function clearSel(){document.querySelectorAll('.cell.selected').forEach(c=>c.classList.remove('selected'));}
+  function getCells(c1,c2){const r1=+c1.dataset.r,c_1=+c1.dataset.c,r2=+c2.dataset.r,c_2=+c2.dataset.c,dr=Math.sign(r2-r1),dc=Math.sign(c_2-c_1);if(r1!==r2&&c_1!==c_2&&Math.abs(r2-r1)!==Math.abs(c_2-c_1))return[c1];const res=[],len=Math.max(Math.abs(r2-r1),Math.abs(c_2-c_1));for(let i=0;i<=len;i++){const el=document.querySelector(`.cell[data-r="${r1+dr*i}"][data-c="${c_1+dc*i}"]`);if(el)res.push(el);}return res;}
 }
-
-function verifyWordSearch() {
-  scores.a1 = Math.round((foundWords.size / WORDS.length) * 25);
-  showNotification(`✅ Sopa de letras: ${scores.a1}/25 puntos (${foundWords.size} de ${WORDS.length} palabras)`, 'info');
-}
+function verifyWordSearch(){scores.a1=Math.round((foundWords.size/WORDS.length)*25);showNotification(`✅ Sopa: ${scores.a1}/25 (${foundWords.size}/${WORDS.length})`,'info');}
 
 // ROMPECABEZAS
-const ITEMS = [
-  {t:'Máquina de vapor', c:1}, {t:'Carbón', c:1}, {t:'Locomotora', c:1}, {t:'Barco de vapor', c:1},
-  {t:'Electricidad', c:2}, {t:'Petróleo', c:2}, {t:'Automóviles', c:2}, {t:'Teléfono', c:2},
-  {t:'Radio', c:2}, {t:'Televisión', c:2},
-  {t:'Computadores', c:3}, {t:'Internet', c:3}, {t:'Energías renovables', c:3}, {t:'Fibra óptica', c:3},
-  {t:'Inteligencia artificial', c:4}, {t:'Drones', c:4}, {t:'Impresión 3D', c:4}, {t:'Robótica avanzada', c:4},
-  {t:'Big Data', c:4}, {t:'Internet de las cosas', c:4}
-];
-
-function initPuzzle() {
-  const pool = document.getElementById('cardPool');
-  pool.innerHTML = '';
-  const shuffled = [...ITEMS].sort(()=>Math.random()-0.5);
-  shuffled.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'drag-card';
-    card.textContent = item.t;
-    card.draggable = true;
-    card.dataset.correct = item.c;
-    card.dataset.id = item.t;
-    card.addEventListener('dragstart', e => { e.dataTransfer.setData('text', card.dataset.id); card.classList.add('dragging'); });
-    card.addEventListener('dragend', () => card.classList.remove('dragging'));
-    pool.appendChild(card);
+const ITEMS=[{t:'Máquina de vapor',c:1},{t:'Carbón',c:1},{t:'Locomotora',c:1},{t:'Barco de vapor',c:1},{t:'Electricidad',c:2},{t:'Petróleo',c:2},{t:'Automóviles',c:2},{t:'Teléfono',c:2},{t:'Radio',c:2},{t:'Televisión',c:2},{t:'Computadores',c:3},{t:'Internet',c:3},{t:'Energías renovables',c:3},{t:'Fibra óptica',c:3},{t:'Inteligencia artificial',c:4},{t:'Drones',c:4},{t:'Impresión 3D',c:4},{t:'Robótica avanzada',c:4},{t:'Big Data',c:4},{t:'Internet de las cosas',c:4}];
+function initPuzzle(){
+  const pool=document.getElementById('cardPool'); pool.innerHTML='';
+  [...ITEMS].sort(()=>Math.random()-0.5).forEach(item=>{
+    const card=document.createElement('div'); card.className='drag-card'; card.textContent=item.t; card.draggable=true; card.dataset.correct=item.c; card.dataset.id=item.t;
+    card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text',card.dataset.id);card.classList.add('dragging');});
+    card.addEventListener('dragend',()=>card.classList.remove('dragging')); pool.appendChild(card);
   });
-  document.querySelectorAll('.puzzle-column').forEach(col => {
-    col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
-    col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
-    col.addEventListener('drop', e => {
-      e.preventDefault(); col.classList.remove('drag-over');
-      const id = e.dataTransfer.getData('text');
-      const card = document.querySelector(`.drag-card[data-id="${id}"]`);
-      if(card) { col.appendChild(card); card.classList.remove('dragging'); }
-    });
+  document.querySelectorAll('.puzzle-column').forEach(col=>{
+    col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over');});
+    col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
+    col.addEventListener('drop',e=>{e.preventDefault();col.classList.remove('drag-over');const id=e.dataTransfer.getData('text');const card=document.querySelector(`.drag-card[data-id="${id}"]`);if(card)col.appendChild(card);});
   });
 }
-
-function verifyPuzzle() {
-  let correct = 0;
-  document.querySelectorAll('.puzzle-column').forEach(col => {
-    const colId = +col.dataset.col;
-    col.querySelectorAll('.drag-card').forEach(card => {
-      if(+card.dataset.correct === colId) { card.classList.add('correct'); correct++; }
-      else card.classList.add('incorrect');
-    });
-  });
-  document.querySelectorAll('.drag-card').forEach(card => {
-    if(!card.parentElement.classList.contains('puzzle-column')) card.classList.add('incorrect');
-  });
-  scores.a2 = Math.round((correct / ITEMS.length) * 25);
-  showNotification(`✅ Rompecabezas: ${scores.a2}/25 puntos (${correct} de ${ITEMS.length} correctas)`, 'info');
+function verifyPuzzle(){
+  let correct=0;
+  document.querySelectorAll('.puzzle-column').forEach(col=>{const cId=+col.dataset.col;col.querySelectorAll('.drag-card').forEach(card=>{if(+card.dataset.correct===cId){card.classList.add('correct');correct++;}else card.classList.add('incorrect');});});
+  document.querySelectorAll('.drag-card').forEach(card=>{if(!card.parentElement.classList.contains('puzzle-column'))card.classList.add('incorrect');});
+  scores.a2=Math.round((correct/ITEMS.length)*25); showNotification(`✅ Rompecabezas: ${scores.a2}/25`,'info');
 }
 
-// PREGUNTAS CERRADAS
-const QUESTIONS = [
-  {t:'mcq', q:'¿Entre qué años ocurrió la Primera Revolución Industrial?', opts:['1780 y 1840','1850 y 1950','2007 y 2016','1600 y 1700'], a:0},
-  {t:'mcq', q:'¿Quién diseñó la máquina de vapor considerada motor inicial de la Revolución Industrial?', opts:['Henry Ford','James Watts','Albert Einstein','Isaac Newton'], a:1},
-  {t:'mcq', q:'¿Qué fuente de energía fue principal en la Segunda Revolución Industrial?', opts:['Carbón','Gas natural','Electricidad y petróleo','Energía solar'], a:2},
-  {t:'mcq', q:'¿Quién lideró la producción en masa de automóviles con el Modelo T?', opts:['James Watts','Thomas Edison','Henry Ford','Nikola Tesla'], a:2},
-  {t:'mcq', q:'¿En qué año se definió la Cuarta Revolución Industrial en el foro económico mundial?', opts:['2007','2010','2016','2020'], a:2},
-  {t:'mcq', q:'¿Cuál de las siguientes es una tecnología de la Cuarta Revolución Industrial?', opts:['Máquina de vapor','Telégrafo','Inteligencia artificial','Barco de vapor'], a:2},
-  {t:'mcq', q:'¿Qué fuente de energía se asocia con la Tercera Revolución Industrial?', opts:['Carbón','Petróleo','Energías renovables','Gas'], a:2},
-  {t:'mcq', q:'¿Cuál fue un invento clave de la Primera Revolución Industrial?', opts:['Internet','Avión','Locomotora','Blockchain'], a:2},
-  {t:'tf', q:'La Segunda Revolución Industrial ocurrió aproximadamente entre 1850 y 1950.', a:true},
-  {t:'tf', q:'La Tercera Revolución Industrial se caracteriza por el uso del carbón como fuente principal.', a:false},
-  {t:'tf', q:'Los drones y la impresión 3D son tecnologías de la Cuarta Revolución Industrial.', a:true},
-  {t:'tf', q:'En la Tercera Revolución Industrial, la economía pasó de servicios a producción.', a:false},
-  {t:'match', q:'Relaciona el invento con su revolución:', pairs:[['Telégrafo',2],['Internet',3],['Blockchain',4],['Barco de vapor',1]]},
-  {t:'match', q:'Relaciona la fuente de energía con su revolución:', pairs:[['Carbón',1],['Petróleo',2],['Energías renovables',3],['N/A',4]]}
+// PREGUNTAS CERRADAS (CORREGIDO)
+const QUESTIONS=[
+  {t:'mcq',q:'¿Entre qué años ocurrió la Primera Revolución Industrial?',opts:['1780 y 1840','1850 y 1950','2007 y 2016','1600 y 1700'],a:0},
+  {t:'mcq',q:'¿Quién diseñó la máquina de vapor considerada motor inicial de la Revolución Industrial?',opts:['Henry Ford','James Watts','Albert Einstein','Isaac Newton'],a:1},
+  {t:'mcq',q:'¿Qué fuente de energía fue principal en la Segunda Revolución Industrial?',opts:['Carbón','Gas natural','Electricidad y petróleo','Energía solar'],a:2},
+  {t:'mcq',q:'¿Quién lideró la producción en masa de automóviles con el Modelo T?',opts:['James Watts','Thomas Edison','Henry Ford','Nikola Tesla'],a:2},
+  {t:'mcq',q:'¿En qué año se definió la Cuarta Revolución Industrial en el foro económico mundial?',opts:['2007','2010','2016','2020'],a:2},
+  {t:'mcq',q:'¿Cuál de las siguientes es una tecnología de la Cuarta Revolución Industrial?',opts:['Máquina de vapor','Telégrafo','Inteligencia artificial','Barco de vapor'],a:2},
+  {t:'mcq',q:'¿Qué fuente de energía se asocia con la Tercera Revolución Industrial?',opts:['Carbón','Petróleo','Energías renovables','Gas'],a:2},
+  {t:'mcq',q:'¿Cuál fue un invento clave de la Primera Revolución Industrial?',opts:['Internet','Avión','Locomotora','Blockchain'],a:2},
+  {t:'tf',q:'La Segunda Revolución Industrial ocurrió aproximadamente entre 1850 y 1950.',a:true},
+  {t:'tf',q:'La Tercera Revolución Industrial se caracteriza por el uso del carbón como fuente principal.',a:false},
+  {t:'tf',q:'Los drones y la impresión 3D son tecnologías de la Cuarta Revolución Industrial.',a:true},
+  {t:'tf',q:'En la Tercera Revolución Industrial, la economía pasó de servicios a producción.',a:false},
+  {t:'match',q:'Relaciona el invento con su revolución:',pairs:[['Telégrafo',2],['Internet',3],['Blockchain',4],['Barco de vapor',1]]},
+  {t:'match',q:'Relaciona la fuente de energía con su revolución:',pairs:[['Carbón',1],['Petróleo',2],['Energías renovables',3],['N/A',4]]}
 ];
-
-function initQuestions() {
-  const mcq = document.getElementById('mcqContainer');
-  const tf = document.getElementById('tfContainer');
-  const mqc = document.getElementById('matchQContainer');
-  let mcqIdx=0, tfIdx=0, mqIdx=0;
-  QUESTIONS.forEach((q,i) => {
-    if(q.t==='mcq') {
-      const div = document.createElement('div');
-      div.className = 'quiz-question';
-      div.innerHTML = `<h4>${mcqIdx+1}. ${q.q}</h4><div class="quiz-options">${q.opts.map((o,j)=>`<div class="quiz-option" onclick="selectMCQ(this, ${i}, ${j})"><input type="radio" name="q${i}" style="display:none"> ${o}</div>`).join('')}</div><div class="feedback" id="fb-mcq-${i}"></div>`;
-      mcq.appendChild(div); mcqIdx++;
-    } else if(q.t==='tf') {
-      const div = document.createElement('div');
-      div.className = 'quiz-question';
-      div.innerHTML = `<h4>${tfIdx+8}. ${q.q}</h4><div class="tf-options"><div class="tf-btn" onclick="selectTF(this, ${i}, true)">✅ Verdadero</div><div class="tf-btn" onclick="selectTF(this, ${i}, false)">❌ Falso</div></div><div class="feedback" id="fb-tf-${i}"></div>`;
-      tf.appendChild(div); tfIdx++;
-    } else if(q.t==='match') {
-      const div = document.createElement('div');
-      div.className = 'quiz-question';
-      div.innerHTML = `<h4>${mqIdx+12}. ${q.q}</h4><div class="matching-row">${q.pairs.map(p=>`<div style="display:flex;gap:1rem;align-items:center;margin:0.5rem 0;"><span style="font-weight:600;min-width:120px;">${p[0]}:</span><select class="matching-select" data-q="${mqIdx}" data-p="${p[0]}"><option value="">Seleccionar...</option><option value="1">Primera Rev. Ind.</option><option value="2">Segunda Rev. Ind.</option><option value="3">Tercera Rev. Ind.</option><option value="4">Cuarta Rev. Ind.</option></select></div>`).join('')}</div><div class="feedback" id="fb-mq-${mqIdx}"></div>`;
-      mqc.appendChild(div); mqIdx++;
+function initQuestions(){
+  const mcq=document.getElementById('mcqContainer'), tf=document.getElementById('tfContainer'), mqc=document.getElementById('matchQContainer');
+  let n1=0,n2=0,n3=0;
+  QUESTIONS.forEach((q,i)=>{
+    const fbId=`fb-${i}`;
+    if(q.t==='mcq'){n1++;const d=document.createElement('div');d.className='quiz-question';d.innerHTML=`<h4>${n1}. ${q.q}</h4><div class="quiz-options">${q.opts.map((o,j)=>`<div class="quiz-option" onclick="selectMCQ(this,${i},${j})"><input type="radio" name="q${i}" style="display:none">${o}</div>`).join('')}</div><div class="feedback" id="${fbId}"></div>`;mcq.appendChild(d);}
+    else if(q.t==='tf'){n2++;const d=document.createElement('div');d.className='quiz-question';d.innerHTML=`<h4>${n1+n2}. ${q.q}</h4><div class="tf-options"><div class="tf-btn" onclick="selectTF(this,${i},true)">✅ Verdadero</div><div class="tf-btn" onclick="selectTF(this,${i},false)">❌ Falso</div></div><div class="feedback" id="${fbId}"></div>`;tf.appendChild(d);}
+    else if(q.t==='match'){n3++;const d=document.createElement('div');d.className='quiz-question';d.innerHTML=`<h4>${n1+n2+n3}. ${q.q}</h4><div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.5rem;">${q.pairs.map(p=>`<div style="display:flex;gap:1rem;align-items:center;"><span style="font-weight:600;min-width:120px;">${p[0]}:</span><select class="q-match-select" data-q="${i}" data-p="${p[0]}"><option value="">Seleccionar...</option><option value="1">Primera Rev.</option><option value="2">Segunda Rev.</option><option value="3">Tercera Rev.</option><option value="4">Cuarta Rev.</option></select></div>`).join('')}</div><div class="feedback" id="${fbId}"></div>`;mqc.appendChild(d);}
+  });
+}
+function selectMCQ(el,qi,oi){el.parentElement.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');el.querySelector('input').checked=true;mcqSel[qi]=oi;}
+function selectTF(el,qi,val){el.parentElement.querySelectorAll('.tf-btn').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');tfSel[qi]=val;}
+function verifyQuestions(){
+  let total=0;
+  QUESTIONS.forEach((q,i)=>{
+    const fb=document.getElementById(`fb-${i}`); let pts=0;
+    if(q.t==='mcq') pts=(mcqSel[i]===q.a)?1:0;
+    else if(q.t==='tf') pts=(tfSel[i]===q.a)?1:0;
+    else if(q.t==='match'){
+      let mc=0; const sels=document.querySelectorAll(`.q-match-select[data-q="${i}"]`);
+      q.pairs.forEach((p,idx)=>{if(sels[idx]&&+sels[idx].value===p[1])mc++;});
+      pts=mc/q.pairs.length;
+    }
+    total+=pts;
+    if(fb){
+      const isCorrect=(q.t==='match')?(pts===1):(pts===1);
+      fb.textContent=isCorrect?'✅ Correcto':'❌ Incorrecto. Revisa la respuesta.';
+      fb.className='feedback show '+(isCorrect?'correct':'incorrect');
     }
   });
-}
-
-function selectMCQ(el, qi, oi) {
-  el.parentElement.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected'); el.querySelector('input').checked = true;
-  mcqSel[qi] = oi;
-}
-function selectTF(el, qi, val) {
-  el.parentElement.querySelectorAll('.tf-btn').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected'); tfSel[qi] = val;
-}
-
-function verifyQuestions() {
-  let correct = 0;
-  QUESTIONS.forEach((q,i) => {
-    if(q.t==='mcq') {
-      const fb = document.getElementById(`fb-mcq-${i}`);
-      const isCorrect = mcqSel[i] === q.a;
-      if(isCorrect) { fb.textContent = '✅ Correcto'; fb.className='feedback show correct'; correct++; }
-      else { fb.textContent = `❌ Incorrecto. La respuesta correcta era: ${q.opts[q.a]}`; fb.className='feedback show incorrect'; }
-    } else if(q.t==='tf') {
-      const fb = document.getElementById(`fb-tf-${i}`);
-      const isCorrect = tfSel[i] === q.a;
-      if(isCorrect) { fb.textContent = '✅ Correcto'; fb.className='feedback show correct'; correct++; }
-      else { fb.textContent = `❌ Incorrecto. Era: ${q.a ? 'Verdadero' : 'Falso'}`; fb.className='feedback show incorrect'; }
-    } else if(q.t==='match') {
-      const fb = document.getElementById(`fb-mq-${i}`);
-      let mc = 0;
-      q.pairs.forEach(p => {
-        const sel = document.querySelector(`.matching-select[data-p="${p[0]}"]`);
-        if(sel && +sel.value === p[1]) mc++;
-      });
-      if(mc === q.pairs.length) { fb.textContent = '✅ Todas correctas'; fb.className='feedback show correct'; correct++; }
-      else { fb.textContent = `❌ ${mc}/${q.pairs.length} correctas`; fb.className='feedback show incorrect'; correct += mc/q.pairs.length; }
-    }
-  });
-  scores.a3 = Math.round((correct / 14) * 25);
-  showNotification(`✅ Preguntas cerradas: ${scores.a3}/25 puntos`, 'info');
+  scores.a3=Math.round((total/QUESTIONS.length)*25);
+  showNotification(`✅ Preguntas: ${scores.a3}/25 puntos`,'info');
 }
 
 // EMPAREJAMIENTO GENERAL
-function initMatching() {
-  const c = document.getElementById('matchingContainer');
-  const data = [
-    {rev:'1. Primera Revolución Industrial', period:'1780 a 1840', energy:'Carbón', tech:'Máquina de vapor'},
-    {rev:'2. Segunda Revolución Industrial', period:'1850 a 1950', energy:'Petróleo / Electricidad', tech:'Automóvil / Teléfono'},
-    {rev:'3. Tercera Revolución Industrial', period:'Computadores e Internet', energy:'Energías renovables', tech:'Fibra óptica'},
-    {rev:'4. Cuarta Revolución Industrial', period:'2016 en adelante', energy:'N/A', tech:'Inteligencia artificial / Drones'}
-  ];
-  const shuffleArr = arr => [...arr].sort(() => Math.random() - 0.5);
-  c.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;">
-    <div class="matching-col"><h4>🏭 Revolución</h4>${data.map(d=>`<div style="padding:1rem;margin:0.5rem 0;background:#e3f2fd;border-radius:8px;font-weight:600;">${d.rev}</div>`).join('')}</div>
-    <div class="matching-col"><h4>📅 Periodo</h4>${data.map(d=>`<select class="matching-select" data-match="period"><option value="">Seleccionar...</option><option value="1780 a 1840">1780 a 1840</option><option value="1850 a 1950">1850 a 1950</option><option value="Computadores e Internet">Computadores e Internet</option><option value="2016 en adelante">2016 en adelante</option></select>`).join('')}</div>
-    <div class="matching-col"><h4>⚡ Energía</h4>${data.map(d=>`<select class="matching-select" data-match="energy"><option value="">Seleccionar...</option><option value="Carbón">Carbón</option><option value="Petróleo / Electricidad">Petróleo / Electricidad</option><option value="Energías renovables">Energías renovables</option><option value="N/A">N/A</option></select>`).join('')}</div>
-    <div class="matching-col"><h4>🔧 Tecnología</h4>${data.map(d=>`<select class="matching-select" data-match="tech"><option value="">Seleccionar...</option><option value="Máquina de vapor">Máquina de vapor</option><option value="Automóvil / Teléfono">Automóvil / Teléfono</option><option value="Fibra óptica">Fibra óptica</option><option value="Inteligencia artificial / Drones">Inteligencia artificial / Drones</option></select>`).join('')}</div>
-  </div>`;
+function initMatching(){
+  const c=document.getElementById('matchingContainer');
+  const data=[{r:'1. Primera Rev.',p:'1780 a 1840',e:'Carbón',t:'Máquina de vapor'},{r:'2. Segunda Rev.',p:'1850 a 1950',e:'Petróleo / Electricidad',t:'Automóvil / Teléfono'},{r:'3. Tercera Rev.',p:'Computadores e Internet',e:'Energías renovables',t:'Fibra óptica'},{r:'4. Cuarta Rev.',p:'2016 en adelante',e:'N/A',t:'Inteligencia artificial / Drones'}];
+  c.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;">
+    <div class="matching-col"><h4>🏭 Revolución</h4>${data.map(d=>`<div style="padding:1rem;margin:0.5rem 0;background:#e3f2fd;border-radius:8px;font-weight:600;">${d.r}</div>`).join('')}</div>
+    <div class="matching-col"><h4>📅 Periodo</h4>${data.map(()=>`<select class="matching-select" data-match="period"><option value="">Seleccionar...</option><option value="1780 a 1840">1780 a 1840</option><option value="1850 a 1950">1850 a 1950</option><option value="Computadores e Internet">Computadores e Internet</option><option value="2016 en adelante">2016 en adelante</option></select>`).join('')}</div>
+    <div class="matching-col"><h4>⚡ Energía</h4>${data.map(()=>`<select class="matching-select" data-match="energy"><option value="">Seleccionar...</option><option value="Carbón">Carbón</option><option value="Petróleo / Electricidad">Petróleo / Electricidad</option><option value="Energías renovables">Energías renovables</option><option value="N/A">N/A</option></select>`).join('')}</div>
+    <div class="matching-col"><h4>🔧 Tecnología</h4>${data.map(()=>`<select class="matching-select" data-match="tech"><option value="">Seleccionar...</option><option value="Máquina de vapor">Máquina de vapor</option><option value="Automóvil / Teléfono">Automóvil / Teléfono</option><option value="Fibra óptica">Fibra óptica</option><option value="Inteligencia artificial / Drones">Inteligencia artificial / Drones</option></select>`).join('')}</div></div>`;
 }
-
-function verifyMatching() {
-  let correct = 0;
-  const expected = [
-    {period:'1780 a 1840', energy:'Carbón', tech:'Máquina de vapor'},
-    {period:'1850 a 1950', energy:'Petróleo / Electricidad', tech:'Automóvil / Teléfono'},
-    {period:'Computadores e Internet', energy:'Energías renovables', tech:'Fibra óptica'},
-    {period:'2016 en adelante', energy:'N/A', tech:'Inteligencia artificial / Drones'}
-  ];
-  for(let i=0; i<4; i++) {
-    if(document.querySelectorAll(`[data-match="period"]`)[i].value === expected[i].period) correct++;
-    if(document.querySelectorAll(`[data-match="energy"]`)[i].value === expected[i].energy) correct++;
-    if(document.querySelectorAll(`[data-match="tech"]`)[i].value === expected[i].tech) correct++;
+function verifyMatching(){
+  let correct=0;
+  const exp=[{p:'1780 a 1840',e:'Carbón',t:'Máquina de vapor'},{p:'1850 a 1950',e:'Petróleo / Electricidad',t:'Automóvil / Teléfono'},{p:'Computadores e Internet',e:'Energías renovables',t:'Fibra óptica'},{p:'2016 en adelante',e:'N/A',t:'Inteligencia artificial / Drones'}];
+  for(let i=0;i<4;i++){
+    if(document.querySelectorAll(`[data-match="period"]`)[i].value===exp[i].p)correct++;
+    if(document.querySelectorAll(`[data-match="energy"]`)[i].value===exp[i].e)correct++;
+    if(document.querySelectorAll(`[data-match="tech"]`)[i].value===exp[i].t)correct++;
   }
-  const total = 12;
-  scores.a4 = Math.round((correct / total) * 25);
-  showNotification(`✅ Emparejamiento: ${scores.a4}/25 puntos`, 'info');
+  scores.a4=Math.round((correct/12)*25); showNotification(`✅ Emparejamiento: ${scores.a4}/25`,'info');
 }
 
 // RESULTADOS Y PDF
-function showResults() { showActivity(5); updateProgress(100); }
-
-function calculateFinalGrade() {
-  if(!scores.a1 && !scores.a2 && !scores.a3 && !scores.a4) {
-    verifyWordSearch(); verifyPuzzle(); verifyQuestions(); verifyMatching();
-  }
-  const total = scores.a1 + scores.a2 + scores.a3 + scores.a4;
-  document.getElementById('resStudentName').innerHTML = `👤 Estudiante: <strong>${studentName}</strong>`;
-  document.getElementById('resStudentCourse').innerHTML = `🏫 Curso: <strong>${studentCourse}</strong>`;
-  document.getElementById('scoreBreakdown').innerHTML = `
+function showResults(){showActivity(5);updateProgress(100);}
+function calculateFinalGrade(){
+  if(!scores.a1&&!scores.a2&&!scores.a3&&!scores.a4){verifyWordSearch();verifyPuzzle();verifyQuestions();verifyMatching();}
+  const total=scores.a1+scores.a2+scores.a3+scores.a4;
+  document.getElementById('resStudentName').innerHTML=`👤 Estudiante: <strong>${studentName}</strong>`;
+  document.getElementById('resStudentCourse').innerHTML=`🏫 Curso: <strong>${studentCourse}</strong>`;
+  document.getElementById('scoreBreakdown').innerHTML=`
     <div class="score-row"><span>Sopa de Letras</span><span>${scores.a1}/25</span></div>
     <div class="score-row"><span>Rompecabezas</span><span>${scores.a2}/25</span></div>
     <div class="score-row"><span>Preguntas Cerradas</span><span>${scores.a3}/25</span></div>
     <div class="score-row"><span>Emparejamiento General</span><span>${scores.a4}/25</span></div>
     <div class="score-row" style="border:none;font-size:1.2rem;font-weight:bold;"><span>TOTAL</span><span>${total}/100</span></div>`;
-  document.getElementById('totalScore').textContent = total;
-  let perf = '';
-  if(total >= 90) perf = `<div class="performance-badge" style="background:var(--success);color:white;">🌟 Excelente trabajo</div>`;
-  else if(total >= 75) perf = `<div class="performance-badge" style="background:var(--secondary);color:white;">👍 Buen trabajo</div>`;
-  else if(total >= 60) perf = `<div class="performance-badge" style="background:var(--warning);color:#333;">💪 Puedes mejorar</div>`;
-  else perf = `<div class="performance-badge" style="background:var(--danger);color:white;">📖 Debes repasar nuevamente la teoría</div>`;
-  document.getElementById('performanceBadge').innerHTML = perf;
-  showNotification(`🏆 Tu calificación final es: ${total}/100`, 'success');
+  document.getElementById('totalScore').textContent=total;
+  let perf='';
+  if(total>=90)perf=`<div class="performance-badge" style="background:var(--success);color:white;">🌟 Excelente trabajo</div>`;
+  else if(total>=75)perf=`<div class="performance-badge" style="background:var(--secondary);color:white;">👍 Buen trabajo</div>`;
+  else if(total>=60)perf=`<div class="performance-badge" style="background:var(--warning);color:#333;">💪 Puedes mejorar</div>`;
+  else perf=`<div class="performance-badge" style="background:var(--danger);color:white;">📖 Debes repasar la teoría</div>`;
+  document.getElementById('performanceBadge').innerHTML=perf;
+  showNotification(`🏆 Calificación final: ${total}/100`,'success');
 }
-
-function generatePDF() {
-  if(!scores.a1 && !scores.a2 && !scores.a3 && !scores.a4) calculateFinalGrade();
-  const total = scores.a1 + scores.a2 + scores.a3 + scores.a4;
-  document.getElementById('printDate').textContent = new Date().toLocaleDateString('es-CO');
-  // Populate print header dynamically if needed
+function generatePDF(){
+  if(!scores.a1&&!scores.a2&&!scores.a3&&!scores.a4)calculateFinalGrade();
+  document.getElementById('printDate').textContent=new Date().toLocaleDateString('es-CO');
   window.print();
 }
-
-function resetWorkshop() {
-  scores = {a1:0,a2:0,a3:0,a4:0};
-  foundWords = new Set(); mcqSel={}; tfSel={}; mqSel={};
-  document.getElementById('studentName').value = '';
-  document.getElementById('studentCourse').value = '';
-  document.getElementById('theoryCheck').checked = false;
-  document.getElementById('continueBtn').disabled = true;
+function resetWorkshop(){
+  scores={a1:0,a2:0,a3:0,a4:0}; foundWords=new Set(); mcqSel={}; tfSel={};
+  document.getElementById('studentName').value=''; document.getElementById('studentCourse').value='';
+  document.getElementById('theoryCheck').checked=false; document.getElementById('continueBtn').disabled=true;
   document.querySelectorAll('.feedback').forEach(f=>{f.className='feedback';f.textContent='';});
-  document.querySelectorAll('.matching-select').forEach(s=>s.value='');
+  document.querySelectorAll('.matching-select, .q-match-select').forEach(s=>s.value='');
   document.querySelectorAll('.drag-card').forEach(c=>{c.classList.remove('correct','incorrect');});
-  document.getElementById('cardPool').innerHTML = '';
-  document.querySelectorAll('.puzzle-column').forEach(c=>{c.querySelectorAll('.drag-card').forEach(card=>document.getElementById('cardPool').appendChild(card));});
+  document.getElementById('cardPool').innerHTML='';
+  document.querySelectorAll('.puzzle-column').forEach(c=>c.querySelectorAll('.drag-card').forEach(card=>document.getElementById('cardPool').appendChild(card)));
   initPuzzle(); initWordSearch(); initQuestions(); initMatching();
   document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('cover').classList.add('active');
-  document.getElementById('progressContainer').style.display='none';
-  updateProgress(0);
+  document.getElementById('cover').classList.add('active'); document.getElementById('progressContainer').style.display='none'; updateProgress(0);
   window.scrollTo({top:0, behavior:'smooth'});
 }
-
-function showNotification(msg, type='success') {
-  const n = document.getElementById('notification');
-  n.textContent = msg;
-  n.style.background = type==='warning'?'var(--warning)':type==='info'?'var(--primary-light)':type==='error'?'var(--danger)':'var(--success)';
-  n.classList.add('show');
-  setTimeout(()=>n.classList.remove('show'), 4000);
+function showNotification(msg, type='success'){
+  const n=document.getElementById('notification'); n.textContent=msg;
+  n.style.background=type==='warning'?'var(--warning)':type==='info'?'var(--primary-light)':'var(--success)';
+  n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000);
 }
 </script>
 </body>
