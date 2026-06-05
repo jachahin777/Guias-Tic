@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicaciones Informáticas - Guía Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 950px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header .meta { font-size: 0.9em; opacity: 0.9; }
+        .student-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 30px; background: #f8f9fa; }
+        .student-info input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; }
+        .student-info input:focus { outline: none; border-color: #2a5298; }
+        
+        #score-top {
+            background: #fffbeb; border: 2px solid #d97706; padding: 15px; border-radius: 8px;
+            text-align: center; margin: 15px 30px; font-weight: bold; font-size: 1.2rem;
+            display: none;
+        }
+        #score-top .badge { background: #fef3c7; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; margin-top: 8px; display: inline-block; }
+        
+        .section { margin: 25px 30px; padding: 25px; background: #fafafa; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .section h2 { color: #2a5298; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2a5298; font-size: 1.4em; }
+        
+        .theory-box { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; border-radius: 8px; margin: 15px 0; }
+        .theory-box h3 { color: #1976d2; margin-bottom: 12px; font-size: 1.15em; }
+        .theory-box p { margin: 10px 0; text-align: justify; }
+        .theory-box ul { margin-left: 25px; margin: 10px 0; }
+        .theory-box li { margin: 8px 0; }
+        
+        .instruction-box { background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107; }
+        
+        .question-block { background: white; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .question-block label { display: block; margin: 8px 0; cursor: pointer; padding: 8px; border-radius: 5px; transition: background 0.2s; }
+        .question-block label:hover { background: #f5f5f5; }
+        .question-block input[type="radio"] { margin-right: 10px; }
+        .question-block input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.6; }
+        
+        .points { display: inline-block; background: #ff9800; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.85em; font-weight: bold; margin-left: 10px; }
+        .btn-verify { background: #2196f3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1em; transition: background 0.3s; }
+        .btn-verify:hover { background: #1976d2; }
+        .btn-verify:disabled { background: #9e9e9e; cursor: not-allowed; }
+        
+        .feedback { padding: 10px; margin-top: 10px; border-radius: 5px; display: none; font-weight: 600; }
+        .feedback.correct { background: #c8e6c9; color: #2e7d32; display: block; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; display: block; }
+        .feedback.warning { background: #fff9c4; color: #f57f17; display: block; }
+        .attempts { font-size: 0.85em; color: #757575; margin-left: 10px; }
+        
+        select { padding: 10px; border-radius: 5px; border: 2px solid #ddd; font-size: 1em; width: 100%; max-width: 350px; background: white; }
+        select:disabled { background: #f5f5f5; cursor: not-allowed; }
+        
+        .matching-table, .concept-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .matching-table th, .matching-table td, .concept-table th, .concept-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .matching-table th, .concept-table th { background: #2a5298; color: white; }
+        .matching-table tr:hover, .concept-table tr:hover { background: #f5f5f5; }
+        
+        .situation-box { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4caf50; }
+        .situation-box strong { color: #1e3c72; }
+        
+        .drawing-section { background: #e8f5e9; padding: 20px; border-radius: 8px; margin: 15px 0; border: 2px dashed #4caf50; }
+        .drawing-section h3 { color: #2e7d32; margin-bottom: 15px; }
+        .drawing-item { margin: 15px 0; padding: 10px; background: white; border-radius: 5px; }
+        
+        .btn-calculate { background: #4caf50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 20px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-calculate:hover { background: #388e3c; }
+        .btn-print { background: #607d8b; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 0 30px 30px 30px; display: block; width: calc(100% - 60px); transition: background 0.3s; }
+        .btn-print:hover { background: #455a64; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .btn-verify, .btn-calculate, .btn-print, .feedback, .attempts { display: none !important; }
+            #score-top { display: block !important; border: 2px solid #000; background: white !important; color: black !important; margin-bottom: 20px; }
+            .section { break-inside: avoid; }
+            select { border: 1px solid #000; appearance: none; }
+            .drawing-section { border: 2px solid #000; }
+        }
+        @media (max-width: 768px) { .student-info { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💻 Aplicaciones Informáticas</h1>
+            <div class="meta">Área: Tecnología e Informática | Grado: 6°</div>
+        </div>
+        
+        <div class="student-info">
+            <input type="text" id="nombre" placeholder="Nombre del Estudiante">
+            <input type="text" id="curso" placeholder="Curso">
+            <input type="text" id="fecha" placeholder="Fecha">
+        </div>
+        
+        <div id="score-top"></div>
+
+        <div class="section">
+            <h2>📖 Propósito de Aprendizaje</h2>
+            <p style="background: #e3f2fd; padding: 15px; border-radius: 8px;">Reconocer los diferentes tipos de aplicaciones informáticas y comprender su utilidad en las actividades académicas, personales y laborales.</p>
+        </div>
+
+        <!-- ACTIVIDAD 1: TEORÍA -->
+        <div class="section">
+            <h2>Actividad 1: Consignación de la Teoría</h2>
+            <div class="instruction-box">
+                <strong>📝 Instrucciones:</strong> Lee atentamente la información y cópiala en tu cuaderno con buena letra, ortografía y presentación.
+            </div>
+
+            <div class="theory-box">
+                <h3>LAS APLICACIONES INFORMÁTICAS</h3>
+                <p>Son programas o software que permiten al usuario realizar diferentes tareas específicas. Fueron desarrolladas para satisfacer necesidades particulares de las personas.</p>
+            </div>
+
+            <div class="theory-box">
+                <h3>PROCESADORES DE TEXTO</h3>
+                <p>Se utilizan para elaborar, editar y dar formato a documentos escritos. Permiten redactar cartas, informes, trabajos y otros tipos de textos. <strong>Un ejemplo es Microsoft Word.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>HOJAS DE CÁLCULO</h3>
+                <p>Son aplicaciones diseñadas para realizar cálculos matemáticos, organizar datos y elaborar estadísticas. <strong>Un ejemplo es Microsoft Excel.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>PRESENTACIONES</h3>
+                <p>Permiten crear exposiciones con imágenes, animaciones, videos y sonido. <strong>Algunos ejemplos son PowerPoint, Canva y Prezi.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>NAVEGADORES</h3>
+                <p>Son aplicaciones que permiten visualizar páginas web en Internet. <strong>Algunos ejemplos son Chrome, Opera y Edge.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>BUSCADORES</h3>
+                <p>Son herramientas que permiten encontrar información en Internet mediante palabras clave. <strong>Algunos ejemplos son Google, Bing y DuckDuckGo.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>BASES DE DATOS</h3>
+                <p>Son conjuntos de datos organizados que permiten almacenar, consultar y administrar información. <strong>Algunos ejemplos son MySQL y Access.</strong></p>
+            </div>
+
+            <div class="theory-box">
+                <h3>ANTIVIRUS</h3>
+                <p>Son programas que ayudan a prevenir, detectar y eliminar virus informáticos. <strong>Algunos ejemplos son Windows Defender, Avast y Kaspersky.</strong></p>
+            </div>
+        </div>
+
+        <!-- ACTIVIDAD 2: SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <h2>Actividad 2: Preguntas de Selección Múltiple <span class="points">32 pts</span></h2>
+            <p style="margin-bottom: 15px;">Marca con una X la respuesta correcta.</p>
+            <div id="mc-container"></div>
+        </div>
+
+        <!-- ACTIVIDAD 3: EMPAREJAMIENTO -->
+        <div class="section">
+            <h2>Actividad 3: Emparejamiento <span class="points">20 pts</span></h2>
+            <p style="margin-bottom: 15px;">Relaciona cada concepto de la Columna A con la opción correcta de la Columna B.</p>
+            <table class="matching-table">
+                <thead>
+                    <tr><th>Columna A</th><th>Columna B</th></tr>
+                </thead>
+                <tbody id="matching-body"></tbody>
+            </table>
+            <button class="btn-verify" onclick="verifyMatching()">Verificar Emparejamiento</button>
+            <div id="match-feedback" class="feedback"></div>
+        </div>
+
+        <!-- ACTIVIDAD 4: COMPLETA ESPACIOS -->
+        <div class="section">
+            <h2>Actividad 4: Completa los Espacios <span class="points">20 pts</span></h2>
+            <p style="margin-bottom: 15px;">Selecciona la aplicación correcta para completar cada enunciado.</p>
+            <div id="fill-container"></div>
+        </div>
+
+        <!-- ACTIVIDAD 5: ANALIZA Y RESPONDE -->
+        <div class="section">
+            <h2>Actividad 5: Analiza y Responde <span class="points">20 pts</span></h2>
+            <p style="margin-bottom: 15px;">Lee cada situación y selecciona qué aplicación informática utilizarías.</p>
+            <div id="situation-container"></div>
+        </div>
+
+        <!-- ACTIVIDAD 6: RETO TIC -->
+        <div class="section">
+            <h2>Actividad 6: Reto TIC <span style="color: #666; font-size: 0.9em;">(Revisión docente - Sin puntaje)</span></h2>
+            <div class="drawing-section">
+                <h3>🎨 Dibuja en tu cuaderno los logos de:</h3>
+                
+                <div class="drawing-item">
+                    <h4>Navegadores:</h4>
+                    <ul>
+                        <li><strong>Chrome</strong></li>
+                        <li><strong>Opera</strong></li>
+                        <li><strong>Edge</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="drawing-item">
+                    <h4>Buscadores:</h4>
+                    <ul>
+                        <li><strong>Google</strong></li>
+                        <li><strong>Bing</strong></li>
+                        <li><strong>DuckDuckGo</strong></li>
+                    </ul>
+                </div>
+                
+                <p style="margin-top: 15px; font-style: italic; color: #555;">Escribe debajo de cada dibujo su nombre y una breve descripción de su función.</p>
+            </div>
+        </div>
+
+        <button class="btn-calculate" onclick="calculateFinalScore()">📊 Calificar Guía Completa</button>
+        <button class="btn-print" onclick="window.print()">🖨️ Guardar como PDF / Imprimir</button>
+    </div>
+
+    <script>
+        // ACTIVIDAD 2: SELECCIÓN MÚLTIPLE
+        const mcQuestions = [
+            {q:"¿Cuál de las siguientes aplicaciones se utiliza para escribir cartas y documentos?", opts:["Excel","Word","Chrome","Avast"], ans:1, pts:4},
+            {q:"¿Qué aplicación se utiliza principalmente para realizar cálculos matemáticos?", opts:["Excel","Word","Edge","Canva"], ans:0, pts:4},
+            {q:"¿Cuál de las siguientes es una aplicación para crear presentaciones?", opts:["MySQL","Chrome","PowerPoint","Defender"], ans:2, pts:4},
+            {q:"¿Cuál de los siguientes es un navegador web?", opts:["Google","Bing","Chrome","Access"], ans:2, pts:4},
+            {q:"¿Cuál de las siguientes opciones corresponde a un buscador?", opts:["Edge","Opera","Word","Google"], ans:3, pts:4},
+            {q:"¿Qué aplicación se utiliza para proteger el computador contra virus?", opts:["Excel","PowerPoint","Avast","Access"], ans:2, pts:4},
+            {q:"¿Cuál de las siguientes opciones es una base de datos?", opts:["MySQL","Canva","Chrome","Bing"], ans:0, pts:4},
+            {q:"¿Cuál es la función principal de un buscador?", opts:["Crear presentaciones","Buscar información en Internet","Escribir documentos","Eliminar virus"], ans:1, pts:4}
+        ];
+
+        // ACTIVIDAD 3: EMPAREJAMIENTO
+        const matching = [
+            {a:"1. Procesador de texto", opts:["A. Google","B. Avast","C. Excel","D. Word","E. Chrome"], ans:3},
+            {a:"2. Hoja de cálculo", opts:["A. Google","B. Avast","C. Excel","D. Word","E. Chrome"], ans:2},
+            {a:"3. Navegador", opts:["A. Google","B. Avast","C. Excel","D. Word","E. Chrome"], ans:4},
+            {a:"4. Buscador", opts:["A. Google","B. Avast","C. Excel","D. Word","E. Chrome"], ans:0},
+            {a:"5. Antivirus", opts:["A. Google","B. Avast","C. Excel","D. Word","E. Chrome"], ans:1}
+        ];
+
+        // ACTIVIDAD 4: COMPLETA ESPACIOS
+        const fillBlanks = [
+            {q:"__________ es una aplicación utilizada para realizar cálculos matemáticos.", opts:["Excel","Word","Chrome","Avast","PowerPoint"], ans:0, pts:4},
+            {q:"__________ permite crear documentos escritos.", opts:["Excel","Word","Chrome","Avast","PowerPoint"], ans:1, pts:4},
+            {q:"__________ ayuda a proteger el computador contra virus.", opts:["Excel","Word","Chrome","Avast","PowerPoint"], ans:3, pts:4},
+            {q:"__________ es una herramienta para buscar información en Internet.", opts:["Google","Bing","DuckDuckGo","Edge","Opera"], ans:0, pts:4},
+            {q:"__________ permite navegar por páginas web.", opts:["Chrome","Firefox","Safari","Edge","Opera"], ans:0, pts:4}
+        ];
+
+        // ACTIVIDAD 5: SITUACIONES
+        const situations = [
+            {q:"Debes realizar una exposición sobre el sistema solar.", opts:["Word","Excel","PowerPoint","Chrome","Avast"], ans:2, pts:4},
+            {q:"Necesitas elaborar una carta para tu rector.", opts:["Word","Excel","PowerPoint","Chrome","Avast"], ans:0, pts:4},
+            {q:"Debes organizar las notas de tus compañeros en una tabla y calcular promedios.", opts:["Word","Excel","PowerPoint","Chrome","Avast"], ans:1, pts:4},
+            {q:"Quieres buscar información sobre los animales de Colombia.", opts:["Word","Excel","Google","Chrome","Avast"], ans:2, pts:4},
+            {q:"Tu computador presenta una amenaza de virus.", opts:["Word","Excel","PowerPoint","Chrome","Avast"], ans:4, pts:4}
+        ];
+
+        let state = {
+            mc: {},
+            matching: {},
+            fill: {},
+            situations: {},
+            scores: {mc: 0, matching: 0, fill: 0, situations: 0}
+        };
+
+        // RENDERIZAR SELECCIÓN MÚLTIPLE
+        function renderMC() {
+            const container = document.getElementById('mc-container');
+            mcQuestions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <p><strong>${i+1}.</strong> ${q.q} <span class="points">${q.pts} pts</span> <span class="attempts" id="att_mc${i}">Intentos: 0/2</span></p>
+                    ${q.opts.map((opt, j) => `
+                        <label><input type="radio" name="mc${i}" value="${j}"> ${String.fromCharCode(65)}) ${opt}</label>
+                    `).join('')}
+                    <button class="btn-verify" onclick="verifyMC(${i}, ${q.ans}, ${q.pts})">Verificar</button>
+                    <div id="fb_mc${i}" class="feedback"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // RENDERIZAR EMPAREJAMIENTO
+        function renderMatching() {
+            const tbody = document.getElementById('matching-body');
+            matching.forEach((item, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${item.a}</strong></td>
+                    <td>
+                        <select id="match_${i}">
+                            <option value="">Selecciona...</option>
+                            ${item.opts.map((opt, j) => `<option value="${j}">${opt}</option>`).join('')}
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // RENDERIZAR COMPLETA ESPACIOS
+        function renderFill() {
+            const container = document.getElementById('fill-container');
+            fillBlanks.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <p><strong>${i+1}.</strong> ${item.q} <span class="points">${item.pts} pts</span> <span class="attempts" id="att_fill${i}">Intentos: 0/2</span></p>
+                    <select id="fill_${i}">
+                        <option value="">Selecciona...</option>
+                        ${item.opts.map((opt, j) => `<option value="${j}">${opt}</option>`).join('')}
+                    </select>
+                    <button class="btn-verify" onclick="verifyFill(${i}, ${item.ans}, ${item.pts})">Verificar</button>
+                    <div id="fb_fill${i}" class="feedback"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // RENDERIZAR SITUACIONES
+        function renderSituations() {
+            const container = document.getElementById('situation-container');
+            situations.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'situation-box';
+                div.innerHTML = `
+                    <p><strong>${i+1}.</strong> ${item.q} <span class="points">${item.pts} pts</span> <span class="attempts" id="att_sit${i}">Intentos: 0/2</span></p>
+                    <select id="sit_${i}">
+                        <option value="">Selecciona la aplicación...</option>
+                        ${item.opts.map((opt, j) => `<option value="${j}">${opt}</option>`).join('')}
+                    </select>
+                    <button class="btn-verify" onclick="verifySituation(${i}, ${item.ans}, ${item.pts})">Verificar</button>
+                    <div id="fb_sit${i}" class="feedback"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // VERIFICAR SELECCIÓN MÚLTIPLE
+        function verifyMC(qNum, correctAns, points) {
+            if(state.mc[qNum] && state.mc[qNum].locked) return;
+            
+            const sel = document.querySelector(`input[name="mc${qNum}"]:checked`);
+            if(!sel) return alert("Selecciona una opción antes de verificar.");
+            
+            if(!state.mc[qNum]) state.mc[qNum] = {attempts: 0};
+            state.mc[qNum].attempts++;
+            document.getElementById(`att_mc${qNum}`).textContent = `Intentos: ${state.mc[qNum].attempts}/2`;
+            
+            const fb = document.getElementById(`fb_mc${qNum}`);
+            const btn = sel.closest('.question-block').querySelector('.btn-verify');
+            const isCorrect = parseInt(sel.value) === correctAns;
+
+            if(isCorrect) {
+                fb.textContent = "✅ ¡Correcto!";
+                fb.className = "feedback correct";
+                state.mc[qNum].locked = true;
+                state.mc[qNum].score = points;
+                state.scores.mc += points;
+                btn.disabled = true;
+                document.querySelectorAll(`input[name="mc${qNum}"]`).forEach(i => i.disabled = true);
+            } else {
+                if(state.mc[qNum].attempts >= 2) {
+                    fb.textContent = `❌ Incorrecto. Respuesta correcta: ${String.fromCharCode(65+correctAns)}`;
+                    fb.className = "feedback incorrect";
+                    state.mc[qNum].locked = true;
+                    btn.disabled = true;
+                    document.querySelectorAll(`input[name="mc${qNum}"]`).forEach(i => i.disabled = true);
+                } else {
+                    fb.textContent = "⚠️ Incorrecto. Te queda 1 oportunidad.";
+                    fb.className = "feedback warning";
+                }
+            }
+        }
+
+        // VERIFICAR EMPAREJAMIENTO
+        function verifyMatching() {
+            let correct = 0;
+            let total = matching.length;
+            let allAnswered = true;
+            
+            matching.forEach((item, i) => {
+                const sel = document.getElementById(`match_${i}`).value;
+                if(sel === "") allAnswered = false;
+                if(parseInt(sel) === item.ans) correct++;
+            });
+            
+            if(!allAnswered) return alert("Responde todos los emparejamientos antes de verificar.");
+            
+            state.scores.matching = Math.round((correct / total) * 20);
+            const fb = document.getElementById('match-feedback');
+            fb.textContent = `✅ ${correct}/${total} correctos. Puntuación: ${state.scores.matching}/20 pts`;
+            fb.className = "feedback correct";
+            
+            matching.forEach((item, i) => {
+                document.getElementById(`match_${i}`).disabled = true;
+            });
+        }
+
+        // VERIFICAR COMPLETA ESPACIOS
+        function verifyFill(itemNum, correctAns, points) {
+            if(state.fill[itemNum] && state.fill[itemNum].locked) return;
+            
+            const sel = document.getElementById(`fill_${itemNum}`).value;
+            if(sel === "") return alert("Selecciona una opción antes de verificar.");
+            
+            if(!state.fill[itemNum]) state.fill[itemNum] = {attempts: 0};
+            state.fill[itemNum].attempts++;
+            document.getElementById(`att_fill${itemNum}`).textContent = `Intentos: ${state.fill[itemNum].attempts}/2`;
+            
+            const fb = document.getElementById(`fb_fill${itemNum}`);
+            const btn = document.getElementById(`fill_${itemNum}`).nextElementSibling;
+            const isCorrect = parseInt(sel) === correctAns;
+
+            if(isCorrect) {
+                fb.textContent = "✅ ¡Correcto!";
+                fb.className = "feedback correct";
+                state.fill[itemNum].locked = true;
+                state.fill[itemNum].score = points;
+                state.scores.fill += points;
+                btn.disabled = true;
+                document.getElementById(`fill_${itemNum}`).disabled = true;
+            } else {
+                if(state.fill[itemNum].attempts >= 2) {
+                    fb.textContent = `❌ Incorrecto. Respuesta correcta: ${fillBlanks[itemNum].opts[correctAns]}`;
+                    fb.className = "feedback incorrect";
+                    state.fill[itemNum].locked = true;
+                    btn.disabled = true;
+                    document.getElementById(`fill_${itemNum}`).disabled = true;
+                } else {
+                    fb.textContent = "⚠️ Incorrecto. Te queda 1 oportunidad.";
+                    fb.className = "feedback warning";
+                }
+            }
+        }
+
+        // VERIFICAR SITUACIONES
+        function verifySituation(itemNum, correctAns, points) {
+            if(state.situations[itemNum] && state.situations[itemNum].locked) return;
+            
+            const sel = document.getElementById(`sit_${itemNum}`).value;
+            if(sel === "") return alert("Selecciona una aplicación antes de verificar.");
+            
+            if(!state.situations[itemNum]) state.situations[itemNum] = {attempts: 0};
+            state.situations[itemNum].attempts++;
+            document.getElementById(`att_sit${itemNum}`).textContent = `Intentos: ${state.situations[itemNum].attempts}/2`;
+            
+            const fb = document.getElementById(`fb_sit${itemNum}`);
+            const btn = document.getElementById(`sit_${itemNum}`).nextElementSibling;
+            const isCorrect = parseInt(sel) === correctAns;
+
+            if(isCorrect) {
+                fb.textContent = "✅ ¡Correcto!";
+                fb.className = "feedback correct";
+                state.situations[itemNum].locked = true;
+                state.situations[itemNum].score = points;
+                state.scores.situations += points;
+                btn.disabled = true;
+                document.getElementById(`sit_${itemNum}`).disabled = true;
+            } else {
+                if(state.situations[itemNum].attempts >= 2) {
+                    fb.textContent = `❌ Incorrecto. Respuesta correcta: ${situations[itemNum].opts[correctAns]}`;
+                    fb.className = "feedback incorrect";
+                    state.situations[itemNum].locked = true;
+                    btn.disabled = true;
+                    document.getElementById(`sit_${itemNum}`).disabled = true;
+                } else {
+                    fb.textContent = "⚠️ Incorrecto. Te queda 1 oportunidad.";
+                    fb.className = "feedback warning";
+                }
+            }
+        }
+
+        // CALCULAR PUNTUACIÓN FINAL
+        function calculateFinalScore() {
+            const total = state.scores.mc + state.scores.matching + state.scores.fill + state.scores.situations;
+            const final = Math.min(100, total + 8); // +8 por copiar teoría
+            
+            const html = `
+                <div style="font-size:1.4rem; margin-bottom:8px;">📊 CALIFICACIÓN FINAL: ${final} / 100 pts</div>
+                <div class="badge"> Actividad 2: ${state.scores.mc}/32 | Actividad 3: ${state.scores.matching}/20 | Actividad 4: ${state.scores.fill}/20 | Actividad 5: ${state.scores.situations}/20 | Teoría: 8 pts</div>
+                <div style="margin-top:10px; font-size:1rem;">
+                    ${final >= 85 ? '🌟 ¡Excelente comprensión de aplicaciones informáticas!' : final >= 70 ? '👍 Aprobado. Revisa los conceptos marcados.' : '💡 Repasa la teoría y vuelve a intentar'}
+                </div>`;
+            
+            document.getElementById('score-top').innerHTML = html;
+            document.getElementById('score-top').style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        window.onload = () => {
+            renderMC();
+            renderMatching();
+            renderFill();
+            renderSituations();
+        };
+    </script>
+</body>
+</html>
