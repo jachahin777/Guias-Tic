@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación: Revoluciones Industriales</title>
+    <style>
+        :root { --primary: #1e3a8a; --accent: #3b82f6; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: var(--card); padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        /* ENCABEZADO DE IMPRESIÓN */
+        #print-header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid var(--primary); padding-bottom: 20px; }
+        #print-header h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 5px; }
+        #print-header p { font-size: 1.1rem; color: #4b5563; }
+        
+        .header-inputs { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 30px; background: #eff6ff; padding: 20px; border-radius: 10px; border: 2px solid #dbeafe; }
+        .header-inputs input { padding: 12px; border: 2px solid #cbd5e1; border-radius: 6px; font-size: 1rem; background: white; }
+        .header-inputs input:focus { outline: none; border-color: var(--accent); }
+        
+        /* CAJA DE PUNTAJE (Para el docente) */
+        .score-box { background: #fef3c7; border: 2px solid #d97706; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .score-box span { color: #d97706; }
+
+        .section-title { font-size: 1.4rem; color: var(--primary); margin: 30px 0 15px 0; border-left: 5px solid var(--accent); padding-left: 15px; font-weight: 700; background: #f8fafc; padding: 10px 15px; border-radius: 0 8px 8px 0; }
+        .pts-badge { float: right; font-size: 0.9rem; color: #64748b; font-weight: normal; background: white; padding: 2px 8px; border-radius: 12px; border: 1px solid #cbd5e1; }
+        
+        .q-item { background: white; padding: 20px; margin: 15px 0; border-radius: 10px; border: 1px solid #e5e7eb; }
+        .q-text { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; }
+        
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .options label { background: #f9fafb; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
+        .options label:hover { border-color: var(--accent); background: #eff6ff; }
+        .options input[type="radio"] { margin-right: 12px; accent-color: var(--accent); width: 18px; height: 18px; }
+        
+        textarea { width: 100%; height: 100px; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical; margin-top: 10px; background: #f9fafb; }
+        textarea:focus { outline: none; border-color: var(--accent); }
+
+        .btn-main { background: #059669; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 1.2rem; margin-top: 30px; font-weight: bold; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3); transition: transform 0.2s; }
+        .btn-main:hover { background: #047857; transform: translateY(-2px); }
+
+        /* ESTILOS PARA IMPRESIÓN */
+        @media print {
+            body { background: white; padding: 0; font-size: 12pt; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
+            .btn-main { display: none !important; }
+            .header-inputs { background: white; border: none; padding: 0; margin-bottom: 20px; }
+            .header-inputs input { border: none; border-bottom: 2px solid #000; border-radius: 0; padding: 5px 0; }
+            .q-item { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 15px; }
+            .options label { border: 1px solid #ccc; background: white; }
+            textarea { border: 1px solid #000; height: 150px; }
+            .section-title { border-left: 4px solid #000; background: white; padding-left: 10px; }
+            .pts-badge { border: 1px solid #000; color: black; }
+            .score-box { border: 2px solid #000; background: white; color: black; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div id="print-header">
+            <h1>Evaluación – Plan de Mejoramiento</h1>
+            <p>Tecnología e Informática – Grado Séptimo<br>Tema: Revoluciones Industriales y Cuarta Revolución Industrial</p>
+        </div>
+        
+        <div class="header-inputs">
+            <input type="text" id="nombre" placeholder="👤 Nombre del Estudiante">
+            <input type="text" id="grado" placeholder="🎓 Grado">
+            <input type="text" id="fecha" placeholder="📅 Fecha">
+        </div>
+
+        <!-- CAJA DE PUNTAJE PARA EL DOCENTE -->
+        <div class="score-box">
+            <span>📊 PUNTAJE TOTAL:</span>
+            <span style="font-size: 1.5rem;">______ / 10</span>
+        </div>
+
+        <!-- SECCIÓN 1: SELECCIÓN MÚLTIPLE (6 Puntos) -->
+        <div class="section-title">Selección múltiple con única respuesta <span class="pts-badge">6 Puntos</span></div>
+        <div id="mc-container"></div>
+
+        <!-- SECCIÓN 2: PREGUNTAS ABIERTAS (4 Puntos) -->
+        <div class="section-title">Preguntas Abiertas <span class="pts-badge">4 Puntos</span></div>
+        <p style="margin-bottom: 15px; font-style: italic; color: #666; font-size: 0.9rem;">Responde de forma clara, con buena ortografía y utilizando tus propias palabras.</p>
+        <div id="open-container"></div>
+
+        <button class="btn-main" onclick="window.print()">🖨️ Guardar como PDF / Imprimir</button>
+    </div>
+
+    <script>
+        // DATOS DE LA EVALUACIÓN
+        const mcData = [
+            {q: "1. ¿Cuál fue una de las principales fuentes de energía que impulsó las máquinas durante la Primera Revolución Industrial?", opts: ["A. Energía solar", "B. Vapor producido principalmente mediante carbón", "C. Energía nuclear", "D. Baterías eléctricas"]},
+            {q: "2. ¿Cuál de los siguientes avances se relaciona principalmente con la Segunda Revolución Industrial?", opts: ["A. Máquina de vapor", "B. Internet", "C. Electricidad y producción en masa", "D. Inteligencia artificial"]},
+            {q: "3. Una característica importante de la Tercera Revolución Industrial fue:", opts: ["A. La utilización de sistemas electrónicos, computadores y automatización.", "B. La aparición de las primeras máquinas de vapor.", "C. El uso exclusivo de animales para realizar trabajos.", "D. La desaparición de las telecomunicaciones."]},
+            {q: "4. Un agricultor instala sensores que miden la humedad del suelo y envían automáticamente los datos a su teléfono por Internet. ¿Qué tecnología está utilizando principalmente?", opts: ["A. Impresión 3D", "B. Internet de las Cosas (IoT)", "C. Economía colaborativa", "D. Vehículos autónomos"]},
+            {q: "5. Una empresa recopila millones de datos de sus clientes y los analiza para identificar patrones y tomar mejores decisiones. Este proceso está relacionado principalmente con:", opts: ["A. Big Data", "B. Robótica", "C. Impresión 3D", "D. Drones"]},
+            {q: "6. ¿Cuál situación representa mejor el uso de la computación en la nube?", opts: ["A. Guardar todos los archivos únicamente en el disco duro del computador.", "B. Construir una pieza utilizando una impresora 3D.", "C. Guardar y acceder a documentos mediante servicios disponibles a través de Internet.", "D. Utilizar un robot para ensamblar automóviles."]}
+        ];
+
+        const openData = [
+            {id: 7, q: "7. Explica una diferencia importante entre la Primera, Segunda y Tercera Revolución Industrial teniendo en cuenta las tecnologías o fuentes de energía utilizadas."},
+            {id: 8, q: "8. Explica con tus propias palabras qué es la Inteligencia Artificial y menciona un ejemplo de cómo esta tecnología puede influir en la vida cotidiana."},
+            {id: 9, q: "9. Escoge UNA de las siguientes tecnologías: robótica, impresión 3D, vehículos autónomos o drones. Explica qué es, menciona un uso actual y señala un beneficio que puede aportar a la sociedad."},
+            {id: 10, q: "10. De todas las tecnologías de la Cuarta Revolución Industrial que investigaste, ¿cuál consideras que tendrá mayor impacto en la sociedad? Explica tu elección y menciona por lo menos dos razones."}
+        ];
+
+        // RENDERIZAR PREGUNTAS
+        function renderMC() {
+            const container = document.getElementById('mc-container');
+            mcData.forEach((item, i) => {
+                let html = `<div class="q-item">
+                    <div class="q-text">${item.q}</div>
+                    <div class="options">`;
+                item.opts.forEach((opt, j) => {
+                    html += `<label><input type="radio" name="mc${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderOpen() {
+            const container = document.getElementById('open-container');
+            openData.forEach((item, i) => {
+                let html = `<div class="q-item">
+                    <div class="q-text">${item.q}</div>
+                    <textarea id="open${i}" placeholder="Escribe tu respuesta aquí..."></textarea>
+                </div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        window.onload = () => { renderMC(); renderOpen(); };
+    </script>
+</body>
+</html>
