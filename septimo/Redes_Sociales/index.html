@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de Redes Sociales · Grado 7 · Tecnología e Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141433;
+  --ink-soft:#4a4a6a;
+  --paper:#ffffff;
+  --fondo:#eef1f9;
+  --linea:#d8def0;
+  --nodo:#2b5cf6;
+  --acento:#e5397d;
+  --ok:#12a06a;
+  --mal:#d92f4c;
+  --amarillo:#ffd45e;
+  --radio:14px;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--fondo);
+  color:var(--ink);
+  font-family:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px 90px;}
+
+/* ---------- Portada ---------- */
+.hero{
+  background:linear-gradient(160deg,#1a1a44 0%,#2b2b6e 55%,#3d2a76 100%);
+  color:#fff;
+  padding:38px 0 34px;
+  position:relative;
+  overflow:hidden;
+}
+.hero .wrap{padding-bottom:0;position:relative;z-index:2;}
+.hero-net{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.5;}
+.hero-net line{stroke:#8fa6ff;stroke-width:1;}
+.hero-net circle{fill:#8fa6ff;}
+.hero-net .n-viva{fill:#ff7ab0;}
+@media (prefers-reduced-motion:no-preference){
+  .hero-net circle{animation:latir 4.5s ease-in-out infinite;}
+  .hero-net circle:nth-child(even){animation-delay:1.6s;}
+}
+@keyframes latir{0%,100%{opacity:.55;}50%{opacity:1;}}
+.colegio{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:#b9c4ff;margin:0 0 14px;
+}
+h1{
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:700;font-size:clamp(34px,7vw,58px);
+  line-height:1.02;letter-spacing:-.02em;margin:0 0 12px;
+}
+h1 em{font-style:normal;color:#ff7ab0;}
+.bajada{max-width:46ch;color:#dfe4ff;margin:0 0 22px;font-size:17px;}
+.metas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+.meta{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  padding:5px 11px;border-radius:999px;
+}
+
+/* ---------- Identificación ---------- */
+.identidad{
+  background:var(--paper);border-radius:var(--radio);
+  border:1px solid var(--linea);
+  padding:22px;margin:-26px 0 34px;position:relative;z-index:3;
+  box-shadow:0 10px 30px rgba(20,20,51,.10);
+}
+.identidad h2{margin:0 0 4px;font-family:"Space Grotesk",sans-serif;font-size:21px;}
+.identidad p{margin:0 0 16px;color:var(--ink-soft);font-size:15px;}
+.campos{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;}
+.campo{flex:1 1 200px;min-width:0;}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--ink-soft);}
+input[type=text]{
+  width:100%;padding:12px 13px;font:inherit;font-size:16px;
+  border:1.5px solid var(--linea);border-radius:10px;background:#fbfcff;color:var(--ink);
+}
+input[type=text]:focus{outline:3px solid #bcd0ff;border-color:var(--nodo);}
+.btn{
+  font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:16px;
+  padding:12px 22px;border-radius:10px;border:none;cursor:pointer;
+  background:var(--nodo);color:#fff;transition:transform .12s ease,background .12s ease;
+}
+.btn:hover{background:#1c46d0;}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:3px solid var(--amarillo);outline-offset:2px;}
+.btn-rosa{background:var(--acento);}
+.btn-rosa:hover{background:#c62a68;}
+.btn-linea{background:transparent;color:var(--nodo);border:1.5px solid var(--nodo);}
+.btn-linea:hover{background:#e8eeff;}
+.aviso{margin-top:12px;font-size:14px;color:var(--mal);font-weight:700;display:none;}
+.tarjeta-id{display:none;align-items:center;gap:14px;flex-wrap:wrap;}
+.tarjeta-id.on{display:flex;}
+.tarjeta-id .quien{font-family:"Space Grotesk",sans-serif;font-size:20px;font-weight:700;}
+.codigo{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  background:#eef2ff;color:#2b3f8f;border:1px solid #cdd8ff;
+  padding:5px 10px;border-radius:8px;
+}
+
+/* ---------- Secciones ---------- */
+#guia{display:none;}
+#guia.on{display:block;}
+.paso{margin:0 0 30px;}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.eyebrow .nodo{width:11px;height:11px;border-radius:50%;background:var(--acento);flex:none;}
+.eyebrow .hilo{height:1.5px;background:var(--linea);flex:1;}
+.eyebrow span{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+h2.titulo{font-family:"Space Grotesk",sans-serif;font-size:clamp(24px,4.4vw,32px);margin:0 0 6px;letter-spacing:-.01em;}
+.instruccion{color:var(--ink-soft);margin:0 0 18px;}
+.tarjeta{
+  background:var(--paper);border:1px solid var(--linea);border-radius:var(--radio);
+  padding:22px;box-shadow:0 2px 10px rgba(20,20,51,.04);
+}
+.tarjeta + .tarjeta{margin-top:14px;}
+
+/* ---------- Teoría ---------- */
+.teoria h3{
+  font-family:"Space Grotesk",sans-serif;font-size:19px;margin:0 0 8px;
+  color:#2b2b6e;
+}
+.teoria h3 .marca{color:var(--acento);}
+.teoria p{margin:0 0 12px;}
+.teoria ul{margin:0 0 4px;padding-left:20px;}
+.teoria li{margin-bottom:6px;}
+.teoria b{color:#1a1a44;}
+.definicion{
+  border-left:4px solid var(--acento);background:#fff5f9;
+  padding:12px 16px;border-radius:0 10px 10px 0;margin:0 0 14px;
+}
+.copiar-check{
+  display:flex;gap:10px;align-items:flex-start;margin-top:16px;
+  background:#f3f6ff;border:1px dashed #b9c6f0;border-radius:10px;padding:12px 14px;font-size:15px;
+}
+.copiar-check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--nodo);}
+
+/* ---------- Preguntas ---------- */
+.pregunta{border-top:1px solid var(--linea);padding:18px 0 4px;}
+.pregunta:first-of-type{border-top:none;padding-top:0;}
+.p-cabeza{display:flex;gap:10px;align-items:baseline;margin-bottom:10px;}
+.p-num{
+  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;
+  background:#2b2b6e;color:#fff;border-radius:6px;padding:3px 7px;flex:none;
+}
+.p-texto{font-weight:700;}
+.p-pts{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);flex:none;}
+.opcion{
+  display:flex;gap:11px;align-items:flex-start;
+  padding:10px 12px;border:1.5px solid var(--linea);border-radius:10px;
+  margin-bottom:8px;cursor:pointer;background:#fbfcff;transition:border-color .12s,background .12s;
+}
+.opcion:hover{border-color:#9db2ff;background:#f4f7ff;}
+.opcion input{width:19px;height:19px;margin-top:2px;flex:none;accent-color:var(--nodo);}
+.opcion .letra{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--nodo);flex:none;}
+.opcion.bloqueada{cursor:default;}
+.opcion.bloqueada:hover{border-color:var(--linea);background:#fbfcff;}
+.opcion.elegida{border-color:#8f9dc9;background:#eef1f9;}
+.opcion.elegida:hover{border-color:#8f9dc9;background:#eef1f9;}
+.opcion.bloqueada .letra{color:var(--ink-soft);}
+
+/* ---------- Sopa de letras ---------- */
+.sopa-zona{display:flex;flex-wrap:wrap;gap:20px;}
+.sopa-grid{
+  display:grid;gap:2px;touch-action:none;user-select:none;-webkit-user-select:none;
+  flex:1 1 320px;min-width:0;
+}
+.celda{
+  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  background:#f5f7ff;border-radius:4px;
+  font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:clamp(11px,2.4vw,17px);color:#2b2b6e;cursor:pointer;
+}
+.celda.sel{background:var(--amarillo);color:#3b2a00;}
+.celda.hallada{background:#12a06a;color:#fff;}
+.celda.sel.hallada{background:#0d7d52;}
+.lista-palabras{flex:0 1 190px;}
+.lista-palabras h4{font-family:"Space Grotesk",sans-serif;margin:0 0 10px;font-size:15px;letter-spacing:.02em;}
+.lista-palabras ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
+.lista-palabras li{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;
+  background:#eef2ff;color:#2b3f8f;padding:4px 9px;border-radius:7px;
+}
+.lista-palabras li.hallada{background:#e2f7ee;color:#0b6b47;text-decoration:line-through;}
+.contador{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-soft);margin-top:12px;}
+.pista{font-size:14px;color:var(--ink-soft);margin:0 0 14px;}
+
+/* ---------- Resultado ---------- */
+.barra-final{text-align:center;margin-top:28px;}
+.resultado{display:none;margin-top:22px;}
+.resultado.on{display:block;}
+.marcador{
+  background:linear-gradient(160deg,#1a1a44,#3d2a76);color:#fff;
+  border-radius:var(--radio);padding:26px;text-align:center;
+}
+.marcador .total{font-family:"Space Grotesk",sans-serif;font-size:64px;font-weight:700;line-height:1;}
+.marcador .total small{font-size:22px;color:#b9c4ff;}
+.marcador .quien-final{font-size:15px;color:#dfe4ff;margin-bottom:14px;}
+.desglose{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;}
+.desglose div{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;padding:10px 14px;font-size:14px;font-family:"IBM Plex Mono",monospace;
+}
+.tabla-pts{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px;}
+.tabla-pts th,.tabla-pts td{border-bottom:1px solid var(--linea);padding:9px 6px;text-align:left;}
+.tabla-pts th{font-family:"IBM Plex Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);}
+.tabla-pts td:last-child,.tabla-pts th:last-child{text-align:right;font-family:"IBM Plex Mono",monospace;}
+footer{text-align:center;color:var(--ink-soft);font-size:13.5px;margin-top:40px;}
+
+@media (max-width:600px){
+  body{font-size:16px;}
+  .lista-palabras{flex:1 1 100%;}
+  .tarjeta{padding:17px;}
+}
+/* ---------- Comprobante ---------- */
+.comprobante{margin-top:14px;}
+.cmp-cabeza{display:flex;gap:16px;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cmp-colegio{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px;}
+.cmp-titulo{font-family:"Space Grotesk",sans-serif;font-size:22px;margin:0;letter-spacing:-.01em;}
+.cmp-sub{margin:2px 0 0;font-size:14px;color:var(--ink-soft);}
+.cmp-sello{
+  margin-left:auto;flex:none;text-align:center;border:2px solid var(--ink);border-radius:12px;
+  padding:8px 14px;min-width:96px;
+}
+.cmp-sello span{display:block;font-family:"Space Grotesk",sans-serif;font-size:34px;font-weight:700;line-height:1;}
+.cmp-sello small{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft);}
+.cmp-datos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;margin:0 0 18px;}
+.cmp-datos div{min-width:0;}
+.cmp-datos dt{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.cmp-datos dd{margin:2px 0 0;font-weight:700;font-size:16px;word-break:break-word;}
+.tabla-pts .cmp-mid{text-align:left;font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--ink-soft);}
+.tabla-pts tr.cmp-total td{font-weight:700;border-bottom:2px solid var(--ink);}
+.cmp-firma{display:flex;gap:24px;margin-top:34px;flex-wrap:wrap;}
+.cmp-firma div{flex:1 1 180px;}
+.cmp-linea{display:block;border-bottom:1.5px solid var(--ink);height:26px;}
+.cmp-firma small{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+
+@media print{
+  body{background:#fff;}
+  .hero{background:#1a1a44 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .btn,.barra-final,.copiar-check,.acciones-pdf{display:none !important;}
+  .tarjeta{box-shadow:none;break-inside:avoid;}
+  .paso{break-inside:avoid;}
+  /* Al pulsar "Guardar como PDF" solo se imprime el comprobante */
+  body.solo-comprobante .hero,
+  body.solo-comprobante .identidad,
+  body.solo-comprobante .paso,
+  body.solo-comprobante .marcador,
+  body.solo-comprobante footer{display:none !important;}
+  body.solo-comprobante .wrap{padding:0;max-width:none;}
+  body.solo-comprobante .comprobante{margin:0;border:none;padding:0;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="hero-net" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="90" y1="60" x2="240" y2="130"/><line x1="240" y1="130" x2="180" y2="250"/>
+    <line x1="240" y1="130" x2="420" y2="80"/><line x1="420" y1="80" x2="600" y2="150"/>
+    <line x1="600" y1="150" x2="720" y2="70"/><line x1="600" y1="150" x2="540" y2="260"/>
+    <line x1="180" y1="250" x2="380" y2="230"/><line x1="380" y1="230" x2="540" y2="260"/>
+    <line x1="380" y1="230" x2="420" y2="80"/><line x1="720" y1="70" x2="760" y2="210"/>
+    <circle cx="90" cy="60" r="6"/><circle cx="240" cy="130" r="9" class="n-viva"/>
+    <circle cx="180" cy="250" r="5"/><circle cx="420" cy="80" r="8"/>
+    <circle cx="600" cy="150" r="9" class="n-viva"/><circle cx="720" cy="70" r="5"/>
+    <circle cx="540" cy="260" r="6"/><circle cx="380" cy="230" r="7"/><circle cx="760" cy="210" r="5"/>
+  </svg>
+  <div class="wrap">
+    <p class="colegio">Colegio Edgardo Vives Campo · Tecnología e Informática</p>
+    <h1>Redes<br><em>sociales</em></h1>
+    <p class="bajada">Nodos que somos nosotros, líneas que son lo que compartimos. Esta guía es tuya: nadie más en el salón recibe las mismas opciones ni la misma sopa de letras.</p>
+    <div class="metas">
+      <span class="meta">GRADO 7</span>
+      <span class="meta">3 ACTIVIDADES</span>
+      <span class="meta">100 PUNTOS</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="identidad">
+    <div id="formulario">
+      <h2>Escribe tu nombre para abrir tu guía</h2>
+      <p>Con tu nombre se arma una versión única: tus preguntas quedan en otro orden y tu sopa de letras es distinta a la de tus compañeros.</p>
+      <div class="campos">
+        <div class="campo">
+          <label for="nombre">Nombre y apellido</label>
+          <input type="text" id="nombre" placeholder="Ej: Laura Martínez" autocomplete="off">
+        </div>
+        <div class="campo" style="flex:0 1 130px">
+          <label for="grupo">Curso</label>
+          <input type="text" id="grupo" placeholder="7-01" autocomplete="off">
+        </div>
+        <div style="flex:0 0 auto">
+          <button class="btn" id="btnGenerar">Abrir mi guía</button>
+        </div>
+      </div>
+      <p class="aviso" id="aviso">Escribe tu nombre completo para continuar.</p>
+    </div>
+    <div class="tarjeta-id" id="tarjetaId">
+      <div>
+        <div class="quien" id="quien"></div>
+        <div style="font-size:14px;color:var(--ink-soft)">Guía personal de Redes Sociales</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="codigo" id="codigo"></span>
+        <button class="btn btn-linea" id="btnCambiar">Cambiar nombre</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="guia">
+
+    <!-- ACTIVIDAD 1 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 1 · 20 puntos</span><i class="hilo"></i></div>
+      <h2 class="titulo">Copia la teoría en tu cuaderno</h2>
+      <p class="instruccion">Transcribe completo el siguiente contenido, con título, subtítulos y viñetas. Escribe con letra legible: esta parte se revisa en el cuaderno, no aquí.</p>
+
+      <div class="tarjeta teoria">
+        <h3><span class="marca">1.</span> ¿Qué es una red social?</h3>
+        <div class="definicion">
+          Es una <b>estructura social</b> compuesta por un conjunto de actores (tales como individuos u organizaciones) que están relacionados de acuerdo a algún criterio (relación profesional, amistad, parentesco, etc.). Normalmente se representan simbolizando los actores como <b>nodos</b> y las relaciones como <b>líneas</b> que los unen.
+        </div>
+
+        <h3><span class="marca">2.</span> ¿Para qué se usan las redes sociales?</h3>
+        <ul>
+          <li>Son aplicaciones web que permiten conectar a las personas con sus amigos y realizar nuevas amistades.</li>
+          <li>Permiten a los usuarios compartir contenido, interactuar y crear comunidades sobre intereses similares.</li>
+          <li>Las redes sociales son un canal de comunicación. Deben tener un lenguaje distinto al tradicional y un destinatario bien definido.</li>
+        </ul>
+
+        <h3 style="margin-top:18px"><span class="marca">3.</span> Tipos y clasificación de redes sociales</h3>
+        <p><b>Redes horizontales:</b> son aquellas que no tienen una temática definida, están dirigidas a un público genérico y se centran en los contactos. La idea principal es relacionar a las personas mediante los perfiles, listas y contenidos.</p>
+        <p><b>Facebook:</b> creada por Mark Zuckerberg en 2004. La idea principal era relacionar a los estudiantes universitarios de Harvard, pero el éxito impulsó a abrirla a todo el mundo y cuenta con más de mil millones de usuarios.</p>
+        <p><b>Redes verticales:</b> su objetivo es congregar a colectivos que desarrollan actividades de entretenimiento, deporte, usuarios de videojuegos, fans, etc. Los ejemplos más representativos son LinkedIn, Filmaffinity y TripAdvisor.</p>
+
+        <h3 style="margin-top:18px"><span class="marca">4.</span> ¿Qué se puede hacer en Facebook?</h3>
+        <ul>
+          <li>Expandir tu red de contactos.</li>
+          <li>Ver videos y fotografías.</li>
+          <li>Unirte a conversaciones de tus temas de interés.</li>
+          <li>Darte a conocer profesionalmente.</li>
+          <li>Crear grupos.</li>
+          <li>Dar a conocer cualquier empresa.</li>
+          <li>Publicitar anuncios con promociones de productos.</li>
+        </ul>
+
+        <label class="copiar-check">
+          <input type="checkbox" id="chkCopia">
+          <span>Ya copié toda la teoría en mi cuaderno y estoy listo para responder.</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD 2 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 2 · 10 preguntas · 5 puntos c/u</span><i class="hilo"></i></div>
+      <h2 class="titulo">Selección múltiple</h2>
+      <p class="instruccion">Marca una sola respuesta por pregunta. Ojo: el orden de las opciones cambió solo para ti, así que copiar la letra de un compañero no sirve.</p>
+      <div class="tarjeta" id="preguntas"></div>
+    </section>
+
+    <!-- ACTIVIDAD 3 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 3 · 15 palabras · 2 puntos c/u</span><i class="hilo"></i></div>
+      <h2 class="titulo">Sopa de letras: redes sociales</h2>
+      <p class="instruccion">Encuentra las 15 redes sociales escondidas. Pueden estar en horizontal, vertical o diagonal, y también al revés.</p>
+      <div class="tarjeta">
+        <p class="pista">Arrastra desde la primera hasta la última letra de la palabra. En el celular, desliza el dedo sobre las letras.</p>
+        <div class="sopa-zona">
+          <div class="sopa-grid" id="sopa"></div>
+          <div class="lista-palabras">
+            <h4>Búscalas todas</h4>
+            <ul id="listaPalabras"></ul>
+            <div class="contador" id="contador">0 de 15 encontradas</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="barra-final">
+      <button class="btn btn-rosa" id="btnCalificar">Calificar mi guía</button>
+    </div>
+
+    <section class="resultado" id="resultado">
+      <div class="marcador">
+        <div class="quien-final" id="quienFinal"></div>
+        <div class="total" id="puntaje">0<small>/80</small></div>
+        <div id="mensaje" style="margin-top:10px;font-size:16px"></div>
+        <div class="desglose" id="desglose"></div>
+      </div>
+      <div class="tarjeta comprobante" id="comprobante">
+        <div class="cmp-cabeza">
+          <div>
+            <p class="cmp-colegio">Colegio Edgardo Vives Campo · Tecnología e Informática</p>
+            <h3 class="cmp-titulo">Comprobante de calificación</h3>
+            <p class="cmp-sub">Guía de Redes Sociales · Grado 7</p>
+          </div>
+          <div class="cmp-sello">
+            <span id="cmpTotal">0</span>
+            <small>de 100</small>
+          </div>
+        </div>
+
+        <dl class="cmp-datos">
+          <div><dt>Estudiante</dt><dd id="cmpNombre">—</dd></div>
+          <div><dt>Curso</dt><dd id="cmpCurso">—</dd></div>
+          <div><dt>Fecha</dt><dd id="cmpFecha">—</dd></div>
+          <div><dt>Código de guía</dt><dd id="cmpCodigo">—</dd></div>
+        </dl>
+
+        <table class="tabla-pts">
+          <thead><tr><th>Actividad</th><th>Resultado</th><th>Puntos</th></tr></thead>
+          <tbody>
+            <tr><td>Copia de la teoría en el cuaderno</td><td class="cmp-mid">La revisa el docente</td><td id="tdTeoria">— / 20</td></tr>
+            <tr><td>Selección múltiple (10 × 5)</td><td class="cmp-mid" id="tdAciertos">0 de 10</td><td id="tdSel">0 / 50</td></tr>
+            <tr><td>Sopa de letras (15 × 2)</td><td class="cmp-mid" id="tdPalabras">0 de 15</td><td id="tdSopa">0 / 30</td></tr>
+            <tr class="cmp-total"><td>Total obtenido en la plataforma</td><td class="cmp-mid"></td><td id="tdTotal">0 / 80</td></tr>
+          </tbody>
+        </table>
+
+        <div class="cmp-firma">
+          <div><span class="cmp-linea"></span><small>Nota definitiva (docente)</small></div>
+          <div><span class="cmp-linea"></span><small>Firma del docente</small></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center" class="acciones-pdf">
+        <button class="btn" id="btnPDF">Guardar como PDF</button>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-soft);margin:12px 0 0;text-align:center" class="acciones-pdf">Guarda el PDF y envíaselo al docente. Él asigna la nota definitiva.</p>
+    </section>
+
+    <footer>
+      Colegio Edgardo Vives Campo · Tecnología e Informática · Guía de Redes Sociales, grado 7
+    </footer>
+  </div>
+</main>
+
+<script>
+/* ============ Generador aleatorio con semilla ============ */
+function semillaDe(txt){
+  let h = 2166136261;
+  for (let i=0;i<txt.length;i++){ h ^= txt.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+function rngCon(semilla){
+  let a = semilla;
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function normalizar(s){
+  return s.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");
+}
+function mezclar(arr, rnd){
+  const a = arr.slice();
+  for (let i=a.length-1;i>0;i--){ const j = Math.floor(rnd()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+/* ============ Banco de preguntas ============ */
+const BANCO = [
+  { q:"¿Qué es una red social?",
+    ops:["Una estructura social compuesta por un conjunto de actores relacionados de acuerdo a algún criterio.",
+         "Un programa que sirve únicamente para descargar música y videos.",
+         "Un cable especial que conecta los computadores dentro de una sala.",
+         "Una página web donde solo se pueden leer noticias del país."] },
+  { q:"En la representación gráfica de una red social, ¿cómo se simbolizan los actores?",
+    ops:["Como nodos.","Como líneas.","Como carpetas.","Como ventanas."] },
+  { q:"¿Y cómo se representan las relaciones entre esos actores?",
+    ops:["Como líneas que unen los nodos.","Como nodos separados entre sí.","Como números dentro de una tabla.","Como fotos de perfil."] },
+  { q:"Según la presentación, las redes sociales permiten a los usuarios…",
+    ops:["Compartir contenido, interactuar y crear comunidades sobre intereses similares.",
+         "Reparar el sistema operativo del computador.",
+         "Aumentar la memoria RAM del celular.",
+         "Imprimir documentos desde cualquier lugar del mundo."] },
+  { q:"Las redes sociales son un canal de comunicación que debe tener…",
+    ops:["Un lenguaje distinto al tradicional y un destinatario bien definido.",
+         "El mismo lenguaje de un libro de texto y ningún destinatario.",
+         "Solo imágenes, sin ningún tipo de texto.",
+         "Un lenguaje secreto que nadie más pueda entender."] },
+  { q:"¿Cuál es la característica principal de las redes horizontales?",
+    ops:["No tienen una temática definida y están dirigidas a un público genérico.",
+         "Reúnen solamente a personas de una misma profesión.",
+         "Únicamente permiten publicar videos de deportes.",
+         "Solo funcionan dentro de una universidad."] },
+  { q:"¿Quién creó Facebook y en qué año?",
+    ops:["Mark Zuckerberg, en 2004.","Bill Gates, en 1998.","Steve Jobs, en 2004.","Mark Zuckerberg, en 2010."] },
+  { q:"¿Cuál era la idea principal de Facebook cuando fue creada?",
+    ops:["Relacionar a los estudiantes universitarios de Harvard.",
+         "Vender productos por internet en todo el mundo.",
+         "Enviar mensajes de texto gratis entre celulares.",
+         "Compartir videos musicales de artistas famosos."] },
+  { q:"¿Cuál es el objetivo de las redes sociales verticales?",
+    ops:["Congregar a colectivos que desarrollan actividades de entretenimiento, deporte, videojuegos o fans.",
+         "Conectar a cualquier persona sin importar sus intereses.",
+         "Guardar copias de seguridad de los archivos del computador.",
+         "Reemplazar el correo electrónico dentro de las empresas."] },
+  { q:"¿Cuáles son ejemplos de redes sociales verticales según la presentación?",
+    ops:["LinkedIn, Filmaffinity y TripAdvisor.","Facebook, Instagram y Pinterest.","Windows, Linux y macOS.","Google, Bing y Yahoo."] }
+];
+const LETRAS = "ABCD";
+
+/* ============ Sopa de letras ============ */
+const PALABRAS = ["FACEBOOK","INSTAGRAM","WHATSAPP","LINKEDIN","TIKTOK","YOUTUBE","TWITTER",
+                  "SNAPCHAT","PINTEREST","TELEGRAM","TUMBLR","REDDIT","SPOTIFY","DISCORD","SKYPE"];
+const N = 15;
+const DIRS = [[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function construirSopa(rnd){
+  for (let intento=0; intento<80; intento++){
+    const g = Array.from({length:N},()=>Array(N).fill(""));
+    let ok = true;
+    const orden = mezclar(PALABRAS, rnd).sort((a,b)=>b.length-a.length);
+    for (const w of orden){
+      let puesta = false;
+      for (let t=0;t<400 && !puesta;t++){
+        const d = DIRS[Math.floor(rnd()*DIRS.length)];
+        const f = Math.floor(rnd()*N), c = Math.floor(rnd()*N);
+        const ff = f + d[0]*(w.length-1), cc = c + d[1]*(w.length-1);
+        if (ff<0||ff>=N||cc<0||cc>=N) continue;
+        let cabe = true;
+        for (let i=0;i<w.length;i++){
+          const y=f+d[0]*i, x=c+d[1]*i;
+          if (g[y][x] !== "" && g[y][x] !== w[i]){ cabe=false; break; }
+        }
+        if (!cabe) continue;
+        for (let i=0;i<w.length;i++) g[f+d[0]*i][c+d[1]*i] = w[i];
+        puesta = true;
+      }
+      if (!puesta){ ok=false; break; }
+    }
+    if (!ok) continue;
+    for (let y=0;y<N;y++) for (let x=0;x<N;x++)
+      if (g[y][x]==="") g[y][x] = ABC[Math.floor(rnd()*26)];
+    return g;
+  }
+  return null;
+}
+
+/* ============ Estado ============ */
+let rnd, preguntasMezcladas = [], halladas = new Set(), gridCells = [], calificada = false;
+let datosEst = {nombre:"", grupo:"", codigo:""};
+
+const $ = id => document.getElementById(id);
+
+$("btnGenerar").addEventListener("click", generar);
+$("nombre").addEventListener("keydown", e => { if(e.key==="Enter") generar(); });
+$("grupo").addEventListener("keydown", e => { if(e.key==="Enter") generar(); });
+$("btnCambiar").addEventListener("click", () => {
+  $("guia").classList.remove("on");
+  $("tarjetaId").classList.remove("on");
+  $("formulario").style.display = "block";
+  $("nombre").focus();
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function generar(){
+  const nom = $("nombre").value.trim();
+  const gr  = $("grupo").value.trim();
+  if (nom.length < 3){ $("aviso").style.display="block"; $("nombre").focus(); return; }
+  $("aviso").style.display="none";
+
+  const clave = normalizar(nom) + "|" + normalizar(gr);
+  const s = semillaDe(clave);
+  rnd = rngCon(s);
+
+  $("formulario").style.display = "none";
+  $("quien").textContent = nom + (gr ? " · " + gr : "");
+  $("quienFinal").textContent = nom + (gr ? " · Curso " + gr : "");
+  const cod = "RS7-" + s.toString(36).toUpperCase().slice(0,5);
+  datosEst = {nombre:nom, grupo:gr, codigo:cod};
+  $("codigo").textContent = cod;
+  $("tarjetaId").classList.add("on");
+
+  construirPreguntas();
+  construirGrid();
+
+  calificada = false;
+  $("resultado").classList.remove("on");
+  $("btnCalificar").disabled = false;
+  $("btnCalificar").textContent = "Calificar mi guía";
+  $("guia").classList.add("on");
+  $("guia").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function construirPreguntas(){
+  const cont = $("preguntas");
+  cont.innerHTML = "";
+  preguntasMezcladas = [];
+
+  const ordenPreguntas = mezclar(BANCO.map((_,i)=>i), rnd);
+
+  ordenPreguntas.forEach((idxBanco, i) => {
+    const base = BANCO[idxBanco];
+    const conMarca = base.ops.map((texto, j) => ({texto, esCorrecta: j===0}));
+    const mezcladas = mezclar(conMarca, rnd);
+    const correcta = mezcladas.findIndex(o => o.esCorrecta);
+    preguntasMezcladas.push({correcta});
+
+    const div = document.createElement("div");
+    div.className = "pregunta";
+    let html = '<div class="p-cabeza"><span class="p-num">' + String(i+1).padStart(2,"0") +
+               '</span><span class="p-texto">' + base.q + '</span><span class="p-pts">5 pts</span></div>';
+    mezcladas.forEach((o, k) => {
+      html += '<label class="opcion" data-p="'+i+'" data-k="'+k+'">' +
+              '<input type="radio" name="q'+i+'" value="'+k+'">' +
+              '<span class="letra">'+LETRAS[k]+'.</span><span>'+o.texto+'</span></label>';
+    });
+    div.innerHTML = html;
+    cont.appendChild(div);
+  });
+}
+
+function construirGrid(){
+  const g = construirSopa(rnd);
+  const cont = $("sopa");
+  cont.innerHTML = "";
+  cont.style.gridTemplateColumns = "repeat("+N+", 1fr)";
+  gridCells = [];
+  halladas = new Set();
+
+  for (let y=0;y<N;y++){
+    for (let x=0;x<N;x++){
+      const c = document.createElement("div");
+      c.className = "celda";
+      c.textContent = g[y][x];
+      c.dataset.y = y; c.dataset.x = x;
+      cont.appendChild(c);
+      gridCells.push(c);
+    }
+  }
+  const lista = $("listaPalabras");
+  lista.innerHTML = "";
+  mezclar(PALABRAS, rnd).forEach(w => {
+    const li = document.createElement("li");
+    li.textContent = w; li.dataset.w = w;
+    lista.appendChild(li);
+  });
+  actualizarContador();
+}
+
+function actualizarContador(){
+  $("contador").textContent = halladas.size + " de " + PALABRAS.length + " encontradas";
+}
+
+/* ---- selección por arrastre ---- */
+let arrastrando = false, celdaIni = null, celdaFin = null;
+const sopa = $("sopa");
+
+sopa.addEventListener("pointerdown", e => {
+  const c = e.target.closest(".celda"); if(!c) return;
+  e.preventDefault();
+  arrastrando = true; celdaIni = c; celdaFin = c;
+  try { sopa.setPointerCapture(e.pointerId); } catch(_){}
+  pintar();
+});
+sopa.addEventListener("pointermove", e => {
+  if(!arrastrando) return;
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  const c = el && el.closest ? el.closest(".celda") : null;
+  if (c && c !== celdaFin){ celdaFin = c; pintar(); }
+});
+["pointerup","pointercancel"].forEach(ev =>
+  sopa.addEventListener(ev, () => { if(!arrastrando) return; arrastrando=false; revisar(); })
+);
+
+function lineaEntre(a, b){
+  if(!a || !b) return null;
+  const y1=+a.dataset.y, x1=+a.dataset.x, y2=+b.dataset.y, x2=+b.dataset.x;
+  const dy = y2-y1, dx = x2-x1;
+  if (dy===0 && dx===0) return [a];
+  if (!(dy===0 || dx===0 || Math.abs(dy)===Math.abs(dx))) return null;
+  const pasos = Math.max(Math.abs(dy), Math.abs(dx));
+  const sy = Math.sign(dy), sx = Math.sign(dx);
+  const out = [];
+  for (let i=0;i<=pasos;i++) out.push(gridCells[(y1+sy*i)*N + (x1+sx*i)]);
+  return out;
+}
+function pintar(){
+  gridCells.forEach(c => c.classList.remove("sel"));
+  const l = lineaEntre(celdaIni, celdaFin);
+  if (l) l.forEach(c => c.classList.add("sel"));
+}
+function revisar(){
+  const l = lineaEntre(celdaIni, celdaFin);
+  gridCells.forEach(c => c.classList.remove("sel"));
+  if (!l || l.length < 2) return;
+  const txt = l.map(c => c.textContent).join("");
+  const rev = txt.split("").reverse().join("");
+  const hit = PALABRAS.find(w => (w===txt || w===rev) && !halladas.has(w));
+  if (!hit) return;
+  halladas.add(hit);
+  l.forEach(c => c.classList.add("hallada"));
+  const li = $("listaPalabras").querySelector('[data-w="'+hit+'"]');
+  if (li) li.classList.add("hallada");
+  actualizarContador();
+}
+
+/* ---- calificación ---- */
+$("btnCalificar").addEventListener("click", () => {
+  let aciertos = 0, sinResponder = 0;
+
+  preguntasMezcladas.forEach((p, i) => {
+    const marcada = document.querySelector('input[name="q'+i+'"]:checked');
+    if (!marcada) sinResponder++;
+    document.querySelectorAll('.opcion[data-p="'+i+'"]').forEach(op => {
+      const k = +op.dataset.k;
+      op.classList.add("bloqueada");
+      op.querySelector("input").disabled = true;
+      if (marcada && +marcada.value === k) op.classList.add("elegida");
+    });
+    if (marcada && +marcada.value === p.correcta) aciertos++;
+  });
+
+  const ptsSel  = aciertos * 5;
+  const ptsSopa = halladas.size * 2;
+  const total   = ptsSel + ptsSopa;
+
+  $("puntaje").innerHTML = total + '<small>/80</small>';
+  $("desglose").innerHTML =
+    '<div>Selección múltiple: ' + ptsSel + '/50</div>' +
+    '<div>Sopa de letras: ' + ptsSopa + '/30</div>' +
+    '<div>Sin responder: ' + sinResponder + '</div>';
+
+  let msg;
+  if (total >= 65) msg = "Muy buen trabajo. Faltan los 20 puntos de la copia en el cuaderno.";
+  else if (total >= 45) msg = "Buen avance. Los 20 puntos de la copia los asigna el docente.";
+  else msg = "Guarda tu comprobante y repasa la teoría con el docente.";
+  $("mensaje").textContent = msg;
+
+  /* --- Comprobante --- */
+  const fecha = new Date().toLocaleDateString("es-CO", {day:"2-digit", month:"long", year:"numeric"});
+  $("cmpNombre").textContent  = datosEst.nombre;
+  $("cmpCurso").textContent   = datosEst.grupo || "—";
+  $("cmpFecha").textContent   = fecha;
+  $("cmpCodigo").textContent  = datosEst.codigo;
+  $("cmpTotal").textContent   = total;
+  $("tdAciertos").textContent = aciertos + " de 10";
+  $("tdPalabras").textContent = halladas.size + " de 15";
+  $("tdSel").textContent      = ptsSel + " / 50";
+  $("tdSopa").textContent     = ptsSopa + " / 30";
+  $("tdTotal").textContent    = total + " / 80";
+
+  document.title = "Calificacion_" + normalizar(datosEst.nombre).replace(/ /g,"_") + "_" + datosEst.codigo;
+
+  calificada = true;
+  $("btnCalificar").disabled = true;
+  $("btnCalificar").textContent = "Guía calificada";
+  $("resultado").classList.add("on");
+  $("resultado").scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+$("btnPDF").addEventListener("click", () => {
+  document.body.classList.add("solo-comprobante");
+  window.print();
+  setTimeout(() => document.body.classList.remove("solo-comprobante"), 800);
+});
+window.addEventListener("afterprint", () => document.body.classList.remove("solo-comprobante"));
+</script>
+</body>
+</html>
