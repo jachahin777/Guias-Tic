@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Las desventajas de las redes sociales II · Grado 7 · Tecnología e Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#14282C;
+  --tinta-suave:#4d6a6f;
+  --papel:#ffffff;
+  --fondo:#e9f1ef;
+  --linea:#cddedb;
+  --teal:#0d6b62;
+  --teal-osc:#094a44;
+  --ambar:#e0980f;
+  --alerta:#c33f2e;
+  --ok:#0f7b57;
+  --radio:14px;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;background:var(--fondo);color:var(--tinta);
+  font-family:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;line-height:1.62;
+}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px 90px;}
+
+/* ---------- Portada ---------- */
+.hero{background:linear-gradient(155deg,#0b3b37 0%,#0d5952 55%,#12706a 100%);color:#fff;padding:40px 0 36px;}
+.hero .wrap{padding-bottom:0;}
+.hero-fila{display:flex;gap:28px;align-items:center;flex-wrap:wrap;}
+.hero-texto{flex:1 1 340px;min-width:0;}
+.colegio{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8fd3ca;margin:0 0 14px;}
+h1{font-family:"Outfit",sans-serif;font-weight:800;font-size:clamp(32px,6.4vw,52px);line-height:1.02;letter-spacing:-.02em;margin:0 0 12px;}
+h1 span{color:#f7c65a;}
+.bajada{max-width:44ch;color:#d5ece8;margin:0 0 20px;}
+.metas{display:flex;flex-wrap:wrap;gap:8px;}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);padding:5px 11px;border-radius:999px;}
+
+/* pila de notificaciones = firma visual */
+.pila{flex:0 1 290px;display:flex;flex-direction:column;gap:9px;}
+.noti{
+  background:rgba(255,255,255,.96);color:var(--tinta);border-radius:12px;
+  padding:10px 13px;display:flex;gap:10px;align-items:center;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+.noti:nth-child(1){transform:rotate(-1.4deg);}
+.noti:nth-child(2){transform:rotate(.9deg);}
+.noti:nth-child(3){transform:rotate(-.6deg);}
+.noti:nth-child(4){transform:rotate(1.2deg);}
+.noti b{display:block;font-size:14px;font-family:"Outfit",sans-serif;}
+.noti small{font-size:12px;color:var(--tinta-suave);}
+.punto{width:10px;height:10px;border-radius:50%;flex:none;background:var(--ambar);}
+.punto.rojo{background:var(--alerta);}
+@media (prefers-reduced-motion:no-preference){
+  .noti{animation:entra .5s ease both;}
+  .noti:nth-child(2){animation-delay:.12s;} .noti:nth-child(3){animation-delay:.24s;} .noti:nth-child(4){animation-delay:.36s;}
+}
+@keyframes entra{from{opacity:0;transform:translateY(10px);}to{opacity:1;}}
+
+/* ---------- Identificación ---------- */
+.identidad{background:var(--papel);border-radius:var(--radio);border:1px solid var(--linea);padding:22px;margin:-26px 0 34px;position:relative;z-index:3;box-shadow:0 10px 30px rgba(9,42,38,.10);}
+.identidad h2{margin:0 0 4px;font-family:"Outfit",sans-serif;font-size:21px;}
+.identidad p{margin:0 0 16px;color:var(--tinta-suave);font-size:15px;}
+.campos{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;}
+.campo{flex:1 1 200px;min-width:0;}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:var(--tinta-suave);}
+input[type=text]{width:100%;padding:12px 13px;font:inherit;font-size:16px;border:1.5px solid var(--linea);border-radius:10px;background:#fbfdfc;color:var(--tinta);}
+input[type=text]:focus{outline:3px solid #a8dbd4;border-color:var(--teal);}
+.btn{font-family:"Outfit",sans-serif;font-weight:700;font-size:16px;padding:12px 22px;border-radius:10px;border:none;cursor:pointer;background:var(--teal);color:#fff;transition:background .12s,transform .12s;}
+.btn:hover{background:var(--teal-osc);}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:3px solid var(--ambar);outline-offset:2px;}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn-ambar{background:var(--ambar);color:#2a1c00;}
+.btn-ambar:hover{background:#c9860a;}
+.btn-linea{background:transparent;color:var(--teal);border:1.5px solid var(--teal);}
+.btn-linea:hover{background:#e2f1ee;}
+.aviso{margin-top:12px;font-size:14px;color:var(--alerta);font-weight:700;display:none;}
+.tarjeta-id{display:none;align-items:center;gap:14px;flex-wrap:wrap;}
+.tarjeta-id.on{display:flex;}
+.tarjeta-id .quien{font-family:"Outfit",sans-serif;font-size:20px;font-weight:700;}
+.codigo{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;background:#e3f2ef;color:#0a5850;border:1px solid #b9dcd6;padding:5px 10px;border-radius:8px;}
+
+/* ---------- Secciones ---------- */
+#guia{display:none;}
+#guia.on{display:block;}
+.paso{margin:0 0 32px;}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.eyebrow .nodo{width:11px;height:11px;border-radius:50%;background:var(--ambar);flex:none;}
+.eyebrow .hilo{height:1.5px;background:var(--linea);flex:1;}
+.eyebrow span{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--tinta-suave);}
+h2.titulo{font-family:"Outfit",sans-serif;font-size:clamp(24px,4.4vw,32px);margin:0 0 6px;letter-spacing:-.01em;}
+.instruccion{color:var(--tinta-suave);margin:0 0 18px;}
+.tarjeta{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:22px;box-shadow:0 2px 10px rgba(9,42,38,.04);}
+
+/* ---------- Teoría ---------- */
+.objetivos{background:#e9f5f2;border:1px solid #b9dcd6;border-radius:12px;padding:16px;margin-bottom:20px;}
+.objetivos h4{font-family:"Outfit",sans-serif;margin:0 0 8px;font-size:16px;}
+.objetivos ul{margin:0;padding-left:20px;}
+.objetivos li{margin-bottom:4px;font-size:15.5px;}
+.bloque-tit{font-family:"Outfit",sans-serif;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);border-bottom:2px solid var(--teal);padding-bottom:6px;margin:0 0 14px;}
+.ventajas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:26px;}
+.ventajas div{background:#f4faf8;border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:11px 13px;font-size:15.5px;}
+.ventajas b{display:block;color:var(--teal-osc);}
+.solucion{background:#fff8e8;border-left:4px solid var(--ambar);border-radius:0 10px 10px 0;padding:11px 14px;font-size:15.5px;margin:8px 0 0 !important;}
+.solucion b{color:#8a5c00;}
+.riesgo{border-top:1px solid var(--linea);padding:16px 0 4px;}
+.riesgo:first-child{border-top:none;padding-top:0;}
+.r-cabeza{display:flex;gap:10px;align-items:baseline;}
+.r-num{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:12px;background:var(--teal);color:#fff;border-radius:6px;padding:3px 7px;flex:none;}
+.riesgo h3{font-family:"Outfit",sans-serif;font-size:18px;margin:0 0 6px;}
+.riesgo p{margin:0 0 8px;}
+.riesgo b{color:var(--teal-osc);}
+.nota-legal{background:#fff8e8;border-left:4px solid var(--ambar);border-radius:0 10px 10px 0;padding:13px 16px;margin:16px 0 0;font-size:15.5px;}
+.nota-legal b{color:#8a5c00;}
+.ayuda{background:#e9f5f2;border:1px solid #b9dcd6;border-radius:12px;padding:16px;margin-top:14px;}
+.ayuda h4{font-family:"Outfit",sans-serif;margin:0 0 8px;font-size:16px;}
+.ayuda ul{margin:0;padding-left:20px;}
+.ayuda li{margin-bottom:5px;font-size:15.5px;}
+
+/* ---------- Preguntas ---------- */
+.pregunta{border-top:1px solid var(--linea);padding:18px 0 6px;}
+.pregunta:first-of-type{border-top:none;padding-top:0;}
+.p-cabeza{display:flex;gap:10px;align-items:baseline;margin-bottom:10px;}
+.p-num{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;background:var(--tinta);color:#fff;border-radius:6px;padding:3px 7px;flex:none;}
+.p-texto{font-weight:700;}
+.p-pts{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--tinta-suave);flex:none;}
+.opcion{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--linea);border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fbfdfc;transition:border-color .12s,background .12s;}
+.opcion:hover{border-color:#79bdb4;background:#f2faf8;}
+.opcion input{width:19px;height:19px;margin-top:2px;flex:none;accent-color:var(--teal);}
+.opcion .letra{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--teal);flex:none;}
+.opcion.bloqueada{cursor:default;}
+.opcion.bloqueada:hover{border-color:var(--linea);background:#fbfdfc;}
+.opcion.elegida{border-color:#8aa3a6;background:#eef3f2;}
+.opcion.elegida:hover{border-color:#8aa3a6;background:#eef3f2;}
+.opcion.bloqueada .letra{color:var(--tinta-suave);}
+.vf{display:flex;gap:10px;}
+.vf .opcion{flex:1;justify-content:center;align-items:center;}
+
+/* ---------- Respuestas abiertas ---------- */
+.abierta textarea{
+  width:100%;min-height:132px;padding:13px;font:inherit;font-size:16px;line-height:1.55;
+  border:1.5px solid var(--linea);border-radius:10px;background:#fbfdfc;color:var(--tinta);resize:vertical;
+}
+.abierta textarea:focus{outline:3px solid #a8dbd4;border-color:var(--teal);}
+.abierta textarea:disabled{background:#f4f7f6;color:var(--tinta);}
+.contador-txt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--tinta-suave);margin-top:5px;text-align:right;}
+.contador-txt.corto{color:var(--alerta);}
+.terminos{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px;}
+.terminos span{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;background:#fff3d6;color:#7a5200;padding:4px 9px;border-radius:7px;}
+.guia-resp{font-size:14.5px;color:var(--tinta-suave);margin:0 0 10px;}
+.respuesta-impresa{display:none;white-space:pre-wrap;}
+
+/* ---------- Resultado y comprobante ---------- */
+.barra-final{text-align:center;margin-top:28px;}
+.resultado{display:none;margin-top:22px;}
+.resultado.on{display:block;}
+.marcador{background:linear-gradient(155deg,#0b3b37,#12706a);color:#fff;border-radius:var(--radio);padding:26px;text-align:center;}
+.marcador .quien-final{font-size:15px;color:#d5ece8;margin-bottom:12px;}
+.marcador .total{font-family:"Outfit",sans-serif;font-size:62px;font-weight:800;line-height:1;}
+.marcador .total small{font-size:21px;color:#8fd3ca;}
+.desglose{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;}
+.desglose div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 14px;font-size:14px;font-family:"IBM Plex Mono",monospace;}
+
+.comprobante{margin-top:14px;}
+.cmp-cabeza{display:flex;gap:16px;align-items:flex-start;border-bottom:2px solid var(--tinta);padding-bottom:14px;margin-bottom:16px;}
+.cmp-colegio{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-suave);margin:0 0 6px;}
+.cmp-titulo{font-family:"Outfit",sans-serif;font-size:22px;margin:0;letter-spacing:-.01em;}
+.cmp-sub{margin:2px 0 0;font-size:14px;color:var(--tinta-suave);}
+.cmp-sello{margin-left:auto;flex:none;text-align:center;border:2px solid var(--tinta);border-radius:12px;padding:8px 14px;min-width:96px;}
+.cmp-sello span{display:block;font-family:"Outfit",sans-serif;font-size:32px;font-weight:800;line-height:1;}
+.cmp-sello small{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--tinta-suave);}
+.cmp-datos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;margin:0 0 18px;}
+.cmp-datos dt{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);}
+.cmp-datos dd{margin:2px 0 0;font-weight:700;font-size:16px;word-break:break-word;}
+.tabla-pts{width:100%;border-collapse:collapse;font-size:15px;}
+.tabla-pts th,.tabla-pts td{border-bottom:1px solid var(--linea);padding:9px 6px;text-align:left;}
+.tabla-pts th{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--tinta-suave);}
+.tabla-pts td:last-child,.tabla-pts th:last-child{text-align:right;font-family:"IBM Plex Mono",monospace;}
+.tabla-pts .cmp-mid{font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--tinta-suave);}
+.tabla-pts tr.cmp-total td{font-weight:700;border-bottom:2px solid var(--tinta);}
+.cmp-firma{display:flex;gap:24px;margin-top:30px;flex-wrap:wrap;}
+.cmp-firma div{flex:1 1 180px;}
+.cmp-linea{display:block;border-bottom:1.5px solid var(--tinta);height:26px;}
+.cmp-firma small{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);}
+.entrega{display:none;}
+.entrega h4{font-family:"Outfit",sans-serif;font-size:15px;margin:16px 0 4px;}
+.entrega .resp{white-space:pre-wrap;border-left:3px solid var(--linea);padding:2px 0 2px 12px;margin:0 0 6px;font-size:14.5px;}
+.entrega .vacia{color:var(--alerta);font-style:italic;}
+.pasos-envio{background:#e9f5f2;border:1px solid #b9dcd6;border-radius:12px;padding:16px;margin-top:14px;}
+.pasos-envio h4{font-family:"Outfit",sans-serif;margin:0 0 8px;font-size:16px;}
+.pasos-envio ol{margin:0;padding-left:20px;}
+.pasos-envio li{margin-bottom:5px;font-size:15.5px;}
+footer{text-align:center;color:var(--tinta-suave);font-size:13.5px;margin-top:40px;}
+
+@media (max-width:600px){
+  body{font-size:16px;}
+  .tarjeta{padding:17px;}
+  .cmp-datos{grid-template-columns:1fr;}
+  .pila{flex:1 1 100%;}
+}
+
+@media print{
+  body{background:#fff;}
+  .btn,.barra-final,.acciones-pdf,.contador-txt{display:none !important;}
+  .tarjeta{box-shadow:none;break-inside:avoid;}
+  body.solo-entrega .hero,
+  body.solo-entrega .identidad,
+  body.solo-entrega .paso,
+  body.solo-entrega .marcador,
+  body.solo-entrega .pasos-envio,
+  body.solo-entrega footer{display:none !important;}
+  body.solo-entrega .wrap{padding:0;max-width:none;}
+  body.solo-entrega .comprobante{margin:0;border:none;padding:0;}
+  body.solo-entrega .entrega{display:block;}
+  .entrega h4,.entrega .resp{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-fila">
+      <div class="hero-texto">
+        <p class="colegio">Colegio Edgardo Vives Campo · Tecnología e Informática</p>
+        <h1>Las desventajas<br><span>de las redes</span></h1>
+        <p class="bajada">Las mismas aplicaciones que nos conectan traen ventajas enormes y riesgos reales. Esta guía recoge la presentación vista en clase y te pide investigar los cinco términos del final.</p>
+        <div class="metas">
+          <span class="meta">GRADO 7</span>
+          <span class="meta">3 ACTIVIDADES</span>
+          <span class="meta">100 PUNTOS</span>
+          <span class="meta">ENTREGA EN CLASSROOM</span>
+        </div>
+      </div>
+      <div class="pila" aria-hidden="true">
+        <div class="noti"><i class="punto"></i><div><b>Menor contacto personal</b><small>Cientos de contactos, poca conversación</small></div></div>
+        <div class="noti"><i class="punto rojo"></i><div><b>Tu foto de hace tres años</b><small>Sigue circulando en internet</small></div></div>
+        <div class="noti"><i class="punto"></i><div><b>"El secreto que te dejará helado"</b><small>Titular sin fuente verificada</small></div></div>
+        <div class="noti"><i class="punto rojo"></i><div><b>Inicio de sesión desconocido</b><small>Activa el doble factor</small></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="identidad">
+    <div id="formulario">
+      <h2>Escribe tu nombre para abrir tu guía</h2>
+      <p>Con tu nombre se arma una versión única: tus preguntas quedan en otro orden que las de tus compañeros.</p>
+      <div class="campos">
+        <div class="campo">
+          <label for="nombre">Nombre y apellido</label>
+          <input type="text" id="nombre" placeholder="Ej: Laura Martínez" autocomplete="off">
+        </div>
+        <div class="campo" style="flex:0 1 130px">
+          <label for="grupo">Curso</label>
+          <input type="text" id="grupo" placeholder="7-01" autocomplete="off">
+        </div>
+        <div style="flex:0 0 auto">
+          <button class="btn" id="btnGenerar">Abrir mi guía</button>
+        </div>
+      </div>
+      <p class="aviso" id="aviso">Escribe tu nombre completo para continuar.</p>
+    </div>
+    <div class="tarjeta-id" id="tarjetaId">
+      <div>
+        <div class="quien" id="quien"></div>
+        <div style="font-size:14px;color:var(--tinta-suave)">Las desventajas de las redes sociales II</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="codigo" id="codigo"></span>
+        <button class="btn btn-linea" id="btnCambiar">Cambiar nombre</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="guia">
+
+    <!-- LECTURA -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Lectura previa · sin puntaje</span><i class="hilo"></i></div>
+      <h2 class="titulo">Ventajas, desventajas y soluciones</h2>
+      <p class="instruccion">Este es el resumen de la presentación vista en clase. Todas las respuestas de la Actividad 1 y la Actividad 2 salen de aquí.</p>
+
+      <div class="tarjeta">
+        <div class="objetivos">
+          <h4>Objetivos de la clase</h4>
+          <ul>
+            <li>Conocer las ventajas de las redes sociales.</li>
+            <li>Identificar cuáles son los principales peligros de las redes sociales que existen.</li>
+            <li>Definir los usos prácticos que el ser humano le puede dar a las redes sociales.</li>
+          </ul>
+        </div>
+
+        <h3 class="bloque-tit">Ventajas de las redes sociales</h3>
+        <div class="ventajas">
+          <div><b>Comunicación instantánea y sin fronteras.</b> Podemos hablar en segundos con alguien que está al otro lado del mundo.</div>
+          <div><b>Denuncia social con alcance exponencial.</b> Una injusticia publicada en redes puede llegar a millones de personas en horas y presionar una respuesta.</div>
+          <div><b>Adquisición de conocimiento.</b> Tutoriales, cursos, noticias y comunidades de estudio al alcance de un clic.</div>
+          <div><b>Compartir bienes y servicios.</b> Se pueden vender productos, ofrecer servicios y dar a conocer un emprendimiento sin pagar publicidad costosa.</div>
+          <div><b>Entretenimiento.</b> Música, videos, juegos y contenido de humor para el tiempo libre.</div>
+        </div>
+
+        <h3 class="bloque-tit">Desventajas de las redes sociales</h3>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">01</span><h3>Menor contacto personal y desconexión del mundo real</h3></div>
+          <p>Podemos tener cientos de contactos en línea y estar solos en la vida real. Cuando la pantalla reemplaza la conversación cara a cara, se pierden gestos, tono de voz y la capacidad de resolver conflictos hablando.</p>
+          <p class="solucion"><b>Solución:</b> establecer horarios sin celular, dejar el teléfono lejos durante las comidas y al estudiar, y priorizar los planes presenciales con familia y amigos.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">02</span><h3>Riesgos a la privacidad y la imagen personal</h3></div>
+          <p>Cada foto, comentario o ubicación que publicamos queda registrada y puede ser copiada por otros. Aunque borres una publicación, alguien pudo tomarle captura. Esa <b>huella digital</b> puede afectar tu reputación años después, cuando un colegio, una universidad o una empresa revise tus redes.</p>
+          <p class="solucion"><b>Solución:</b> mantener las cuentas en privado, aceptar solo a personas conocidas, desactivar la ubicación y aplicar la regla de oro: si no te gustaría que lo vieran tu familia o tu profesor, no lo publiques.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">03</span><h3>Peligros de seguridad</h3></div>
+          <p>Las cuentas pueden ser robadas mediante contraseñas débiles, enlaces engañosos o programas maliciosos. También hay riesgo de contacto con desconocidos que ocultan su verdadera identidad.</p>
+          <p class="solucion"><b>Solución:</b> activar el <b>doble factor de autenticación</b>, que pide un segundo paso además de la contraseña (un código enviado al celular o al correo). Así, aunque alguien descubra tu clave, no puede entrar a tu cuenta. Además: contraseñas largas y distintas para cada servicio, y nunca abrir enlaces sospechosos.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">04</span><h3>Adicción</h3></div>
+          <p>Las aplicaciones están diseñadas para que sigamos deslizando la pantalla sin parar. Cuando revisar el celular deja de ser una elección y se vuelve una necesidad, aparecen las señales: bajan las notas, se pierden horas de sueño, se abandonan los deportes y da angustia estar sin conexión.</p>
+          <p class="solucion"><b>Solución:</b> medir el tiempo de pantalla con las herramientas del propio celular, desactivar notificaciones innecesarias, no dormir con el teléfono en la habitación y reemplazar parte de ese tiempo por actividades presenciales.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">05</span><h3>Fake news (noticias falsas)</h3></div>
+          <p>Son informaciones inventadas o manipuladas que se difunden como si fueran verdaderas. Se propagan más rápido que las noticias reales porque están hechas para provocar indignación, miedo o asombro. Los titulares escandalosos sobre famosos son un ejemplo típico.</p>
+          <p class="solucion"><b>Solución:</b> antes de compartir, verificar quién lo publicó, buscar la misma noticia en al menos dos medios reconocidos y revisar la fecha, porque muchas imágenes virales son antiguas o de otro país.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">06</span><h3>Control social y social bots</h3></div>
+          <p>Los <b>social bots</b> son cuentas automatizadas, manejadas por programas, que simulan ser personas reales. Se usan para multiplicar un mensaje, inflar tendencias y hacer creer que una opinión es mayoritaria cuando no lo es. Sumado a esto, las redes privilegian el sensacionalismo, la exacerbación y la dramatización, y eso genera una mayor <b>polarización política y emocional</b> de la sociedad.</p>
+          <p class="solucion"><b>Solución:</b> desconfiar de cuentas sin foto, sin historial y que publican decenas de veces al día; contrastar opiniones con fuentes distintas y no dejarse arrastrar por la primera reacción emocional.</p>
+        </div>
+
+        <div class="riesgo">
+          <div class="r-cabeza"><span class="r-num">07</span><h3>Infringir la ley</h3></div>
+          <p>Lo que se hace en redes tiene consecuencias legales reales. Insultar o difamar, difundir fotos íntimas de otra persona, entrar a la cuenta de alguien sin permiso, crear perfiles falsos o descargar contenido pirata son conductas sancionadas.</p>
+          <p class="solucion"><b>Solución:</b> conocer la norma antes de publicar. En Colombia, la <b>Ley 1273 de 2009</b> sanciona los delitos informáticos, la <b>Ley 1581 de 2012</b> protege los datos personales y la <b>Ley 1620 de 2013</b> incluye el ciberacoso escolar en el Sistema Nacional de Convivencia Escolar.</p>
+        </div>
+
+        <div class="ayuda">
+          <h4>Si algo te pasa a ti o a un compañero</h4>
+          <ul>
+            <li>Cuéntale a un adulto de confianza: tu familia, tu director de grupo o la orientadora escolar.</li>
+            <li>Guarda las pruebas con capturas de pantalla antes de bloquear o denunciar.</li>
+            <li>Línea 141 del ICBF, gratuita y disponible las 24 horas para niños, niñas y adolescentes.</li>
+            <li>CAI Virtual de la Policía Nacional, para denunciar delitos informáticos.</li>
+            <li>Te Protejo, para reportar contenidos que ponen en riesgo a menores de edad.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVIDAD 1 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 1 · 10 preguntas × 4 puntos = 40</span><i class="hilo"></i></div>
+      <h2 class="titulo">Selección múltiple</h2>
+      <p class="instruccion">Marca una sola respuesta por pregunta. El orden de las opciones cambió solo para ti, así que copiar la letra de un compañero no funciona.</p>
+      <div class="tarjeta" id="preguntas"></div>
+    </section>
+
+    <!-- ACTIVIDAD 2 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 2 · 5 preguntas × 4 puntos = 20</span><i class="hilo"></i></div>
+      <h2 class="titulo">Verdadero o falso</h2>
+      <p class="instruccion">Decide si cada afirmación es verdadera o falsa según la lectura.</p>
+      <div class="tarjeta" id="cerradas"></div>
+    </section>
+
+    <!-- ACTIVIDAD 3 -->
+    <section class="paso">
+      <div class="eyebrow"><i class="nodo"></i><span>Actividad 3 · 5 preguntas × 8 puntos = 40</span><i class="hilo"></i></div>
+      <h2 class="titulo">Investigación</h2>
+      <p class="instruccion">Estos son los cinco términos de la última diapositiva de la presentación. Consulta en internet o en la biblioteca y responde con tus propias palabras: el docente califica que expliques con tu propio lenguaje, no que copies y pegues. Escribe mínimo cuatro líneas por respuesta y define también los términos resaltados.</p>
+      <div class="tarjeta" id="investigacion"></div>
+    </section>
+
+    <div class="barra-final">
+      <button class="btn btn-ambar" id="btnCalificar">Terminar y preparar mi entrega</button>
+    </div>
+
+    <section class="resultado" id="resultado">
+      <div class="marcador">
+        <div class="quien-final" id="quienFinal"></div>
+        <div class="total" id="puntaje">0<small>/60</small></div>
+        <div id="mensaje" style="margin-top:10px;font-size:16px"></div>
+        <div class="desglose" id="desglose"></div>
+      </div>
+
+      <div class="tarjeta comprobante" id="comprobante">
+        <div class="cmp-cabeza">
+          <div>
+            <p class="cmp-colegio">Colegio Edgardo Vives Campo · Tecnología e Informática</p>
+            <h3 class="cmp-titulo">Entrega de la guía</h3>
+            <p class="cmp-sub">Las desventajas de las redes sociales II · Grado 7</p>
+          </div>
+          <div class="cmp-sello"><span id="cmpTotal">0</span><small>de 100</small></div>
+        </div>
+
+        <dl class="cmp-datos">
+          <div><dt>Estudiante</dt><dd id="cmpNombre">—</dd></div>
+          <div><dt>Curso</dt><dd id="cmpCurso">—</dd></div>
+          <div><dt>Fecha</dt><dd id="cmpFecha">—</dd></div>
+          <div><dt>Código de guía</dt><dd id="cmpCodigo">—</dd></div>
+        </dl>
+
+        <table class="tabla-pts">
+          <thead><tr><th>Actividad</th><th>Resultado</th><th>Puntos</th></tr></thead>
+          <tbody>
+            <tr><td>Actividad 1 · Selección múltiple (10 × 4)</td><td class="cmp-mid" id="tdAciertos">0 de 10</td><td id="tdSel">0 / 40</td></tr>
+            <tr><td>Actividad 2 · Verdadero o falso (5 × 4)</td><td class="cmp-mid" id="tdAciertosVF">0 de 5</td><td id="tdVF">0 / 20</td></tr>
+            <tr><td>Actividad 3 · Investigación (5 × 8)</td><td class="cmp-mid" id="tdEstadoInv">Pendiente</td><td>— / 40</td></tr>
+            <tr class="cmp-total"><td>Puntaje automático</td><td class="cmp-mid"></td><td id="tdTotal">0 / 60</td></tr>
+          </tbody>
+        </table>
+
+        <div class="entrega" id="entrega"></div>
+
+        <div class="cmp-firma">
+          <div><span class="cmp-linea"></span><small>Nota definitiva (docente)</small></div>
+          <div><span class="cmp-linea"></span><small>Firma del docente</small></div>
+        </div>
+      </div>
+
+      <div class="pasos-envio acciones-pdf">
+        <h4>Cómo entregar tu guía</h4>
+        <ol>
+          <li>Pulsa <b>Guardar como PDF</b>. En el destino de impresión elige "Guardar como PDF".</li>
+          <li>Abre la tarea en <b>Google Classroom</b> y pulsa "Añadir o crear" → "Archivo".</li>
+          <li>Sube el PDF y pulsa <b>Entregar</b>. El docente asigna la nota definitiva sobre 100.</li>
+        </ol>
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="btnPDF">Guardar como PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>Colegio Edgardo Vives Campo · Tecnología e Informática · Grado 7</footer>
+  </div>
+</main>
+
+<script>
+/* ============ Aleatorio con semilla ============ */
+function semillaDe(t){let h=2166136261;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function rngCon(s){let a=s;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function normalizar(s){return s.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");}
+function mezclar(arr,rnd){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ============ Actividad 1 · selección múltiple (la 1.ª opción es la correcta) ============ */
+const BANCO = [
+  { q:"Según la presentación, ¿cuál de estas es una ventaja de las redes sociales?",
+    ops:["La comunicación instantánea y sin fronteras.",
+         "El aumento de la polarización política.",
+         "La pérdida de horas de sueño.",
+         "La difusión de noticias falsas."] },
+  { q:"¿Qué significa que las redes permitan una denuncia social con alcance exponencial?",
+    ops:["Que una denuncia puede difundirse muy rápido y llegar a muchísimas personas.",
+         "Que las denuncias solo llegan a la policía del barrio.",
+         "Que denunciar en redes está prohibido por la ley.",
+         "Que las denuncias se borran automáticamente cada semana."] },
+  { q:"¿Cuál es la primera desventaja que señala la presentación?",
+    ops:["El menor contacto personal y la desconexión del mundo real.",
+         "El alto costo de los planes de datos.",
+         "La lentitud de las aplicaciones.",
+         "La falta de aplicaciones en español."] },
+  { q:"Los riesgos a la privacidad y a la imagen personal se refieren a que…",
+    ops:["Las fotos y datos que publicamos pueden copiarse y afectar nuestra reputación años después.",
+         "Las fotos pierden calidad cada vez que se comparten.",
+         "Las redes borran las publicaciones antiguas cada mes.",
+         "Solo los administradores de la red pueden ver lo que publicamos."] },
+  { q:"¿Qué medida de seguridad destaca la presentación para proteger las cuentas?",
+    ops:["El doble factor de autenticación.",
+         "Cambiar la foto de perfil cada semana.",
+         "Tener el mismo correo en todas las redes.",
+         "Aceptar solicitudes solo los fines de semana."] },
+  { q:"¿En qué consiste el doble factor de autenticación?",
+    ops:["En confirmar la identidad con un segundo paso además de la contraseña, como un código enviado al celular.",
+         "En tener dos cuentas distintas en la misma red social.",
+         "En usar la misma contraseña en dos dispositivos.",
+         "En que dos personas compartan una sola cuenta."] },
+  { q:"¿Qué son las fake news?",
+    ops:["Noticias falsas o manipuladas que se difunden como si fueran verdaderas.",
+         "Noticias publicadas únicamente por periódicos extranjeros.",
+         "Noticias que solo aparecen en la televisión.",
+         "Noticias antiguas que ya fueron corregidas por su autor."] },
+  { q:"¿Qué son los social bots?",
+    ops:["Cuentas automatizadas que simulan ser personas reales para multiplicar mensajes e inflar tendencias.",
+         "Robots físicos que reparten pedidos a domicilio.",
+         "Programas que reparan el computador cuando se infecta.",
+         "Asistentes que traducen las publicaciones a otros idiomas."] },
+  { q:"Según la presentación, las redes privilegian el sensacionalismo y la dramatización, y esto genera…",
+    ops:["Una mayor polarización política y emocional de la sociedad.",
+         "Un mejor rendimiento académico de los estudiantes.",
+         "Una reducción del uso del celular.",
+         "Una disminución de las noticias falsas."] },
+  { q:"¿Qué quiere decir que en redes sociales se puede infringir la ley?",
+    ops:["Que conductas como difamar, suplantar a alguien o entrar a su cuenta sin permiso son delitos con consecuencias legales.",
+         "Que está prohibido tener más de una red social.",
+         "Que publicar fotos propias siempre es ilegal.",
+         "Que solo los mayores de edad pueden usar internet."] }
+];
+const LETRAS = "ABCD";
+
+/* ============ Actividad 2 · verdadero o falso ============ */
+const CERRADAS = [
+  { q:"El entretenimiento aparece en la presentación como una de las ventajas de las redes sociales.", r:true },
+  { q:"Los social bots son personas reales que administran sus cuentas de forma manual.", r:false },
+  { q:"Compartir bienes y servicios es una de las ventajas señaladas en la presentación.", r:true },
+  { q:"Publicar en redes nunca tiene consecuencias legales porque internet es un espacio totalmente libre.", r:false },
+  { q:"La adicción es una de las desventajas de las redes sociales estudiadas en clase.", r:true }
+];
+
+/* ============ Actividad 3 · investigación ============ */
+const INVESTIGACION = [
+  { t:"Ciberacoso",
+    q:"Investiga qué es el ciberacoso, en qué se diferencia del matoneo tradicional y qué debe hacer un estudiante si le ocurre a él o a un compañero.",
+    guia:"Incluye dos ejemplos de ciberacoso y dos personas o entidades a las que se puede acudir en Colombia.",
+    terms:["ciberbullying","netiqueta"] },
+  { t:"Grooming",
+    q:"Investiga qué es el grooming, cómo actúa la persona que lo comete y cuáles son las señales de alerta que debe reconocer un menor de edad.",
+    guia:"Explica también por qué la víctima nunca es la culpable y a quién debe contarle de inmediato.",
+    terms:["sextorsión"] },
+  { t:"Sexting",
+    q:"Investiga qué es el sexting, qué riesgos tiene para un adolescente y por qué una imagen enviada deja de estar bajo el control de quien la envió.",
+    guia:"Relaciona tu respuesta con la huella digital y escribe una recomendación propia.",
+    terms:["huella digital"] },
+  { t:"Suplantación de identidad",
+    q:"Investiga qué es la suplantación de identidad en redes sociales, cómo se reconoce un perfil falso y qué consecuencias legales tiene en Colombia.",
+    guia:"Menciona tres señales de un perfil falso y qué sanciona la Ley 1273 de 2009.",
+    terms:["catfishing","Ley 1273 de 2009"] },
+  { t:"Phishing",
+    q:"Investiga qué es el phishing, cómo llega normalmente a la víctima y qué señales permiten reconocer un mensaje fraudulento.",
+    guia:"Explica cómo ayuda el doble factor de autenticación a proteger tus cuentas.",
+    terms:["malware","doble factor de autenticación"] }
+];
+
+/* ============ Estado ============ */
+let rnd, ordenMC = [], correctasMC = [], ordenVF = [], calificada = false;
+let datosEst = {nombre:"", grupo:"", codigo:""};
+const $ = id => document.getElementById(id);
+
+$("btnGenerar").addEventListener("click", generar);
+$("nombre").addEventListener("keydown", e => { if(e.key==="Enter") generar(); });
+$("grupo").addEventListener("keydown", e => { if(e.key==="Enter") generar(); });
+$("btnCambiar").addEventListener("click", () => {
+  $("guia").classList.remove("on");
+  $("tarjetaId").classList.remove("on");
+  $("formulario").style.display = "block";
+  $("nombre").focus();
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function generar(){
+  const nom = $("nombre").value.trim();
+  const gr  = $("grupo").value.trim();
+  if (nom.length < 3){ $("aviso").style.display="block"; $("nombre").focus(); return; }
+  $("aviso").style.display="none";
+
+  const s = semillaDe(normalizar(nom) + "|" + normalizar(gr));
+  rnd = rngCon(s);
+  const cod = "DR2-" + s.toString(36).toUpperCase().slice(0,5);
+  datosEst = {nombre:nom, grupo:gr, codigo:cod};
+
+  $("formulario").style.display = "none";
+  $("quien").textContent = nom + (gr ? " · " + gr : "");
+  $("quienFinal").textContent = nom + (gr ? " · Curso " + gr : "");
+  $("codigo").textContent = cod;
+  $("tarjetaId").classList.add("on");
+
+  construirMC();
+  construirVF();
+  construirInvestigacion();
+
+  calificada = false;
+  $("resultado").classList.remove("on");
+  $("btnCalificar").disabled = false;
+  $("btnCalificar").textContent = "Terminar y preparar mi entrega";
+  $("guia").classList.add("on");
+  $("guia").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function construirMC(){
+  const cont = $("preguntas"); cont.innerHTML = "";
+  ordenMC = mezclar(BANCO.map((_,i)=>i), rnd);
+  correctasMC = [];
+  ordenMC.forEach((idx, i) => {
+    const base = BANCO[idx];
+    const mezcladas = mezclar(base.ops.map((texto,j)=>({texto, ok:j===0})), rnd);
+    correctasMC.push(mezcladas.findIndex(o=>o.ok));
+    const div = document.createElement("div");
+    div.className = "pregunta";
+    let html = '<div class="p-cabeza"><span class="p-num">'+String(i+1).padStart(2,"0")+
+               '</span><span class="p-texto">'+base.q+'</span><span class="p-pts">4 pts</span></div>';
+    mezcladas.forEach((o,k)=>{
+      html += '<label class="opcion" data-p="'+i+'" data-k="'+k+'">'+
+              '<input type="radio" name="q'+i+'" value="'+k+'">'+
+              '<span class="letra">'+LETRAS[k]+'.</span><span>'+o.texto+'</span></label>';
+    });
+    div.innerHTML = html;
+    cont.appendChild(div);
+  });
+}
+
+function construirVF(){
+  const cont = $("cerradas"); cont.innerHTML = "";
+  ordenVF = mezclar(CERRADAS.map((_,i)=>i), rnd);
+  ordenVF.forEach((idx, i) => {
+    const base = CERRADAS[idx];
+    const div = document.createElement("div");
+    div.className = "pregunta";
+    div.innerHTML = '<div class="p-cabeza"><span class="p-num">'+String(i+1).padStart(2,"0")+
+      '</span><span class="p-texto">'+base.q+'</span><span class="p-pts">4 pts</span></div>'+
+      '<div class="vf">'+
+      '<label class="opcion" data-v="'+i+'" data-k="V"><input type="radio" name="v'+i+'" value="V"><span class="letra">V</span><span>Verdadero</span></label>'+
+      '<label class="opcion" data-v="'+i+'" data-k="F"><input type="radio" name="v'+i+'" value="F"><span class="letra">F</span><span>Falso</span></label>'+
+      '</div>';
+    cont.appendChild(div);
+  });
+}
+
+function construirInvestigacion(){
+  const cont = $("investigacion"); cont.innerHTML = "";
+  INVESTIGACION.forEach((it, i) => {
+    const div = document.createElement("div");
+    div.className = "pregunta abierta";
+    let html = '<div class="p-cabeza"><span class="p-num">'+String(i+1).padStart(2,"0")+
+      '</span><span class="p-texto">'+it.t+'</span><span class="p-pts">8 pts</span></div>'+
+      '<p style="margin:0 0 8px">'+it.q+'</p>';
+    if (it.terms.length){
+      html += '<div class="terminos">'+it.terms.map(t=>'<span>'+t+'</span>').join("")+'</div>';
+    }
+    html += '<p class="guia-resp">'+it.guia+'</p>'+
+      '<textarea id="inv'+i+'" placeholder="Escribe aquí tu respuesta…"></textarea>'+
+      '<div class="contador-txt corto" id="cnt'+i+'">0 caracteres</div>';
+    div.innerHTML = html;
+    cont.appendChild(div);
+    const ta = div.querySelector("textarea");
+    ta.addEventListener("input", () => {
+      const n = ta.value.trim().length;
+      const c = $("cnt"+i);
+      c.textContent = n + " caracteres";
+      c.classList.toggle("corto", n < 150);
+      ta.style.height = "auto";
+      ta.style.height = Math.max(132, ta.scrollHeight) + "px";
+    });
+  });
+}
+
+/* ============ Calificación y entrega ============ */
+$("btnCalificar").addEventListener("click", () => {
+  let aciertos = 0, sinResponder = 0, aciertosVF = 0, vacias = 0;
+
+  correctasMC.forEach((correcta, i) => {
+    const m = document.querySelector('input[name="q'+i+'"]:checked');
+    if (!m) sinResponder++;
+    document.querySelectorAll('.opcion[data-p="'+i+'"]').forEach(op => {
+      op.classList.add("bloqueada");
+      op.querySelector("input").disabled = true;
+      if (m && +m.value === +op.dataset.k) op.classList.add("elegida");
+    });
+    if (m && +m.value === correcta) aciertos++;
+  });
+
+  ordenVF.forEach((idx, i) => {
+    const m = document.querySelector('input[name="v'+i+'"]:checked');
+    if (!m) sinResponder++;
+    document.querySelectorAll('.opcion[data-v="'+i+'"]').forEach(op => {
+      op.classList.add("bloqueada");
+      op.querySelector("input").disabled = true;
+      if (m && m.value === op.dataset.k) op.classList.add("elegida");
+    });
+    if (m && ((m.value === "V") === CERRADAS[idx].r)) aciertosVF++;
+  });
+
+  const ptsSel = aciertos * 4;
+  const ptsVF  = aciertosVF * 4;
+  const auto   = ptsSel + ptsVF;
+
+  /* respuestas abiertas → bloque imprimible */
+  let bloque = '<h4 style="margin-top:22px;border-top:2px solid var(--tinta);padding-top:12px">Actividad 3 · Respuestas de investigación</h4>';
+  INVESTIGACION.forEach((it, i) => {
+    const ta = $("inv"+i);
+    const txt = ta.value.trim();
+    if (!txt) vacias++;
+    ta.disabled = true;
+    bloque += '<h4>'+(i+1)+'. '+esc(it.t)+' <span style="font-weight:400;color:var(--tinta-suave)">(8 pts)</span></h4>'+
+      '<p class="resp'+(txt?'':' vacia')+'">'+(txt ? esc(txt) : "Sin responder.")+'</p>';
+  });
+  $("entrega").innerHTML = bloque;
+
+  $("puntaje").innerHTML = auto + '<small>/60</small>';
+  $("desglose").innerHTML =
+    '<div>Selección múltiple: '+ptsSel+'/40</div>'+
+    '<div>Verdadero o falso: '+ptsVF+'/20</div>'+
+    '<div>Investigación: la califica el docente</div>';
+  $("mensaje").textContent = vacias
+    ? "Tienes " + vacias + " respuesta(s) de investigación sin escribir. Vuelve a la Actividad 3 antes de entregar."
+    : "Tu entrega está lista. Guárdala en PDF y súbela a Classroom.";
+
+  const fecha = new Date().toLocaleDateString("es-CO", {day:"2-digit", month:"long", year:"numeric"});
+  $("cmpNombre").textContent   = datosEst.nombre;
+  $("cmpCurso").textContent    = datosEst.grupo || "—";
+  $("cmpFecha").textContent    = fecha;
+  $("cmpCodigo").textContent   = datosEst.codigo;
+  $("cmpTotal").textContent    = auto;
+  $("tdAciertos").textContent  = aciertos + " de 10";
+  $("tdAciertosVF").textContent= aciertosVF + " de 5";
+  $("tdSel").textContent       = ptsSel + " / 40";
+  $("tdVF").textContent        = ptsVF + " / 20";
+  $("tdEstadoInv").textContent = vacias ? (5 - vacias) + " de 5 respondidas" : "5 de 5 respondidas";
+  $("tdTotal").textContent     = auto + " / 60";
+
+  document.title = "Guia_Desventajas_II_" + normalizar(datosEst.nombre).replace(/ /g,"_") + "_" + datosEst.codigo;
+
+  calificada = true;
+  $("btnCalificar").disabled = true;
+  $("btnCalificar").textContent = "Entrega preparada";
+  $("resultado").classList.add("on");
+  $("resultado").scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+$("btnPDF").addEventListener("click", () => {
+  document.body.classList.add("solo-entrega");
+  window.print();
+  setTimeout(() => document.body.classList.remove("solo-entrega"), 800);
+});
+window.addEventListener("afterprint", () => document.body.classList.remove("solo-entrega"));
+</script>
+</body>
+</html>
